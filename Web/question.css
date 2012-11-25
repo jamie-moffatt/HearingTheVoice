@@ -5,7 +5,96 @@ body
 
 #iphone
 {
-	width: 200px;
-	height: 400px;
-	background-color: red;
+	background-image: url("iphone.png");
+	float: right;
+	position: relative;
+	width: 400px;
+	height: 730px;
+}
+
+#iphone #screen
+{
+	top: 126px;
+	left: 38px;
+	position: absolute;
+	width: 320px;
+	height: 480px;
+	background-color: #AFBDCC;
+}
+
+#iphone #screen #status
+{
+	background-color: #186C99;
+	height: 20px;
+}
+
+#iphone #screen #navigation
+{
+	color: white;
+	font-size: 18pt;
+	font-style: oblique;
+	text-align: center;
+    background-image: -webkit-linear-gradient(#81ADD4, #2369A6);
+    background-image: linear-gradient(#81ADD4,#2369A6);
+	line-height: 44px;
+	height: 44px;
+}
+
+#iphone #screen #tableview
+{
+	padding: 10px;
+}
+
+#iphone .section-header
+{
+	color: #38669C;
+	font-size: 12pt;
+	font-style: oblique;
+	text-shadow: #AAA 1px 1px 0px;
+	padding: 0px;
+	margin-bottom: 5px;
+}
+
+#iphone .section
+{
+	background-color: white;
+	border: 1px solid #a9a9a9;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+#iphone #tableview ul
+{
+	border: 1px solid #a9a9a9;
+	border-radius: 5px;
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+#iphone #tableview li
+{
+	border-bottom: 1px solid #a9a9a9;
+	background-color: white;
+	padding: 5px;
+}
+
+#iphone #tableview li:last-child
+{
+	-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	border-bottom: none;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+#iphone #tableview li:first-child {
+	-webkit-border-top-right-radius: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-moz-border-radius-topleft: 5px;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
 }
