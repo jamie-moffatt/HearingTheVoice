@@ -1,0 +1,11 @@
+body
+{
+	font-family: Helvetica, "MS Trebuchet", sans-serif;
+}
+
+#iphone
+{
+	width: 200px;
+	height: 400px;
+	background-color: red;
+}
