@@ -3,20 +3,25 @@ body
 	font-family: Helvetica, "MS Trebuchet", sans-serif;
 }
 
+#form
+{
+	float: left;
+	background-color: #DDD;
+}
+
 #iphone
 {
 	background-image: url("iphone.png");
 	float: right;
-	position: relative;
 	width: 400px;
 	height: 730px;
 }
 
 #iphone #screen
 {
+	position: relative;
 	top: 126px;
 	left: 38px;
-	position: absolute;
 	width: 320px;
 	height: 480px;
 	background-color: #AFBDCC;
@@ -70,11 +75,10 @@ body
 	right: 10px;
 	background-repeat: no-repeat;
 	font-size: 11pt;
-	width: 65px;
+	width: 57px;
 	height: 31px;
 	line-height: 32px;
-    background-image: url("ps/backbutton.png");
-	padding-left: 2px;
+    background-image: url("ps/actionbutton.png");
 }
 
 #iphone #screen #tableview
@@ -89,7 +93,7 @@ body
 	font-style: oblique;
 	text-shadow: #AAA 1px 1px 0px;
 	padding: 0px;
-	margin-bottom: 5px;
+	margin-bottom: 7px;
 }
 
 #iphone .section
@@ -137,4 +141,9 @@ body
 	-moz-border-radius-topleft: 5px;
 	border-top-right-radius: 5px;
 	border-top-left-radius: 5px;
+}
+
+.iphone-checkbox
+{
+	float: right;
 }

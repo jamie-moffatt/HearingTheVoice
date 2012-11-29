@@ -7,5 +7,5 @@
 		{% endfor %}
 	</question>
 	{% endfor %}
-	</section>
+</section>
 {% endfor %}

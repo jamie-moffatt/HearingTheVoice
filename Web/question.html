@@ -4,17 +4,30 @@
 	<meta charset="utf-8">
 	<title>Questions</title>
 	<link rel="stylesheet" type="text/css" href="question.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="js/question.js"></script>
 </head>
 </body>
 <div id="form">
 	<form action="">
-		<select name="questionType">
+		<div>
+		<input type="button" id="previousQuestion" value="Previous">
+		<input type="button" id="nextQuestion" value="Next">
+		</div>
+		<select name="type">
 			<option value="boolean">Yes/No</option>
 			<option value="radio">Multiple Choice</option>
-			<option value="dropdownlist">List</option>
+			<option value="dropdown">List</option>
 			<option value="checkbox">Checkboxes</option>
 			<option value="textbox">Text</option>
 		</select>
+		<br>
+		Description
+		<br>
+		<input type="text" id="inputDescription" name="description">
+		<div id="input-choices">
+		</div>
+		<input type="button" id="cmdQuestion" value="Submit">
 	</form>
 </div>
 <div id="iphone">
@@ -28,15 +41,11 @@
 		</div>
 		<div id="tableview">
 			<div class="section-header">Question 1</div>
-			<div class="section">
-				I hear the voice of another person in my head. 
-				For example, when I have done something foolish 
-				I hear my mother’s voice criticising me in my mind.
+			<div class="section" id="description">
+				The question will appear here.
 			</div>
-			<ul>
-				<li>Agree</li>
-				<li>Neither Agree Nor Disagree</li>
-				<li>Disagree</li>
+			<ul id="choices">
+				<li>Choices will appear here.</li>
 			</ul>
 		</div>
 	</div>
