@@ -1,12 +1,9 @@
 <?php
 // CHANGE TO PREPARED STATEMENTS
 
-// set content type to xml
-header('Content-type: text/xml');
-header('Charset: utf-8');
-
 // make a mysql connection
-$mysqli = new mysqli("mysql.dur.ac.uk", "cwwp64", "H3ather!", "Pcwwp64_Voice");
+//$mysqli = new mysqli("mysql.dur.ac.uk", "cwwp64", "H3ather!", "Pcwwp64_Voice");
+$mysqli = new mysqli("127.0.0.1", "root", "", "Voice");
 if ($mysqli->connect_errno)
 {
 	die("Failed to connect to MySQL: " . $mysqli->connect_error);
@@ -17,16 +14,16 @@ $sections = array();
 // list the sections
 if ($result = $mysqli->query("SELECT * FROM `Section`"))
 {
-	print('<sections>'."\n");
+	print('<div id="sections">'."\n");
 	while ($row = $result->fetch_assoc())
 	{
-		printf('<section id="%d" name="%s" description="%s">'."\n", $row['sectionID'], $row['name'], htmlspecialchars($row['description']));
+		printf('<div class="section">');
 		printQuestions($mysqli, $row['sectionID']);
 		printChoices($mysqli, $row['sectionID']);
-		print('</section>'."\n");
+		print('</div>'."\n");
 	}
 	$result->free();
-	print('</sections>'."\n");
+	print('</div>'."\n");
 }	
 $mysqli->close();
 
