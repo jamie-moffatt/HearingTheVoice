@@ -5,14 +5,15 @@
 header('Content-type: text/xml');
 header('Charset: utf-8');
 
+// read database configuration
+$config = parse_ini_file("dbconfig.ini");
+
 // make a mysql connection
-$mysqli = new mysqli("mysql.dur.ac.uk", "cwwp64", "H3ather!", "Pcwwp64_Voice");
+$mysqli = new mysqli($config['host'], $config['user'], $config['password'], $config['database']);
 if ($mysqli->connect_errno)
 {
 	die("Failed to connect to MySQL: " . $mysqli->connect_error);
 }
-
-$sections = array();
 
 // list the sections
 if ($result = $mysqli->query("SELECT * FROM `Section`"))
