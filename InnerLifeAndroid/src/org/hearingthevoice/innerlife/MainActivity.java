@@ -13,6 +13,7 @@ import java.util.Map.Entry;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -59,6 +60,9 @@ public class MainActivity extends Activity
 		
 		context = getApplicationContext();
 		activity = this;
+		
+		Intent startServiceIntent = new Intent(context, BootService.class);
+        context.startService(startServiceIntent);
 		
 		notificationTime = Calendar.getInstance();
 		

@@ -35,7 +35,7 @@ public class BootService extends Service
 		
 		Calendar cal = Calendar.getInstance();
 		
-		cal.add(Calendar.MINUTE, 1);
+		cal.add(Calendar.SECOND, 5);
 		
 		// In reality, you would want to have a static variable for the request code instead of
 		// 192837
