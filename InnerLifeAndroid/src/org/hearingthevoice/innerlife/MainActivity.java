@@ -1,13 +1,20 @@
 package org.hearingthevoice.innerlife;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -26,6 +33,8 @@ public class MainActivity extends Activity
 	
 	private Runnable downloadQuestionsThread;
 	private Runnable downloadScheduleThread;
+	
+	private Calendar notificationTime;
 	
 	private TextView txtQuestionHead;
 	private TextView txtQuestionBody;
@@ -50,6 +59,8 @@ public class MainActivity extends Activity
 		
 		context = getApplicationContext();
 		activity = this;
+		
+		notificationTime = Calendar.getInstance();
 		
 		boolean updateQuestions = false;
 		boolean updateSchedule = false;
@@ -188,6 +199,72 @@ public class MainActivity extends Activity
 	public void endSession()
 	{
 		Log.d("SESSION", "end of session");
+		
+		try
+		{
+			FileOutputStream fos = context.openFileOutput("responses", Context.MODE_PRIVATE);
+	
+			StringBuffer str = new StringBuffer();
+			
+			str.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+			
+			str.append("<submission ");
+			str.append("userID=\"" + "1" + "\" ");
+			str.append("sessionID=\"" + "1" + "\" ");
+			
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Calendar submissionTime = Calendar.getInstance();
+			
+			String _notificationTime = format.format(notificationTime.getTime());
+			String _submissionTime = format.format(submissionTime.getTime());
+			
+			str.append("notificationTime=\"" + _notificationTime + "\" ");
+			str.append("submissionTime=\"" + _submissionTime + "\">\n");
+			
+			for(Entry<Long, Integer> e : responseIDs.entrySet())
+			{
+				str.append("<response ");
+				str.append("questionID=\"" + e.getKey() + "\" ");
+				str.append("response=\"" + e.getValue() + "\"/>\n");
+			}
+			
+			str.append("</submission>");
+			
+			fos.write(str.toString().getBytes());
+			fos.close();
+			
+			(new SubmitTask()).execute(str.toString());
+		}
+		catch (IOException e) { e.printStackTrace(); }
+	}
+	
+	private class SubmitTask extends AsyncTask<String, Void, Boolean>
+	{	
+		@Override
+		protected Boolean doInBackground(String... responseXMLRequest)
+		{
+			try
+			{
+				InputStream response = QuestionAPI.getHTTPResponseStream(
+						"responses.php", "POST", responseXMLRequest[0].getBytes());
+				return true;
+				
+			}
+			catch (IOException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				return false;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(Boolean postedSuccessfully)
+		{
+			if (postedSuccessfully) Toast.makeText(activity, "Responses submitted.", Toast.LENGTH_LONG).show();
+			else Toast.makeText(activity, "Network Problem. Responses were not submitted.", Toast.LENGTH_LONG).show();
+
+		}
 	}
 	
 	public void populateResponses()
@@ -243,9 +320,6 @@ public class MainActivity extends Activity
 
 		thread.start();
 		
-		if (sections != null)
-			while(sections.size() < 1) {}
-		
 		activity.runOnUiThread(callback);
 	}
 
@@ -259,8 +333,8 @@ public class MainActivity extends Activity
 				if(sections != null && sections.size() > 0)
 				{
 					loadQuestion();
+					populateResponses();
 				}
-				populateResponses();
 			}
 		};
 

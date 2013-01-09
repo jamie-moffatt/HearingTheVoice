@@ -4,10 +4,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -25,8 +27,43 @@ import android.content.Context;
 import android.util.Log;
 
 public class QuestionAPI
-{
+{	
 	private static final String INNER_LIFE_BASE_URL = "http://www.dur.ac.uk/matthew.bates/HearingTheVoice/";
+	
+	public static InputStream getHTTPResponseStream(String url, String httpMethod,
+			byte[] postData) throws IOException
+	{
+		InputStream inputStream = null;
+		int responseCode = -1;
+
+		URLConnection urlConnection = (new URL(INNER_LIFE_BASE_URL + url)).openConnection();
+
+		if (!(urlConnection instanceof HttpURLConnection))
+			throw new IOException("Not an HTTP connection");
+
+		HttpURLConnection httpConnection = (HttpURLConnection) urlConnection;
+		httpConnection.setAllowUserInteraction(false);
+		httpConnection.setInstanceFollowRedirects(true);
+		httpConnection.setRequestMethod(httpMethod);
+
+		if (httpMethod.equalsIgnoreCase("POST") && postData != null)
+		{
+			httpConnection.setRequestProperty("Content-type", "application/xml");
+			httpConnection.setDoOutput(true);
+			OutputStream requestOutput = httpConnection.getOutputStream();
+			requestOutput.write(postData);
+			requestOutput.close();
+		}
+		
+		httpConnection.connect();
+		responseCode = httpConnection.getResponseCode();
+		
+		Log.d("RESPONSE_CODE", ""+responseCode);
+		
+		inputStream = httpConnection.getInputStream();
+
+		return inputStream;
+	}
 
 	public static List<Section> downloadQuestionXML(Context context, String urlExtension)
 			throws MalformedURLException, IOException, ProtocolException, FactoryConfigurationError
