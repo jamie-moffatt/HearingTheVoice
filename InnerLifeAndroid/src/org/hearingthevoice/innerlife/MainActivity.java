@@ -275,6 +275,10 @@ public class MainActivity extends Activity
 				Toast.makeText(activity, "Responses submitted.", Toast.LENGTH_LONG).show();
 				Log.d("RESPONSES", "deleting file");
 				context.deleteFile(filename);
+				Intent i = new Intent(context, DashboardActivity.class);
+				// TODO might be better ways of doing this now!!!
+				finish();
+				startActivity(i);
 			}
 			else Toast.makeText(activity, "Network Problem. Responses were not submitted.", Toast.LENGTH_LONG).show();
 
