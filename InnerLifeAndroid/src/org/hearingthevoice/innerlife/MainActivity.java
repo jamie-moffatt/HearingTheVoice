@@ -62,7 +62,7 @@ public class MainActivity extends Activity
 		
 		notificationTime = Calendar.getInstance();
 		
-		boolean updateQuestions = false;
+		boolean updateQuestions = true;
 		boolean updateSchedule = false;
 		
 		boolean questionsCached = false;
@@ -149,7 +149,7 @@ public class MainActivity extends Activity
 				if(!questions.isEmpty()) responseIDs.put(questions.get(question).getQuestionID(), rblResponses.getCheckedRadioButtonId());
 				
 				question--;
-				if(question < 0)
+				if(question < 0 && !questions.isEmpty())
 				{
 					if(section > 0) section--;
 					questions = sections.get(section).getQuestions();
@@ -170,7 +170,7 @@ public class MainActivity extends Activity
 				if(!questions.isEmpty()) responseIDs.put(questions.get(question).getQuestionID(), rblResponses.getCheckedRadioButtonId());
 				
 				question++;
-				if(question > questions.size() - 1)
+				if(question > questions.size() - 1 && !questions.isEmpty() && !sections.isEmpty())
 				{
 					if(section < sections.size() - 1) section++;
 					questions = sections.get(section).getQuestions();
@@ -299,9 +299,9 @@ public class MainActivity extends Activity
 	
 	public void downloadQuestions()
 	{
-		Runnable callback = getQuestionCallback();
+		final Runnable callback = getQuestionCallback();
 		
-		downloadScheduleThread = new Runnable()
+		downloadQuestionsThread = new Runnable()
 		{
 			@Override
 			public void run()
@@ -311,6 +311,8 @@ public class MainActivity extends Activity
 					Log.d("DOWNLOAD", "Downloading questions");
 					sections = QuestionAPI.downloadQuestionXML(context, "questions.php");
 					if(sections != null) questions = sections.get(0).getQuestions();
+					
+					activity.runOnUiThread(callback);
 				}
 				catch (Exception e) { e.printStackTrace(); }
 			}
@@ -320,7 +322,7 @@ public class MainActivity extends Activity
 
 		thread.start();
 		
-		activity.runOnUiThread(callback);
+		Log.d("DOWNLOAD", "complete");
 	}
 
 	private Runnable getQuestionCallback()
@@ -332,8 +334,12 @@ public class MainActivity extends Activity
 			{
 				if(sections != null && sections.size() > 0)
 				{
-					loadQuestion();
-					populateResponses();
+					if(questions.isEmpty()) loadPlaceholder();
+					else
+					{
+						loadQuestion();
+						populateResponses();
+					}
 				}
 			}
 		};
@@ -391,7 +397,8 @@ public class MainActivity extends Activity
 
 	private void loadPlaceholder()
 	{
-		txtQuestionHead.setText("Section " + sections.get(section).getSectionID() + ", No Question");
+		if(sections.isEmpty()) txtQuestionHead.setText("No Section, No Question");
+		else txtQuestionHead.setText("Section " + sections.get(section).getSectionID() + ", No Question");
 		txtQuestionBody.setText("There are currently no questions in this section");
 	}
 }
