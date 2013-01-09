@@ -143,7 +143,7 @@ public class DashboardActivity extends Activity
 			@Override
 			public void run()
 			{
-				downloadSchedule();
+				downloadQuestions();
 			}
 		};
 
