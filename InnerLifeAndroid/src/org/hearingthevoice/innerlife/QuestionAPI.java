@@ -23,7 +23,10 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import android.app.Activity;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 public class QuestionAPI
@@ -207,5 +210,12 @@ public class QuestionAPI
 		}
 
 		return schedule;
+	}
+	
+	public static boolean networkIsConnected(Activity activity)
+	{
+		ConnectivityManager connMgr = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+		return (networkInfo != null && networkInfo.isConnected());
 	}
 }

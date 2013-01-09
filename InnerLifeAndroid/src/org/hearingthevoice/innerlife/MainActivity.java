@@ -46,6 +46,8 @@ public class MainActivity extends Activity
 	private int section = 0;
 	private int question = 0;
 	
+	private String filename;
+	
 	private RadioGroup rblResponses;
 	private Map<Long, Integer> responseIDs;
 	
@@ -206,7 +208,11 @@ public class MainActivity extends Activity
 		
 		try
 		{
-			FileOutputStream fos = context.openFileOutput("responses", Context.MODE_PRIVATE);
+			Calendar submissionTime = Calendar.getInstance();
+			String extension = new SimpleDateFormat("yyyyMMddHHmmss").format(submissionTime.getTime());
+			
+			filename = "responses" + extension; 
+			FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
 	
 			StringBuffer str = new StringBuffer();
 			
@@ -217,7 +223,6 @@ public class MainActivity extends Activity
 			str.append("sessionID=\"" + "1" + "\" ");
 			
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Calendar submissionTime = Calendar.getInstance();
 			
 			String _notificationTime = format.format(notificationTime.getTime());
 			String _submissionTime = format.format(submissionTime.getTime());
@@ -237,7 +242,8 @@ public class MainActivity extends Activity
 			fos.write(str.toString().getBytes());
 			fos.close();
 			
-			(new SubmitTask()).execute(str.toString());
+			if(QuestionAPI.networkIsConnected(activity)) (new SubmitTask()).execute(str.toString());
+			else Toast.makeText(activity, "No Connection. Saving responses.", Toast.LENGTH_LONG).show();
 		}
 		catch (IOException e) { e.printStackTrace(); }
 	}
@@ -256,7 +262,6 @@ public class MainActivity extends Activity
 			}
 			catch (IOException e1)
 			{
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 				return false;
 			}
@@ -265,7 +270,12 @@ public class MainActivity extends Activity
 		@Override
 		protected void onPostExecute(Boolean postedSuccessfully)
 		{
-			if (postedSuccessfully) Toast.makeText(activity, "Responses submitted.", Toast.LENGTH_LONG).show();
+			if (postedSuccessfully)
+			{
+				Toast.makeText(activity, "Responses submitted.", Toast.LENGTH_LONG).show();
+				Log.d("RESPONSES", "deleting file");
+				context.deleteFile(filename);
+			}
 			else Toast.makeText(activity, "Network Problem. Responses were not submitted.", Toast.LENGTH_LONG).show();
 
 		}
