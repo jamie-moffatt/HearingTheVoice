@@ -92,40 +92,12 @@ public class QuestionAPI
 		while(scanner.hasNextLine()) fos.write(scanner.nextLine().getBytes());
 
 		fos.close();
+		inputStream.close();
+		scanner.close();
+		conn.disconnect();
 
-		try
-		{
-			SAXParserFactory factory = SAXParserFactory.newInstance();
-			SAXParser parser = factory.newSAXParser();
-			XMLReader reader = parser.getXMLReader();
-
-			QuestionXMLParser myXMLHandler = new QuestionXMLParser(questionList);
-
-			Log.d("QUESTION_LIST", ""+questionList.size());
-
-			reader.setContentHandler(myXMLHandler);
-			reader.parse(new InputSource(inputStream));
-
-			Log.d("QUESTION_LIST", ""+questionList.size());
-		}
-		catch (SAXException e)
-		{
-			e.printStackTrace();
-			throw new IOException();
-		}
-		catch (ParserConfigurationException e)
-		{
-			e.printStackTrace();
-			throw new IOException();
-		}
-		finally
-		{
-			inputStream.close();
-			conn.disconnect();
-		}
-
-		return questionList;
-			}
+		return retrieveCachedQuestions(context);
+	}
 
 	public static List<Section> retrieveCachedQuestions(Context context)
 			throws MalformedURLException, IOException, ProtocolException, FactoryConfigurationError
@@ -194,35 +166,11 @@ public class QuestionAPI
 		while(scanner.hasNextLine()) fos.write(scanner.nextLine().getBytes());
 
 		fos.close();
+		inputStream.close();
+		scanner.close();
+		conn.disconnect();
 
-		try
-		{
-			SAXParserFactory factory = SAXParserFactory.newInstance();
-			SAXParser parser = factory.newSAXParser();
-			XMLReader reader = parser.getXMLReader();
-
-			ScheduleXMLParser myXMLHandler = new ScheduleXMLParser(schedule);
-
-			reader.setContentHandler(myXMLHandler);
-			reader.parse(new InputSource(inputStream));
-		}
-		catch (SAXException e)
-		{
-			e.printStackTrace();
-			throw new IOException();
-		}
-		catch (ParserConfigurationException e)
-		{
-			e.printStackTrace();
-			throw new IOException();
-		}
-		finally
-		{
-			inputStream.close();
-			conn.disconnect();
-		}
-
-		return schedule;
+		return retrieveCachedSchedule(context);
 	}
 	
 	public static Schedule retrieveCachedSchedule(Context context)
