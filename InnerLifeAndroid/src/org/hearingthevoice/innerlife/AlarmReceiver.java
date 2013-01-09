@@ -38,6 +38,7 @@ public class AlarmReceiver extends BroadcastReceiver
 		            PendingIntent.FLAG_UPDATE_CURRENT
 		        );
 		nb.setContentIntent(resultPendingIntent);
+		nb.setAutoCancel(true);
 		
 		nm.notify(0, nb.build());
 	}
