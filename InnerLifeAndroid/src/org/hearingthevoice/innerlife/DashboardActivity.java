@@ -6,10 +6,15 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class DashboardActivity extends Activity
 {
 	private Button btnAnswerTestQuestions;
+	private TextView txtQuestionsAvailable;
+	private ProgressBar progDownloadQuestions;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -17,6 +22,18 @@ public class DashboardActivity extends Activity
 		setContentView(R.layout.activity_dashboard);
 		
 		btnAnswerTestQuestions = (Button)findViewById(R.id.btnAnswerTestQuestions);
+		txtQuestionsAvailable = (TextView)findViewById(R.id.txtQuestionsAvailable);
+		progDownloadQuestions = (ProgressBar)findViewById(R.id.progDownloadQuestions);
+		
+		txtQuestionsAvailable.setText("Downloading Questions.");
+		progDownloadQuestions.setMax(100);
+		progDownloadQuestions.setProgress(0);
+		
+		try {Thread.sleep(2000);} catch (Exception e) {}
+		
+		progDownloadQuestions.setProgress(100);
+		txtQuestionsAvailable.setText("There are questions available.");
+		
 		btnAnswerTestQuestions.setOnClickListener(new View.OnClickListener()
 		{
 			@Override

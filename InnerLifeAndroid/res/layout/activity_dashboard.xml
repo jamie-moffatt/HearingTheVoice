@@ -50,6 +50,13 @@
                 android:text="There are new questions available."
                 android:textColor="#FFFFFF" />
 
+            <ProgressBar
+                android:id="@+id/progDownloadQuestions"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" />
+
             <Button
                 android:id="@+id/btnAnswerTestQuestions"
                 android:layout_width="match_parent"
