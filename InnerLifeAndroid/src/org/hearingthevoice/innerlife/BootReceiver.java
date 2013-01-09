@@ -20,7 +20,7 @@ public class BootReceiver extends BroadcastReceiver
 		nb.setContentText("BootReceiver received boot message");
 		nb.setContentTitle("BOOT");
 		nb.setSmallIcon(R.drawable.next_item);
-		nm.notify(0, nb.build());
+//		nm.notify(0, nb.build());
 		Intent startServiceIntent = new Intent(context, BootService.class);
         context.startService(startServiceIntent);
 	}

@@ -31,7 +31,7 @@ public class BootService extends Service
 		nb.setContentText("BootService started.");
 		nb.setContentTitle("BOOT SERVICE");
 		nb.setSmallIcon(R.drawable.next_item);
-		nm.notify(0, nb.build());
+//		nm.notify(0, nb.build());
 		
 		Calendar cal = Calendar.getInstance();
 		
