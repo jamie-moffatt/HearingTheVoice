@@ -15,10 +15,9 @@ public class AlarmReceiver extends BroadcastReceiver
 		NotificationManager nm;
 		nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
-		nb.setContentInfo("Hello");
-		nb.setContentText("Hello");
-		nb.setContentTitle("Hello");
-		nb.setSmallIcon(R.drawable.ic_action_search);
+		nb.setContentTitle("New Questions Available");
+		nb.setContentText("Click to participate.");
+		nb.setSmallIcon(R.drawable.next_item);
 		nm.notify(0, nb.build());
 	}
 }
