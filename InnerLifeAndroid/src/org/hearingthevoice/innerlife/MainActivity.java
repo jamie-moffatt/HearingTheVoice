@@ -68,7 +68,7 @@ public class MainActivity extends Activity
 		
 		notificationTime = Calendar.getInstance();
 		
-		boolean updateQuestions = true;
+		boolean updateQuestions = false;
 		boolean updateSchedule = false;
 		
 		boolean questionsCached = false;
