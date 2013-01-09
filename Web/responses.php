@@ -28,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST")
 		$xml = simplexml_load_string($post_data);
 		
 		$stmt = $mysqli->prepare("INSERT INTO `Answer` (`userID`, `scheduleID`, `notificationTime`, `submissionTime`, `questionID`, `response`) VALUES (?, ?, ?, ?, ?, ?)");
-		$stmt->bind_param('iissii', $userID, $scheduleID, $notificationTime, $submissionTime, $questionID, $response);
+		$stmt->bind_param('iissii', $userID, $sessionID, $notificationTime, $submissionTime, $questionID, $response);
 		
 		$userID = mysqli_real_escape_string($mysqli, $xml['userID']);
-		$scheduleID = mysqli_real_escape_string($mysqli, $xml['scheduleID']);
+		$sessionID = mysqli_real_escape_string($mysqli, $xml['sessionID']);
 		$notificationTime = mysqli_real_escape_string($mysqli, $xml['notificationTime']);
 		$submissionTime = mysqli_real_escape_string($mysqli, $xml['submissionTime']);
 		
