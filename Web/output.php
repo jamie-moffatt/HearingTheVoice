@@ -18,6 +18,9 @@ $sections = array();
 $questions = array();
 $sectionCodes = getSectionCodes($mysqli);
 
+header('Content-Disposition: attachment; filename="responses.csv"');
+header('Content-type: text/csv');
+
 if ($result = $mysqli->query("SELECT * FROM `Schedule` ORDER BY `order`"))
 {
 	while ($row = $result->fetch_assoc())
@@ -36,11 +39,33 @@ foreach ($sections as $scheduleID => $sectionArray)
 {
 	foreach ($sectionArray as $section)
 	{
-		print("$section\n");
-		$questions = getQuestions($mysqli, $section);
-		foreach ($questions as $questionID)
+		$questions[$section] = getQuestions($mysqli, $section);
+	}
+}
+
+foreach ($sections as $scheduleID => $sectionArray)
+{
+	foreach ($sectionArray as $section)
+	{
+		foreach ($questions[$section] as $questionID)
 		{
-			printf("S%d%s%d  ", $scheduleID, $sectionCodes[$section], $questionID);
+			printf(",S%d%s%d", $scheduleID, $sectionCodes[$section], getQuestionNumber($mysqli, $questionID));
+		}
+		
+	}
+}
+
+foreach (getUsers($mysqli) as $user)
+{
+	printf("\n%d", $user);
+	foreach ($sections as $scheduleID => $sectionArray)
+	{
+		foreach ($sectionArray as $section)
+		{
+			foreach ($questions[$section] as $questionID)
+			{
+				printf(",%s", getResponse($mysqli, $user, $scheduleID, $questionID));
+			}
 		}
 	}
 }
@@ -50,7 +75,7 @@ $mysqli->close();
 function getSections($mysqli, $scheduleID)
 {
 	$sections = array();
-	if ($result = $mysqli->query("SELECT `Section`.`sectionID` FROM `Section`, `SectionSchedule` WHERE `Section`.`sectionID` = `SectionSchedule`.`sectionID` AND `SectionSchedule`.`scheduleID` = $scheduleID"))
+	if ($result = $mysqli->query("SELECT `Section`.`sectionID` FROM `Section`, `SectionSchedule` WHERE `Section`.`sectionID` = `SectionSchedule`.`sectionID` AND `SectionSchedule`.`scheduleID` = $scheduleID ORDER BY `Section`.`code`"))
 	{
 		while ($row = $result->fetch_assoc())
 		{
@@ -82,11 +107,51 @@ function getQuestions($mysqli, $sectionID)
 	{
 		while ($row = $result->fetch_assoc())
 		{
-			$questions[] = $row['number'];
+			$questions[] = $row['questionID'];
 		}
 		$result->free();
 	}	
 	return $questions;
+}
+
+function getUsers($mysqli)
+{
+	$users = array();
+	if ($result = $mysqli->query("SELECT userID FROM `User`"))
+	{
+		while ($row = $result->fetch_assoc())
+		{
+			$users[] = $row['userID'];
+		}
+		$result->free();
+	}	
+	return $users;
+}
+
+function getResponse($mysqli, $user, $scheduleID, $questionID)
+{
+	if ($result = $mysqli->query("SELECT response FROM `Answer` WHERE userID=$user AND scheduleID=$scheduleID AND questionID=$questionID"))
+	{
+		while ($row = $result->fetch_assoc())
+		{
+			$response = $row['response'];
+		}
+		$result->free();
+	}	
+	return $response;
+}
+
+function getQuestionNumber($mysqli, $questionID)
+{
+	if ($result = $mysqli->query("SELECT `number` FROM `Question` WHERE questionID=$questionID"))
+	{
+		while ($row = $result->fetch_assoc())
+		{
+			$response = $row['number'];
+		}
+		$result->free();
+	}	
+	return $response;
 }
 
 ?>
