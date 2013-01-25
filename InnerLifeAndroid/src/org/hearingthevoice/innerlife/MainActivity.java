@@ -63,9 +63,13 @@ public class MainActivity extends Activity
 		context = getApplicationContext();
 		activity = this;
 		
+		// This starts the background service for the first time and should
+		// probably only run the first time the application is started
 		Intent startServiceIntent = new Intent(context, BootService.class);
         context.startService(startServiceIntent);
 		
+        // The notification time should be taken from the SharedPreferences set by
+        // the background service
 		notificationTime = Calendar.getInstance();
 		
 		boolean updateQuestions = false;
@@ -79,6 +83,7 @@ public class MainActivity extends Activity
 //		context.deleteFile("questions");
 //		context.deleteFile("schedule");
 		
+		// determine whether the questions are cached in the file system
 		for(String file : files)
 		{
 			if(file.contains("questions"))
@@ -88,6 +93,7 @@ public class MainActivity extends Activity
 			}
 		}
 		
+		// determine whether the schedule is cached in the file system
 		for(String file : files)
 		{
 			if(file.contains("schedule"))
@@ -104,11 +110,16 @@ public class MainActivity extends Activity
 				Log.d("QUESTIONS", "read from file");
 				
 				sections = QuestionAPI.retrieveCachedQuestions(context);
-				if(sections != null) questions = sections.get(0).getQuestions();
+				// TODO I think the bug from issue #1 is here
+				Log.wtf("ISSUE #1", sections.toString());
+				//if(sections != null) questions = sections.get(0).getQuestions();
+				schedule = QuestionAPI.retrieveCachedSchedule(context);
+				sections = schedule.filterBySession(sections, 0);
+				questions = sections.get(0).getQuestions();
 			}
 			catch (Exception e) { e.printStackTrace(); }
 		}
-		else downloadQuestions();
+		else {}//downloadQuestions();
 		
 		if(scheduleCached && !updateSchedule)
 		{
@@ -129,12 +140,13 @@ public class MainActivity extends Activity
 					Log.d("SCHEDULE", "sections before: " + sections.size());
 					sections = schedule.filterBySession(sections, 0);
 					Log.d("SCHEDULE", "sections after: " + sections.size());
+					Log.wtf("ISSUE #1", "actual sections: " + sections);
 					
 				}
 			}
 			catch (Exception e) { e.printStackTrace(); }
 		}
-		else downloadSchedule();
+		else {} //downloadSchedule();
 		
 		txtQuestionHead = (TextView) findViewById(R.id.txt_question_header);
 		txtQuestionBody = (TextView) findViewById(R.id.txt_question_body);
@@ -151,7 +163,7 @@ public class MainActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				Toast.makeText(context, String.format("You chose: %d", rblResponses.getCheckedRadioButtonId()), Toast.LENGTH_SHORT).show();
+				//Toast.makeText(context, String.format("You chose: %d", rblResponses.getCheckedRadioButtonId()), Toast.LENGTH_SHORT).show();
 				if(!questions.isEmpty()) responseIDs.put(questions.get(question).getQuestionID(), rblResponses.getCheckedRadioButtonId());
 				
 				question--;
@@ -172,7 +184,7 @@ public class MainActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				Toast.makeText(context, String.format("You chose: %d", rblResponses.getCheckedRadioButtonId()), Toast.LENGTH_SHORT).show();
+				//Toast.makeText(context, String.format("You chose: %d", rblResponses.getCheckedRadioButtonId()), Toast.LENGTH_SHORT).show();
 				if(!questions.isEmpty()) responseIDs.put(questions.get(question).getQuestionID(), rblResponses.getCheckedRadioButtonId());
 				
 				question++;
@@ -313,96 +325,6 @@ public class MainActivity extends Activity
 	{
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
-	}
-	
-	public void downloadQuestions()
-	{
-		final Runnable callback = getQuestionCallback();
-		
-		downloadQuestionsThread = new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				try
-				{
-					Log.d("DOWNLOAD", "Downloading questions");
-					sections = QuestionAPI.downloadQuestionXML(context, "questions.php");
-					if(sections != null) questions = sections.get(0).getQuestions();
-					
-					activity.runOnUiThread(callback);
-				}
-				catch (Exception e) { e.printStackTrace(); }
-			}
-		};
-		
-		Thread thread = new Thread(null, downloadQuestionsThread, "DownloadQuestionsThread");
-
-		thread.start();
-		
-		Log.d("DOWNLOAD", "complete");
-	}
-
-	private Runnable getQuestionCallback()
-	{
-		Runnable callback = new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				if(sections != null && sections.size() > 0)
-				{
-					if(questions.isEmpty()) loadPlaceholder();
-					else
-					{
-						loadQuestion();
-						populateResponses();
-					}
-				}
-			}
-		};
-
-		return callback;
-	}
-	
-	public void downloadSchedule()
-	{
-		Runnable callback = getScheduleCallback();
-		
-		downloadScheduleThread = new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				try
-				{
-					Log.d("DOWNLOAD", "Downloading schedule");
-					schedule = QuestionAPI.downloadScheduleXML(context, "schedule.php");
-					if(sections != null) sections = schedule.filterBySession(sections, 0);
-				}
-				catch (Exception e) { e.printStackTrace(); }
-			}
-		};
-		
-		Thread thread = new Thread(null, downloadScheduleThread, "DownloadScheduleThread");
-
-		thread.start();
-		
-		activity.runOnUiThread(callback);
-	}
-
-	private Runnable getScheduleCallback()
-	{
-		Runnable callback = new Runnable()
-		{
-			@Override
-			public void run()
-			{
-
-			}
-		};
-
-		return callback;
 	}
 
 	private void loadQuestion()

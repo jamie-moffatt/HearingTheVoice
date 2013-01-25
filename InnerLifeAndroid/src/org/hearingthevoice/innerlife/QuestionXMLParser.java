@@ -7,8 +7,6 @@ import org.hearingthevoice.innerlife.Question.QuestionType;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
-import android.util.Log;
-
 public class QuestionXMLParser extends DefaultHandler
 {
 	private Section section;
@@ -72,17 +70,14 @@ public class QuestionXMLParser extends DefaultHandler
 	{
 		     if (localName.equalsIgnoreCase("section"  ))
 		    {
-		    	 Log.d("SECTIONS", ""+sectionList.size());
 		    	 sectionList.add(section);
 		    }
 		else if (localName.equalsIgnoreCase("questions"))
 		{
-			Log.d("QUESTIONS", ""+questionList.size());
 			section.setQuestions(questionList);
 		}
 		else if (localName.equalsIgnoreCase("choices"  ))
 		{
-			Log.d("RESPONSES", ""+responses.size());
 			section.setResponses(responses);
 		}
 	}

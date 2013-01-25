@@ -57,4 +57,9 @@ public class Section
 	public void setResponses(List<String> responses) {
 		this.responses = responses;
 	}
+	
+	public String toString()
+	{
+		return "(" + sectionID + "," + name + ")";
+	}
 }

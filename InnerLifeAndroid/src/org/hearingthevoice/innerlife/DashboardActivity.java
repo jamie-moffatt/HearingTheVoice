@@ -5,8 +5,8 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -20,33 +20,34 @@ public class DashboardActivity extends Activity
 	private TextView txtQuestionsAvailable;
 	private ProgressBar progDownloadQuestions;
 	
-	private Runnable downloadQuestionsThread;
-	private Runnable downloadScheduleThread;
-	
+	private boolean scheduleDownloaded = false;
+	private boolean questionsDownloaded = false;
+
 	private Activity activity;
 	private Context context;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard);
-		
-		context = getApplicationContext();
+
+		context = this;
 		activity = this;
-		
-		btnAnswerTestQuestions = (Button)findViewById(R.id.btnAnswerTestQuestions);
-		txtQuestionsAvailable = (TextView)findViewById(R.id.txtQuestionsAvailable);
-		progDownloadQuestions = (ProgressBar)findViewById(R.id.progDownloadQuestions);
-		
+
+		btnAnswerTestQuestions = (Button) findViewById(R.id.btnAnswerTestQuestions);
+		txtQuestionsAvailable = (TextView) findViewById(R.id.txtQuestionsAvailable);
+		progDownloadQuestions = (ProgressBar) findViewById(R.id.progDownloadQuestions);
+
 		txtQuestionsAvailable.setText("Downloading Questions.");
 		progDownloadQuestions.setMax(100);
 		progDownloadQuestions.setProgress(0);
-		
+
 		btnAnswerTestQuestions.setEnabled(false);
-		
-		downloadSchedule();
-		
+
+		(new ScheduleDownloadTask()).execute();
+		(new QuestionDownloadTask()).execute();
+
 		btnAnswerTestQuestions.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -65,89 +66,67 @@ public class DashboardActivity extends Activity
 		getMenuInflater().inflate(R.menu.activity_dashboard, menu);
 		return true;
 	}
-	
-	public void downloadQuestions()
+
+	private class ScheduleDownloadTask extends AsyncTask<String, Void, Schedule>
 	{
-		final Runnable callback = getQuestionCallback();
-		
-		downloadQuestionsThread = new Runnable()
+		// The slow code that runs in the background
+		@Override
+		protected Schedule doInBackground(String... params)
 		{
-			@Override
-			public void run()
+			try
 			{
-				try
-				{
-					Log.d("DOWNLOAD", "Downloading questions");
-					List<Section> sections = QuestionAPI.downloadQuestionXML(context, "questions.php");
-					if(sections != null) activity.runOnUiThread(callback);
-					else Toast.makeText(context, String.format("No questions downloaded"), Toast.LENGTH_SHORT).show();	
-				}
-				catch (Exception e) { e.printStackTrace(); }
+				Schedule schedule = QuestionAPI.downloadScheduleXML(context, "schedule.php");
+				scheduleDownloaded = true;
+				return schedule;
 			}
-		};
-		
-		Thread thread = new Thread(null, downloadQuestionsThread, "DownloadQuestionsThread");
-
-		thread.start();
-		
-		Log.d("DOWNLOAD", "complete");
-	}
-
-	private Runnable getQuestionCallback()
-	{
-		Runnable callback = new Runnable()
-		{
-			@Override
-			public void run()
+			catch (Exception ex)
 			{
-				txtQuestionsAvailable.setText("Questions are available.");
-				progDownloadQuestions.setMax(100);
+				ex.printStackTrace();
+				return null;
+			}
+		}
+
+		// Run the result on the UI thread
+		@Override
+		protected void onPostExecute(Schedule schedule)
+		{
+			Toast.makeText(context, "Schedule Downloaded.", Toast.LENGTH_LONG).show();
+			if (scheduleDownloaded && questionsDownloaded)
+			{
 				btnAnswerTestQuestions.setEnabled(true);
 			}
-		};
-
-		return callback;
+		}
 	}
 	
-	public void downloadSchedule()
+	private class QuestionDownloadTask extends AsyncTask<String, Void, List<Section>>
 	{
-		final Runnable callback = getScheduleCallback();
-		
-		downloadScheduleThread = new Runnable()
+		// The slow code that runs in the background
+		@Override
+		protected List<Section> doInBackground(String... params)
 		{
-			@Override
-			public void run()
+			try
 			{
-				try
-				{
-					Log.d("DOWNLOAD", "Downloading schedule");
-					Schedule schedule = QuestionAPI.downloadScheduleXML(context, "schedule.php");
-					if(schedule != null) activity.runOnUiThread(callback);
-					else Toast.makeText(context, String.format("No schedule downloaded"), Toast.LENGTH_SHORT).show();
-				}
-				catch (Exception e) { e.printStackTrace(); }
+				List<Section> sections = QuestionAPI.downloadQuestionXML(context, "questions.php");
+				questionsDownloaded = true;
+				return sections;
 			}
-		};
-		
-		Thread thread = new Thread(null, downloadScheduleThread, "DownloadScheduleThread");
+			catch (Exception ex)
+			{
+				ex.printStackTrace();
+				return null;
+			}
+		}
 
-		thread.start();
-		
-		activity.runOnUiThread(callback);
-	}
-
-	private Runnable getScheduleCallback()
-	{
-		Runnable callback = new Runnable()
+		// Run the result on the UI thread
+		@Override
+		protected void onPostExecute(List<Section> sections)
 		{
-			@Override
-			public void run()
+			Toast.makeText(context, "Questions Downloaded.", Toast.LENGTH_LONG).show();
+			if (scheduleDownloaded && questionsDownloaded)
 			{
-				downloadQuestions();
+				btnAnswerTestQuestions.setEnabled(true);
 			}
-		};
-
-		return callback;
+		}
 	}
 
 }
