@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.hearingthevoice.innerlife.Question.QuestionType;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -313,12 +315,30 @@ public class MainActivity extends Activity
 		
 		if(sections != null && sections.size() > 0)
 		{
-			if(questions.get(question).getType() == Question.QuestionType.YESNO)
+			switch(questions.get(question).getType())
 			{
-				responses.add("No");
-				responses.add("Yes");
+				case YESNO:
+				{
+					responses.add("No");
+					responses.add("Yes");
+					break;
+				}
+				case RADIO:
+				{
+					responses = sections.get(section).getResponses();
+					break;
+				}
+				case NUMSCALE:
+				{
+					List<String> minmax  = sections.get(section).getResponses();
+					
+					responses.add("1 - "  + minmax.get(0));
+					for(int i = 2; i <= 9; i++) responses.add("" + i);
+					responses.add("10 - " + minmax.get(1));
+					
+					break;
+				}
 			}
-			else responses = sections.get(section).getResponses();
 			
 			if(responses.size() > 0)
 			{
