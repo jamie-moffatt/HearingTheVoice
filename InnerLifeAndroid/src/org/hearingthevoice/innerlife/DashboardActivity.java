@@ -5,7 +5,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -55,6 +54,13 @@ public class DashboardActivity extends Activity
 
 		(new ScheduleDownloadTask()).execute();
 		(new QuestionDownloadTask()).execute();
+		
+		int samplesCompletedToday = AppManager.getSamplesCompleteToday(context);
+		txtSamplesToday.setText("You have submitted " + samplesCompletedToday + " samples today.");
+		if (samplesCompletedToday == 1) txtSamplesToday.setText("You have submitted " + samplesCompletedToday + " sample today.");
+		if (samplesCompletedToday < 1) txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_empty_star, 0, 0, 0);
+		else if (samplesCompletedToday == 1) txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_half_star, 0, 0, 0);
+		else txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_full_star, 0, 0, 0);
 
 		btnAnswerTestQuestions.setOnClickListener(new View.OnClickListener()
 		{
