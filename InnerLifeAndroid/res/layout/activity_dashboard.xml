@@ -25,9 +25,21 @@
                 android:textSize="22sp" />
 
             <TextView
+                android:id="@+id/txtSamplesToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/action_empty_star"
+                android:gravity="center_vertical"
+                android:padding="7dp"
+                android:text="You have submitted 0 samples today."
+                android:textColor="#FFFFFF" />
+
+            <TextView
                 android:id="@+id/txtResponses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/action_upload"
+                android:gravity="center_vertical"
                 android:padding="7dp"
                 android:text="You have made 0 responses so far."
                 android:textColor="#FFFFFF" />
@@ -37,8 +49,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/action_time"
+                android:gravity="center_vertical"
                 android:padding="7dp"
-                android:text="Your average response time is 3 minutes 22 seconds."
+                android:text="Your average response time is --."
                 android:textColor="#FFFFFF" />
 
             <TextView
@@ -46,6 +60,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/action_help"
+                android:gravity="center_vertical"
                 android:padding="7dp"
                 android:text="There are new questions available."
                 android:textColor="#FFFFFF" />
@@ -66,15 +82,6 @@
                 android:layout_marginTop="5dp"
                 android:text="Answer Test Questions" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/durham_university_banner" />
-
     </RelativeLayout>
 
 </RelativeLayout>
