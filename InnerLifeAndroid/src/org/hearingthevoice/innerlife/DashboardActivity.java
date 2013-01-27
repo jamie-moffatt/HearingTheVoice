@@ -62,6 +62,13 @@ public class DashboardActivity extends Activity
 		else if (samplesCompletedToday == 1) txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_half_star, 0, 0, 0);
 		else txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_full_star, 0, 0, 0);
 
+		int numResponses = AppManager.getSamplesComplete(context);
+		txtNumResponses.setText("You have made " + numResponses + " responses so far.");
+		if (numResponses == 1) txtNumResponses.setText("You have made " + numResponses + " response so far.");
+		
+		String avgResponseTime = AppManager.getAverageResponseTime();
+		txtResponseTime.setText("Your average response time is " + avgResponseTime);
+		
 		btnAnswerTestQuestions.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
