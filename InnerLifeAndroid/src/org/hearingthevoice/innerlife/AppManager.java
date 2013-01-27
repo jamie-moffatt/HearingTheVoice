@@ -18,6 +18,7 @@ public class AppManager extends Application
 	public static final String LAST_SESSION_COMPLETE = "session_complete_key";
 	
 	public static final String SAMPLES_COMPLETE = "samples_complete_key";
+	public static final String SAMPLE_TIMES = "sample_times_key";
 	
 	@Override
 	public void onCreate()
@@ -82,8 +83,8 @@ public class AppManager extends Application
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		Editor editor = preferences.edit();
 		
-		editor.putInt(SAMPLES_COMPLETE, preferences.getInt(SAMPLES_COMPLETE, 0));
-		editor.putInt(time, preferences.getInt(time, 0));
+		editor.putInt(SAMPLES_COMPLETE, preferences.getInt(SAMPLES_COMPLETE, 0) + 1);
+		editor.putInt(time, preferences.getInt(time, 0) + 1);
 		
 		editor.commit();
 	}
