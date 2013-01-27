@@ -312,17 +312,24 @@ public class MainActivity extends Activity
 		List<String> responses = new ArrayList<String>();
 		
 		if(sections != null && sections.size() > 0)
-			responses = sections.get(section).getResponses();
-		
-		if(responses.size() > 0)
 		{
-			for(int i = 0; i < responses.size(); i++)
+			if(questions.get(question).getType() == Question.QuestionType.YESNO)
 			{
-				RadioButton rb = new RadioButton(context);
-				rb.setText(responses.get(i));
-				rb.setTextColor(Color.BLACK);
-				rb.setId(i);
-				rblResponses.addView(rb);
+				responses.add("No");
+				responses.add("Yes");
+			}
+			else responses = sections.get(section).getResponses();
+			
+			if(responses.size() > 0)
+			{
+				for(int i = 0; i < responses.size(); i++)
+				{
+					RadioButton rb = new RadioButton(context);
+					rb.setText(responses.get(i));
+					rb.setTextColor(Color.BLACK);
+					rb.setId(i);
+					rblResponses.addView(rb);
+				}
 			}
 		}
 		

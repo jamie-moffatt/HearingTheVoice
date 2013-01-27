@@ -33,11 +33,15 @@ public class Question
 
 	public enum QuestionType
 	{
-		RADIO;
+		RADIO,
+		YESNO,
+		NUMSCALE;
 		
 		public static QuestionType parseType(String type)
 		{
-			if(type.equalsIgnoreCase("radio")) return RADIO;
+			     if(type.equalsIgnoreCase("radio"   )) return RADIO;
+			else if(type.equalsIgnoreCase("yesno"   )) return YESNO;
+			else if(type.equalsIgnoreCase("numscale")) return NUMSCALE;
 			
 			else return RADIO;
 		}

@@ -110,4 +110,9 @@ public class AppManager extends Application
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getInt(time, 0);
 	}
+	
+	public static String getAverageResponseTime(Context context)
+	{
+		return "?";
+	}
 }
