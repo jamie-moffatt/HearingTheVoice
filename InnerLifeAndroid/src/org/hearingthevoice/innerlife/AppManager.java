@@ -1,5 +1,8 @@
 package org.hearingthevoice.innerlife;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,10 +12,12 @@ public class AppManager extends Application
 {
 	private static AppManager sInstance;
 	
-	private static final String FIRST_RUN_KEY = "first_run";
+	public static final String FIRST_RUN_KEY = "first_run";
 	public static final String PREFERENCES_KEY = "preferences_key";
 	public static final String LAST_SESSION_ID = "session_id_key";
 	public static final String LAST_SESSION_COMPLETE = "session_complete_key";
+	
+	public static final String SAMPLES_COMPLETE = "samples_complete_key";
 	
 	@Override
 	public void onCreate()
@@ -70,5 +75,38 @@ public class AppManager extends Application
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getBoolean(LAST_SESSION_COMPLETE, false);
+	}
+	
+	public static void recordSampleComplete(Context context, String time)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		
+		editor.putInt(SAMPLES_COMPLETE, preferences.getInt(SAMPLES_COMPLETE, 0));
+		editor.putInt(time, preferences.getInt(time, 0));
+		
+		editor.commit();
+	}
+	
+	public static int getSamplesComplete(Context context)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getInt(SAMPLES_COMPLETE, 0);
+	}
+	
+	public static int getSamplesComplete(Context context, String time)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getInt(time, 0);
+	}
+	
+	public static int getSamplesCompleteToday(Context context)
+	{
+		Calendar today = Calendar.getInstance();
+		
+		String time = new SimpleDateFormat("yyyy-MM-dd").format(today.getTime());
+		
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getInt(time, 0);
 	}
 }

@@ -176,8 +176,12 @@ public class MainActivity extends Activity
 				
 				if(!questions.isEmpty()) loadQuestion();
 				else loadPlaceholder();
+				
+				btnBack.setEnabled(section != 0 || question != 0);
 			}
 		});
+		
+		btnBack.setEnabled(false);
 		
 		btnNext.setOnClickListener(new OnClickListener()
 		{
@@ -201,6 +205,8 @@ public class MainActivity extends Activity
 					if(!questions.isEmpty()) loadQuestion();
 					else loadPlaceholder();
 				}
+				
+				btnBack.setEnabled(section != 0 || question != 0);
 			}
 		});
 		
@@ -222,6 +228,8 @@ public class MainActivity extends Activity
 		{
 			Calendar submissionTime = Calendar.getInstance();
 			String extension = new SimpleDateFormat("yyyyMMddHHmmss").format(submissionTime.getTime());
+			
+			AppManager.recordSampleComplete(context, new SimpleDateFormat("yyyy-MM-dd").format(submissionTime.getTime()));
 			
 			filename = "responses" + extension; 
 			FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
@@ -300,7 +308,6 @@ public class MainActivity extends Activity
 	public void populateResponses()
 	{
 		rblResponses.removeAllViews();
-		rblResponses.clearCheck();
 		
 		List<String> responses = new ArrayList<String>();
 		
@@ -318,6 +325,19 @@ public class MainActivity extends Activity
 				rblResponses.addView(rb);
 			}
 		}
+		
+		long questionID = questions.get(question).getQuestionID();
+		
+		if(responseIDs.containsKey(questionID))
+		{
+			Log.d("CHECKBOX", "Recalling: " + responseIDs.get(questionID));
+			rblResponses.check(responseIDs.get(questionID));
+		}
+		else
+		{
+			Log.d("CHECKBOX", "Clearing");
+			rblResponses.clearCheck();
+		}
 	}
 
 	@Override
@@ -332,7 +352,7 @@ public class MainActivity extends Activity
 		txtQuestionHead.setText("Section  " + sections.get(section).getSectionID() +
 		                      ", Question " + questions.get(question).getNumber());
 		txtQuestionBody.setText(questions.get(question).getDescription());
-		populateResponses();
+		populateResponses();		
 	}
 
 	private void loadPlaceholder()
