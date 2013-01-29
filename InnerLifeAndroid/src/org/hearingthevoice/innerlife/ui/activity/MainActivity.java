@@ -13,14 +13,10 @@ import java.util.Map.Entry;
 
 import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.R;
-import org.hearingthevoice.innerlife.R.id;
-import org.hearingthevoice.innerlife.R.layout;
-import org.hearingthevoice.innerlife.R.menu;
 import org.hearingthevoice.innerlife.io.web.QuestionAPI;
 import org.hearingthevoice.innerlife.model.Question;
 import org.hearingthevoice.innerlife.model.Schedule;
 import org.hearingthevoice.innerlife.model.Section;
-import org.hearingthevoice.innerlife.model.Question.QuestionType;
 import org.hearingthevoice.innerlife.services.BootService;
 
 import android.app.Activity;
@@ -117,7 +113,9 @@ public class MainActivity extends Activity
 			Log.d("SCHEDULE", "read from file");
 			schedule = QuestionAPI.retrieveCachedSchedule(context);
 			
-			sections = schedule.filterBySession(sections, 0);
+			int sessionID = AppManager.getSamplesComplete(context);
+			
+			sections = schedule.filterBySession(sections, sessionID);
 			questions = sections.get(0).getQuestions();
 		}
 		catch(Exception e) { e.printStackTrace(); }
