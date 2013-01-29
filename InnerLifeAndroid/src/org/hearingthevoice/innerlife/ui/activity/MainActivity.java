@@ -1,4 +1,4 @@
-package org.hearingthevoice.innerlife;
+package org.hearingthevoice.innerlife.ui.activity;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,7 +11,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.hearingthevoice.innerlife.Question.QuestionType;
+import org.hearingthevoice.innerlife.AppManager;
+import org.hearingthevoice.innerlife.R;
+import org.hearingthevoice.innerlife.R.id;
+import org.hearingthevoice.innerlife.R.layout;
+import org.hearingthevoice.innerlife.R.menu;
+import org.hearingthevoice.innerlife.io.web.QuestionAPI;
+import org.hearingthevoice.innerlife.model.Question;
+import org.hearingthevoice.innerlife.model.Schedule;
+import org.hearingthevoice.innerlife.model.Section;
+import org.hearingthevoice.innerlife.model.Question.QuestionType;
+import org.hearingthevoice.innerlife.services.BootService;
 
 import android.app.Activity;
 import android.content.Context;
@@ -33,9 +43,6 @@ public class MainActivity extends Activity
 {
 	private Context context;
 	private Activity activity;
-	
-	private Runnable downloadQuestionsThread;
-	private Runnable downloadScheduleThread;
 	
 	private Calendar notificationTime;
 	
@@ -82,9 +89,6 @@ public class MainActivity extends Activity
 		
 		String[] files = context.fileList();
 		
-//		context.deleteFile("questions");
-//		context.deleteFile("schedule");
-		
 		// determine whether the questions are cached in the file system
 		for(String file : files)
 		{
@@ -105,50 +109,18 @@ public class MainActivity extends Activity
 			}
 		}
 		
-		if(questionsCached && !updateQuestions)
+		try
 		{
-			try
-			{
-				Log.d("QUESTIONS", "read from file");
-				
-				sections = QuestionAPI.retrieveCachedQuestions(context);
-				// TODO I think the bug from issue #1 is here
-				Log.wtf("ISSUE #1", sections.toString());
-				//if(sections != null) questions = sections.get(0).getQuestions();
-				schedule = QuestionAPI.retrieveCachedSchedule(context);
-				sections = schedule.filterBySession(sections, 0);
-				questions = sections.get(0).getQuestions();
-			}
-			catch (Exception e) { e.printStackTrace(); }
+			Log.d("QUESTIONS", "read from file");
+			sections = QuestionAPI.retrieveCachedQuestions(context);
+
+			Log.d("SCHEDULE", "read from file");
+			schedule = QuestionAPI.retrieveCachedSchedule(context);
+			
+			sections = schedule.filterBySession(sections, 0);
+			questions = sections.get(0).getQuestions();
 		}
-		else {}//downloadQuestions();
-		
-		if(scheduleCached && !updateSchedule)
-		{
-			try
-			{
-				Log.d("SCHEDULE", "read from file");
-				
-				schedule = QuestionAPI.retrieveCachedSchedule(context);
-				
-				if(schedule != null)
-				{
-					Log.d("SCHEDULE", "sessions: " + schedule.numberOfSessions());
-					Log.d("SCHEDULE", schedule.toString());
-				}
-				
-				if(schedule != null && sections != null)
-				{
-					Log.d("SCHEDULE", "sections before: " + sections.size());
-					sections = schedule.filterBySession(sections, 0);
-					Log.d("SCHEDULE", "sections after: " + sections.size());
-					Log.wtf("ISSUE #1", "actual sections: " + sections);
-					
-				}
-			}
-			catch (Exception e) { e.printStackTrace(); }
-		}
-		else {} //downloadSchedule();
+		catch(Exception e) { e.printStackTrace(); }
 		
 		txtQuestionHead = (TextView) findViewById(R.id.txt_question_header);
 		txtQuestionBody = (TextView) findViewById(R.id.txt_question_body);

@@ -1,9 +1,11 @@
-package org.hearingthevoice.innerlife;
+package org.hearingthevoice.innerlife.io.xml;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hearingthevoice.innerlife.Question.QuestionType;
+import org.hearingthevoice.innerlife.model.Question;
+import org.hearingthevoice.innerlife.model.Section;
+import org.hearingthevoice.innerlife.model.Question.QuestionType;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 

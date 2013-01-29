@@ -1,4 +1,4 @@
-package org.hearingthevoice.innerlife;
+package org.hearingthevoice.innerlife.model;
 
 
 public class Question

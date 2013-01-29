@@ -1,8 +1,9 @@
-package org.hearingthevoice.innerlife;
+package org.hearingthevoice.innerlife.io.xml;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hearingthevoice.innerlife.model.Schedule;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 

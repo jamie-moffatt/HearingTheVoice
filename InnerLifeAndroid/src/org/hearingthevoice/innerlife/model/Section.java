@@ -1,4 +1,4 @@
-package org.hearingthevoice.innerlife;
+package org.hearingthevoice.innerlife.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.hearingthevoice.innerlife;
+package org.hearingthevoice.innerlife.io.web;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,6 +19,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.hearingthevoice.innerlife.io.xml.QuestionXMLParser;
+import org.hearingthevoice.innerlife.io.xml.ScheduleXMLParser;
+import org.hearingthevoice.innerlife.model.Schedule;
+import org.hearingthevoice.innerlife.model.Section;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
