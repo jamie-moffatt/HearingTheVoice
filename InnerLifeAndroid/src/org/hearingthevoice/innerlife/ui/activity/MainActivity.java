@@ -50,6 +50,7 @@ public class MainActivity extends Activity
 	
 	private int section = 0;
 	private int question = 0;
+	private int session = 0;
 	
 	private String filename;
 	
@@ -113,9 +114,11 @@ public class MainActivity extends Activity
 			Log.d("SCHEDULE", "read from file");
 			schedule = QuestionAPI.retrieveCachedSchedule(context);
 			
-			int sessionID = AppManager.getSamplesComplete(context);
+			session = AppManager.getSamplesComplete(context);
 			
-			sections = schedule.filterBySession(sections, sessionID);
+			if(session > schedule.numberOfSessions() - 1) session %= schedule.numberOfSessions();
+			
+			sections = schedule.filterBySession(sections, session);
 			questions = sections.get(0).getQuestions();
 		}
 		catch(Exception e) { e.printStackTrace(); }
@@ -212,7 +215,7 @@ public class MainActivity extends Activity
 			
 			str.append("<submission ");
 			str.append("userID=\"" + "1" + "\" ");
-			str.append("sessionID=\"" + "1" + "\" ");
+			str.append("sessionID=\"" + session + "\" ");
 			
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			
