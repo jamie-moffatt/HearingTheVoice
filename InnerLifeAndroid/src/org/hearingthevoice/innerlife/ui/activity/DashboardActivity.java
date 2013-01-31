@@ -13,10 +13,17 @@ import org.hearingthevoice.innerlife.model.Schedule;
 import org.hearingthevoice.innerlife.model.Section;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore.Audio;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +34,7 @@ import android.widget.Toast;
 public class DashboardActivity extends Activity
 {
 	private Button btnAnswerTestQuestions;
+	private Button btnTestNotification;
 	private TextView txtSamplesToday;
 	private TextView txtNumResponses;
 	private TextView txtResponseTime;
@@ -49,6 +57,7 @@ public class DashboardActivity extends Activity
 		activity = this;
 
 		btnAnswerTestQuestions = (Button) findViewById(R.id.btnAnswerTestQuestions);
+		btnTestNotification = (Button) findViewById(R.id.btnTestNotification);
 		txtSamplesToday = (TextView) findViewById(R.id.txtSamplesToday);
 		txtNumResponses = (TextView) findViewById(R.id.txtResponses);
 		txtResponseTime = (TextView) findViewById(R.id.txtResponseTime);
@@ -86,6 +95,43 @@ public class DashboardActivity extends Activity
 			{
 				Intent i = new Intent(v.getContext(), MainActivity.class);
 				startActivity(i);
+			}
+		});
+		
+		btnTestNotification.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				NotificationManager nm;
+				nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+				NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+				nb.setContentTitle("New Questions Available");
+				nb.setContentText("Click to participate.");
+				nb.setSmallIcon(R.drawable.next_item);
+				
+				Intent clickIntent = new Intent(context, DashboardActivity.class);
+
+				// The stack builder object will contain an artificial back stack for the
+				// started Activity.
+				// This ensures that navigating backward from the Activity leads out of
+				// your application to the Home screen.
+				TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+				// Adds the back stack for the Intent (but not the Intent itself)
+				stackBuilder.addParentStack(DashboardActivity.class);
+				// Adds the Intent that starts the Activity to the top of the stack
+				stackBuilder.addNextIntent(clickIntent);
+				PendingIntent resultPendingIntent =
+				        stackBuilder.getPendingIntent(
+				            0,
+				            PendingIntent.FLAG_UPDATE_CURRENT
+				        );
+				nb.setContentIntent(resultPendingIntent);
+				nb.setAutoCancel(true);
+				
+				nb.setSound(Uri.parse("content://settings/system/notification_sound"));
+				
+				nm.notify(0, nb.build());
 			}
 		});
 	}
