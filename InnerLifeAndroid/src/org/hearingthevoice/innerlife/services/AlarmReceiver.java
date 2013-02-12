@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
@@ -17,6 +18,8 @@ public class AlarmReceiver extends BroadcastReceiver
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
+		// TODO check whether an addition notification needs to be created
+		
 		NotificationManager nm;
 		nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
@@ -42,6 +45,8 @@ public class AlarmReceiver extends BroadcastReceiver
 		        );
 		nb.setContentIntent(resultPendingIntent);
 		nb.setAutoCancel(true);
+		
+		nb.setSound(Uri.parse("content://settings/system/notification_sound"));
 		
 		nm.notify(0, nb.build());
 	}

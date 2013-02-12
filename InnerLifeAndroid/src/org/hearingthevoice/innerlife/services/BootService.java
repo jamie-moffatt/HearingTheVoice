@@ -36,24 +36,26 @@ public class BootService extends Service
 //		nm.notify(0, nb.build());
 		
 		Calendar amSession = Calendar.getInstance();
-		amSession.set(Calendar.HOUR_OF_DAY, 22); // 10
-		amSession.set(Calendar.MINUTE, 30); // 0
+		amSession.set(Calendar.HOUR_OF_DAY, 10); // 10
+		amSession.set(Calendar.MINUTE, 0); // 0
 		amSession.set(Calendar.SECOND, 0);
 		
 		Calendar pmSession = Calendar.getInstance();
-		pmSession.set(Calendar.HOUR_OF_DAY, 22); // 17
-		pmSession.set(Calendar.MINUTE, 40); // 0
+		pmSession.set(Calendar.HOUR_OF_DAY, 17); // 17
+		pmSession.set(Calendar.MINUTE, 0); // 0
 		pmSession.set(Calendar.SECOND, 0);
 		
 		// In reality, you would want to have a static variable for the request code instead of
 		// 192837
-		PendingIntent sender = PendingIntent.getBroadcast(context, 192837, new Intent(context,
+		PendingIntent amSender = PendingIntent.getBroadcast(context, 117, new Intent(context,
+				AlarmReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent pmSender = PendingIntent.getBroadcast(context, 118, new Intent(context,
 				AlarmReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
 
 		// Get the AlarmManager service
 		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-		am.set(AlarmManager.RTC_WAKEUP, amSession.getTimeInMillis(), sender);
-		am.set(AlarmManager.RTC_WAKEUP, pmSession.getTimeInMillis(), sender);
+		am.set(AlarmManager.RTC_WAKEUP, amSession.getTimeInMillis(), amSender);
+		am.set(AlarmManager.RTC_WAKEUP, pmSession.getTimeInMillis(), pmSender);
 		return START_STICKY;
 	}
 
