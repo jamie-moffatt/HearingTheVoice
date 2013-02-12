@@ -94,6 +94,9 @@ public class DashboardActivity extends Activity
 			}
 		});
 		
+		// TODO needs to check whether the user has already answered 2 sessions today and
+		// disable the button if they have
+		
 		btnTestNotification.setOnClickListener(new View.OnClickListener()
 		{
 			@Override

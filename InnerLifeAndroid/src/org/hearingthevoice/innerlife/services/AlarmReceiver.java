@@ -1,7 +1,7 @@
 package org.hearingthevoice.innerlife.services;
 
 import org.hearingthevoice.innerlife.R;
-import org.hearingthevoice.innerlife.ui.activity.MainActivity;
+import org.hearingthevoice.innerlife.ui.activity.DashboardActivity;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -24,7 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver
 		nb.setContentText("Click to participate.");
 		nb.setSmallIcon(R.drawable.next_item);
 		
-		Intent clickIntent = new Intent(context, MainActivity.class);
+		Intent clickIntent = new Intent(context, DashboardActivity.class);
 
 		// The stack builder object will contain an artificial back stack for the
 		// started Activity.
@@ -32,7 +32,7 @@ public class AlarmReceiver extends BroadcastReceiver
 		// your application to the Home screen.
 		TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
 		// Adds the back stack for the Intent (but not the Intent itself)
-		stackBuilder.addParentStack(MainActivity.class);
+		stackBuilder.addParentStack(DashboardActivity.class);
 		// Adds the Intent that starts the Activity to the top of the stack
 		stackBuilder.addNextIntent(clickIntent);
 		PendingIntent resultPendingIntent =

@@ -35,9 +35,15 @@ public class BootService extends Service
 		nb.setSmallIcon(R.drawable.next_item);
 //		nm.notify(0, nb.build());
 		
-		Calendar cal = Calendar.getInstance();
+		Calendar amSession = Calendar.getInstance();
+		amSession.set(Calendar.HOUR_OF_DAY, 22); // 10
+		amSession.set(Calendar.MINUTE, 30); // 0
+		amSession.set(Calendar.SECOND, 0);
 		
-		cal.add(Calendar.SECOND, 5);
+		Calendar pmSession = Calendar.getInstance();
+		pmSession.set(Calendar.HOUR_OF_DAY, 22); // 17
+		pmSession.set(Calendar.MINUTE, 40); // 0
+		pmSession.set(Calendar.SECOND, 0);
 		
 		// In reality, you would want to have a static variable for the request code instead of
 		// 192837
@@ -46,7 +52,8 @@ public class BootService extends Service
 
 		// Get the AlarmManager service
 		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-		am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+		am.set(AlarmManager.RTC_WAKEUP, amSession.getTimeInMillis(), sender);
+		am.set(AlarmManager.RTC_WAKEUP, pmSession.getTimeInMillis(), sender);
 		return START_STICKY;
 	}
 
