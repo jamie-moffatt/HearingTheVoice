@@ -128,6 +128,23 @@ public class DashboardActivity extends Activity
 				nm.notify(0, nb.build());
 			}
 		});
+		
+		Button btnDisplayStoredData = (Button) findViewById(R.id.btnDisplayStoredData);
+		btnDisplayStoredData.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Toast.makeText(context, AppManager.getStoredData(context), Toast.LENGTH_LONG).show();				
+			}
+		});
+		
+		// Perform first-time run actions
+		if (AppManager.isFirstRun(context))
+		{
+			Intent intent = new Intent(context, FirstRunFormActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	@Override
