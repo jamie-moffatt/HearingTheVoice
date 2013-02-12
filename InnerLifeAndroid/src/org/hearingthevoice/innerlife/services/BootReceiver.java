@@ -2,7 +2,6 @@ package org.hearingthevoice.innerlife.services;
 
 
 import org.hearingthevoice.innerlife.R;
-import org.hearingthevoice.innerlife.R.drawable;
 
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;

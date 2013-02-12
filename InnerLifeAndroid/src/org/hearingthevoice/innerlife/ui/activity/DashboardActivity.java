@@ -4,16 +4,11 @@ import java.util.List;
 
 import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.R;
-import org.hearingthevoice.innerlife.R.drawable;
-import org.hearingthevoice.innerlife.R.id;
-import org.hearingthevoice.innerlife.R.layout;
-import org.hearingthevoice.innerlife.R.menu;
 import org.hearingthevoice.innerlife.io.web.QuestionAPI;
 import org.hearingthevoice.innerlife.model.Schedule;
 import org.hearingthevoice.innerlife.model.Section;
 
 import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -21,7 +16,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore.Audio;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.Menu;
