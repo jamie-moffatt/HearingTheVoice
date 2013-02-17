@@ -84,6 +84,12 @@ public class DashboardActivity extends Activity
 		String avgResponseTime = AppManager.getAverageResponseTime(context);
 		txtResponseTime.setText("Your average response time is " + avgResponseTime + ".");
 		
+		if(samplesCompletedToday > 1)
+		{
+			txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
+			btnAnswerTestQuestions.setEnabled(false);
+		}
+		
 		btnAnswerTestQuestions.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
