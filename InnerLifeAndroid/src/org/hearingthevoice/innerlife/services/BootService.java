@@ -36,21 +36,22 @@ public class BootService extends Service
 //		nm.notify(0, nb.build());
 		
 		Calendar amSession = Calendar.getInstance();
-		amSession.set(Calendar.HOUR_OF_DAY, 10); // 10
+//		amSession.set(Calendar.HOUR_OF_DAY, 10); // 10
 		amSession.set(Calendar.MINUTE, 0); // 0
-		amSession.set(Calendar.SECOND, 0);
+		amSession.set(Calendar.SECOND, amSession.get(Calendar.SECOND)+10);
 		
 		Calendar pmSession = Calendar.getInstance();
-		pmSession.set(Calendar.HOUR_OF_DAY, 17); // 17
+//		pmSession.set(Calendar.HOUR_OF_DAY, 17); // 17
 		pmSession.set(Calendar.MINUTE, 0); // 0
-		pmSession.set(Calendar.SECOND, 0);
+		pmSession.set(Calendar.SECOND, pmSession.get(Calendar.SECOND)+20);
 		
-		// In reality, you would want to have a static variable for the request code instead of
-		// 192837
-		PendingIntent amSender = PendingIntent.getBroadcast(context, 117, new Intent(context,
-				AlarmReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
-		PendingIntent pmSender = PendingIntent.getBroadcast(context, 118, new Intent(context,
-				AlarmReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+		Intent amIntent = new Intent(context, AlarmReceiver.class);
+		amIntent.putExtra("NOTIFICATION_TYPE", "AM");
+		PendingIntent amSender = PendingIntent.getBroadcast(context, 117, amIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+		Intent pmIntent = new Intent(context, AlarmReceiver.class);
+		amIntent.putExtra("NOTIFICATION_TYPE", "PM");
+		PendingIntent pmSender = PendingIntent.getBroadcast(context, 118, pmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		// Get the AlarmManager service
 		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);

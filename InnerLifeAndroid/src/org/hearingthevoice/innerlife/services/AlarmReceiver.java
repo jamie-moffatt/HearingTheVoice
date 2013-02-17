@@ -24,7 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver
 		nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
 		nb.setContentTitle("New Questions Available");
-		nb.setContentText("Click to participate.");
+		nb.setContentText("Click to participate. " + intent.getStringExtra("NOTIFICATION_TYPE"));
 		nb.setSmallIcon(R.drawable.next_item);
 		
 		Intent clickIntent = new Intent(context, DashboardActivity.class);
