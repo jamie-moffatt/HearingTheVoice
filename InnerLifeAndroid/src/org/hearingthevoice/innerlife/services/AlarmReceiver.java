@@ -51,7 +51,7 @@ public class AlarmReceiver extends BroadcastReceiver
 		nb.setSound(Uri.parse("content://settings/system/notification_sound"));
 
 		if (intent.getStringExtra("NOTIFICATION_TYPE").equals("AM")) nm.notify(0, nb.build());
-		else nm.notify(1, nb.build());
+		else if ((intent.getStringExtra("NOTIFICATION_TYPE").equals("PM"))) nm.notify(1, nb.build());
 		
 		AppManager.setGotNotification(context, true);
 		Calendar now = Calendar.getInstance();

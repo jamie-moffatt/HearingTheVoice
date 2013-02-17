@@ -3,6 +3,7 @@ package org.hearingthevoice.innerlife.ui.activity;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -78,7 +79,18 @@ public class MainActivity extends Activity
 
 		// The notification time should be taken from the SharedPreferences set by
 		// the background service
+		String notificationTimeStored = AppManager.getNotificationTime(context);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		notificationTime = Calendar.getInstance();
+		
+		try
+		{
+			notificationTime.setTime(sdf.parse(notificationTimeStored));
+		}
+		catch (ParseException ex)
+		{
+			ex.printStackTrace();
+		}
 
 		boolean updateQuestions = false;
 		boolean updateSchedule = false;
@@ -253,6 +265,8 @@ public class MainActivity extends Activity
 
 			str.append("</submission>");
 
+			Log.d("SUBMISSION_DATA", str.toString());
+			
 			fos.write(str.toString().getBytes());
 			fos.close();
 
@@ -305,6 +319,8 @@ public class MainActivity extends Activity
 				Toast.makeText(activity, "Responses submitted.", Toast.LENGTH_LONG).show();
 				Log.d("RESPONSES", "deleting file");
 				context.deleteFile(filename);
+				AppManager.setGotNotification(context, false);
+				AppManager.setNotificationTime(context, null);
 				if (submissionProgressDialog != null && submissionProgressDialog.isShowing())
 				{
 					submissionProgressDialog.dismiss();

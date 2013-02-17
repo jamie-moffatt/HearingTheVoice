@@ -36,13 +36,13 @@ public class BootService extends Service
 //		nm.notify(0, nb.build());
 		
 		Calendar amSession = Calendar.getInstance();
-//		amSession.set(Calendar.HOUR_OF_DAY, 10); // 10
-		amSession.set(Calendar.MINUTE, 0); // 0
-		amSession.set(Calendar.SECOND, amSession.get(Calendar.SECOND)+10);
+		amSession.set(Calendar.HOUR_OF_DAY, 21); // 10
+		amSession.set(Calendar.MINUTE, 21); // 0
+		amSession.set(Calendar.SECOND, 0);
 		
 		Calendar pmSession = Calendar.getInstance();
-		pmSession.set(Calendar.HOUR_OF_DAY, 20); // 17
-		pmSession.set(Calendar.MINUTE, 3); // 0
+		pmSession.set(Calendar.HOUR_OF_DAY, 21); // 17
+		pmSession.set(Calendar.MINUTE, 23); // 0
 		pmSession.set(Calendar.SECOND, 0);
 		
 		Intent amIntent = new Intent(context, AlarmReceiver.class);

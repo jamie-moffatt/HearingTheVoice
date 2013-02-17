@@ -85,7 +85,7 @@ public class DashboardActivity extends Activity
 		String avgResponseTime = AppManager.getAverageResponseTime(context);
 		txtResponseTime.setText("Your average response time is " + avgResponseTime + ".");
 		
-		if (samplesCompletedToday > 1)
+		if (samplesCompletedToday > 1 && !AppManager.getGotNotification(context))
 		{
 			txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
 			btnAnswerTestQuestions.setEnabled(false);
@@ -102,8 +102,7 @@ public class DashboardActivity extends Activity
 			}
 		});
 		
-		// TODO needs to check whether the user has already answered 2 sessions today and
-		// disable the button if they have
+		// TODO prevent a user from answering at the wrong time/without a notification
 		
 		btnTestNotification.setOnClickListener(new View.OnClickListener()
 		{
@@ -199,7 +198,7 @@ public class DashboardActivity extends Activity
 			{
 				if (progressDialog != null)
 					progressDialog.dismiss();
-				if (AppManager.getSamplesCompleteToday(context) < 2)
+				if (AppManager.getSamplesCompleteToday(context) < 2 && AppManager.getGotNotification(context))
 				{
 				txtQuestionsAvailable.setText("New Questions Available.");
 				txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
@@ -244,7 +243,7 @@ public class DashboardActivity extends Activity
 				if (progressDialog != null)
 					progressDialog.dismiss();
 				
-				if (AppManager.getSamplesCompleteToday(context) < 2)
+				if (AppManager.getSamplesCompleteToday(context) < 2 && AppManager.getGotNotification(context))
 				{
 				txtQuestionsAvailable.setText("New Questions Available.");
 				txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
