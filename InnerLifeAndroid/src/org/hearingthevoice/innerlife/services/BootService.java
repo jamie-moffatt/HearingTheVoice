@@ -41,16 +41,16 @@ public class BootService extends Service
 		amSession.set(Calendar.SECOND, amSession.get(Calendar.SECOND)+10);
 		
 		Calendar pmSession = Calendar.getInstance();
-//		pmSession.set(Calendar.HOUR_OF_DAY, 17); // 17
-		pmSession.set(Calendar.MINUTE, 0); // 0
-		pmSession.set(Calendar.SECOND, pmSession.get(Calendar.SECOND)+20);
+		pmSession.set(Calendar.HOUR_OF_DAY, 17); // 17
+		pmSession.set(Calendar.MINUTE, 28); // 0
+		pmSession.set(Calendar.SECOND, 0);
 		
 		Intent amIntent = new Intent(context, AlarmReceiver.class);
 		amIntent.putExtra("NOTIFICATION_TYPE", "AM");
 		PendingIntent amSender = PendingIntent.getBroadcast(context, 117, amIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		Intent pmIntent = new Intent(context, AlarmReceiver.class);
-		amIntent.putExtra("NOTIFICATION_TYPE", "PM");
+		pmIntent.putExtra("NOTIFICATION_TYPE", "PM");
 		PendingIntent pmSender = PendingIntent.getBroadcast(context, 118, pmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		// Get the AlarmManager service

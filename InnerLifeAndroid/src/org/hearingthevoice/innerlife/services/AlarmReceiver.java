@@ -19,14 +19,14 @@ public class AlarmReceiver extends BroadcastReceiver
 	public void onReceive(Context context, Intent intent)
 	{
 		// TODO check whether an addition notification needs to be created
-		
+
 		NotificationManager nm;
 		nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
 		nb.setContentTitle("New Questions Available");
 		nb.setContentText("Click to participate. " + intent.getStringExtra("NOTIFICATION_TYPE"));
 		nb.setSmallIcon(R.drawable.next_item);
-		
+
 		Intent clickIntent = new Intent(context, DashboardActivity.class);
 
 		// The stack builder object will contain an artificial back stack for the
@@ -38,16 +38,14 @@ public class AlarmReceiver extends BroadcastReceiver
 		stackBuilder.addParentStack(DashboardActivity.class);
 		// Adds the Intent that starts the Activity to the top of the stack
 		stackBuilder.addNextIntent(clickIntent);
-		PendingIntent resultPendingIntent =
-		        stackBuilder.getPendingIntent(
-		            0,
-		            PendingIntent.FLAG_UPDATE_CURRENT
-		        );
+		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
+				PendingIntent.FLAG_UPDATE_CURRENT);
 		nb.setContentIntent(resultPendingIntent);
 		nb.setAutoCancel(true);
-		
+
 		nb.setSound(Uri.parse("content://settings/system/notification_sound"));
-		
-		nm.notify(0, nb.build());
+
+		if (intent.getStringExtra("NOTIFICATION_TYPE").equals("AM")) nm.notify(0, nb.build());
+		else nm.notify(1, nb.build());
 	}
 }

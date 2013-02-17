@@ -85,7 +85,7 @@ public class DashboardActivity extends Activity
 		String avgResponseTime = AppManager.getAverageResponseTime(context);
 		txtResponseTime.setText("Your average response time is " + avgResponseTime + ".");
 		
-		if(samplesCompletedToday > 1)
+		if (samplesCompletedToday > 1)
 		{
 			txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
 			btnAnswerTestQuestions.setEnabled(false);
@@ -98,6 +98,7 @@ public class DashboardActivity extends Activity
 			{
 				Intent i = new Intent(v.getContext(), MainActivity.class);
 				startActivity(i);
+				finish();
 			}
 		});
 		
@@ -198,9 +199,18 @@ public class DashboardActivity extends Activity
 			{
 				if (progressDialog != null)
 					progressDialog.dismiss();
+				if (AppManager.getSamplesCompleteToday(context) < 2)
+				{
 				txtQuestionsAvailable.setText("New Questions Available.");
 				txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
 				btnAnswerTestQuestions.setEnabled(true);
+				}
+				else
+				{
+					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
+					txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
+					btnAnswerTestQuestions.setEnabled(false);
+				}
 			}
 		}
 	}
@@ -233,9 +243,19 @@ public class DashboardActivity extends Activity
 			{
 				if (progressDialog != null)
 					progressDialog.dismiss();
+				
+				if (AppManager.getSamplesCompleteToday(context) < 2)
+				{
 				txtQuestionsAvailable.setText("New Questions Available.");
 				txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
 				btnAnswerTestQuestions.setEnabled(true);
+				}
+				else
+				{
+					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
+					txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
+					btnAnswerTestQuestions.setEnabled(false);
+				}
 			}
 		}
 	}
