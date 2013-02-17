@@ -1,5 +1,7 @@
 package org.hearingthevoice.innerlife.ui.activity;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import org.hearingthevoice.innerlife.AppManager;
@@ -142,6 +144,12 @@ public class DashboardActivity extends Activity
 				nb.setSound(Uri.parse("content://settings/system/notification_sound"));
 
 				nm.notify(0, nb.build());
+				
+				AppManager.setGotNotification(context, true);
+				Calendar now = Calendar.getInstance();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String notificationTime = sdf.format(now.getTime());
+				AppManager.setNotificationTime(context, notificationTime);
 			}
 		});
 

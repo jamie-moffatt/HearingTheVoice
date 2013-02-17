@@ -269,6 +269,8 @@ public class MainActivity extends Activity
 			
 			fos.write(str.toString().getBytes());
 			fos.close();
+			
+			AppManager.updateAverageResponseTime(context, _notificationTime, _submissionTime);
 
 			if (QuestionAPI.networkIsConnected(activity)) (new SubmitTask())
 					.execute(str.toString());

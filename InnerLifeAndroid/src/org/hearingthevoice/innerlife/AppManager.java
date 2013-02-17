@@ -1,5 +1,6 @@
 package org.hearingthevoice.innerlife;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
@@ -29,6 +30,8 @@ public class AppManager extends Application
 	
 	public static final String GOT_NOTIFICATION = "got_notification_key";
 	public static final String NOTIFICATION_TIME = "notification_time_key";
+	
+	public static final String AVERAGE_RESPONSE_TIME = "average_response_time_key";
 
 	@Override
 	public void onCreate()
@@ -138,11 +141,6 @@ public class AppManager extends Application
 		return preferences.getInt(time, 0);
 	}
 
-	public static String getAverageResponseTime(Context context)
-	{
-		return "?";
-	}
-
 	public static void setUserCode(Context context, String userCode)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
@@ -248,5 +246,57 @@ public class AppManager extends Application
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getString(NOTIFICATION_TIME, null);
+	}
+	
+	public static void updateAverageResponseTime(Context context, String notificationTime, String responseTime)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		Calendar nT = Calendar.getInstance();
+		try
+		{
+			nT.setTime(sdf.parse(notificationTime));
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+			return;
+		}
+		
+		Calendar rT = Calendar.getInstance();
+		try
+		{
+			rT.setTime(sdf.parse(responseTime));
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+			return;
+		}
+		
+		long newResponseTime = (rT.getTimeInMillis() / 1000) - (nT.getTimeInMillis() / 1000);
+		
+		int currentAvgResponseTime = preferences.getInt(AVERAGE_RESPONSE_TIME, 0);
+		int weightedAvgResponseTime = currentAvgResponseTime * (preferences.getInt(SAMPLES_COMPLETE, 0) - 1);
+		float newAverageResponseTime = (weightedAvgResponseTime + newResponseTime) / (float) (preferences.getInt(SAMPLES_COMPLETE, 0));
+		
+		editor.putInt(AVERAGE_RESPONSE_TIME, (int) newAverageResponseTime);
+
+		editor.commit();
+	}
+	
+	public static String getAverageResponseTime(Context context)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		int avgResponseTime = preferences.getInt(AVERAGE_RESPONSE_TIME, 0);
+		String formattedTime = "";
+		if (avgResponseTime > (60*60)) formattedTime += (avgResponseTime / (60*60)) + "h";
+		if (avgResponseTime > 60) formattedTime += ((avgResponseTime % (60*60)) / 60) + "m";
+		if (avgResponseTime > 0) formattedTime += ((avgResponseTime % (60*60)) % 60) + "s";
+		else return "?";
+		return formattedTime;
 	}
 }
