@@ -214,7 +214,7 @@ public class MainActivity extends Activity
 			str.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
 			
 			str.append("<submission ");
-			str.append("userID=\"" + "1" + "\" ");
+			str.append("userID=\"" + AppManager.getUserCode(context) + "\" ");
 			str.append("sessionID=\"" + session + "\" ");
 			
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
