@@ -7,6 +7,7 @@ import org.hearingthevoice.innerlife.R;
 import org.hearingthevoice.innerlife.io.web.QuestionAPI;
 import org.hearingthevoice.innerlife.model.Schedule;
 import org.hearingthevoice.innerlife.model.Section;
+import org.hearingthevoice.innerlife.services.BootService;
 
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -136,7 +137,10 @@ public class DashboardActivity extends Activity
 				
 				nb.setSound(Uri.parse("content://settings/system/notification_sound"));
 				
-				nm.notify(0, nb.build());
+//				nm.notify(0, nb.build());
+				
+				Intent startServiceIntent = new Intent(context, BootService.class);
+		        context.startService(startServiceIntent);
 			}
 		});
 		
