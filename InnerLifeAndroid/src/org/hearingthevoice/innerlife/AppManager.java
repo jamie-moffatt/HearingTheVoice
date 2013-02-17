@@ -1,5 +1,6 @@
 package org.hearingthevoice.innerlife;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -23,6 +24,9 @@ public class AppManager extends Application
 	public static final String USER_CODE = "user_code_key";
 	public static final String USER_AGE = "user_age_key";
 	public static final String USER_GENDER = "user_gender_key";
+	
+	public static final String GOT_NOTIFICATION = "got_notification_key";
+	public static final String NOTIFICATION_TIME = "notification_time_key";
 
 	@Override
 	public void onCreate()
@@ -195,8 +199,56 @@ public class AppManager extends Application
 		sb.append(SAMPLE_TIMES + ": " + preferences.getString(SAMPLE_TIMES, "--") + "\n");
 		sb.append(USER_CODE + ": " + preferences.getString(USER_CODE, "--") + "\n");
 		sb.append(USER_AGE + ": " + preferences.getString(USER_AGE, "--") + "\n");
-		sb.append(USER_GENDER + ": " + preferences.getString(USER_GENDER, "--"));
+		sb.append(USER_GENDER + ": " + preferences.getString(USER_GENDER, "--") + "\n");
+		sb.append(GOT_NOTIFICATION + ": " + preferences.getBoolean(GOT_NOTIFICATION, false) + "\n");
+		sb.append(NOTIFICATION_TIME + ": " + preferences.getString(NOTIFICATION_TIME, "--") + "\n");
 		
 		return sb.toString();
+	}
+	
+	public static void setGotNotification(Context context, boolean sentNotification)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+
+		editor.putBoolean(GOT_NOTIFICATION, sentNotification);
+
+		editor.commit();
+	}
+	
+	public static boolean getGotNotification(Context context)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getBoolean(GOT_NOTIFICATION, false);
+	}
+	
+	public static void setNotificationTime(Context context, String time)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+
+		editor.putString(NOTIFICATION_TIME, time);
+
+		editor.commit();
+	}
+	
+	public static Calendar getNotificationTime(Context context)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		String timeString =  preferences.getString(NOTIFICATION_TIME, null);
+		if (timeString == null) return null;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Calendar c = Calendar.getInstance();
+		try
+		{
+			c.setTime(sdf.parse(timeString));
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+		return c;
 	}
 }
