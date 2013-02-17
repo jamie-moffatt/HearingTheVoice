@@ -1,5 +1,9 @@
 package org.hearingthevoice.innerlife.services;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.R;
 import org.hearingthevoice.innerlife.ui.activity.DashboardActivity;
 
@@ -47,5 +51,11 @@ public class AlarmReceiver extends BroadcastReceiver
 
 		if (intent.getStringExtra("NOTIFICATION_TYPE").equals("AM")) nm.notify(0, nb.build());
 		else nm.notify(1, nb.build());
+		
+		AppManager.setGotNotification(context, true);
+		Calendar now = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String notificationTime = sdf.format(now.getTime());
+		AppManager.setNotificationTime(context, notificationTime);
 	}
 }

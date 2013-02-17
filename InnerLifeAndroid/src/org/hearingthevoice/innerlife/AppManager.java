@@ -232,23 +232,9 @@ public class AppManager extends Application
 		editor.commit();
 	}
 	
-	public static Calendar getNotificationTime(Context context)
+	public static String getNotificationTime(Context context)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-		String timeString =  preferences.getString(NOTIFICATION_TIME, null);
-		if (timeString == null) return null;
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Calendar c = Calendar.getInstance();
-		try
-		{
-			c.setTime(sdf.parse(timeString));
-		}
-		catch (ParseException e)
-		{
-			e.printStackTrace();
-			return null;
-		}
-		return c;
+		return preferences.getString(NOTIFICATION_TIME, null);
 	}
 }
