@@ -33,16 +33,19 @@ public class BootService extends Service
 		nb.setContentText("BootService started.");
 		nb.setContentTitle("BOOT SERVICE");
 		nb.setSmallIcon(R.drawable.next_item);
-//		nm.notify(0, nb.build());
+//		nm.notify(784, nb.build());
+		
+		Calendar now = Calendar.getInstance();
+		if (now.get(Calendar.HOUR_OF_DAY) > 10) return START_NOT_STICKY;
 		
 		Calendar amSession = Calendar.getInstance();
-		amSession.set(Calendar.HOUR_OF_DAY, 21); // 10
-		amSession.set(Calendar.MINUTE, 21); // 0
+		amSession.set(Calendar.HOUR_OF_DAY, 10); // 10
+		amSession.set(Calendar.MINUTE, 0); // 0
 		amSession.set(Calendar.SECOND, 0);
 		
 		Calendar pmSession = Calendar.getInstance();
-		pmSession.set(Calendar.HOUR_OF_DAY, 21); // 17
-		pmSession.set(Calendar.MINUTE, 23); // 0
+		pmSession.set(Calendar.HOUR_OF_DAY, 17); // 17
+		pmSession.set(Calendar.MINUTE, 0); // 0
 		pmSession.set(Calendar.SECOND, 0);
 		
 		Intent amIntent = new Intent(context, AlarmReceiver.class);
@@ -57,7 +60,7 @@ public class BootService extends Service
 		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 		am.set(AlarmManager.RTC_WAKEUP, amSession.getTimeInMillis(), amSender);
 		am.set(AlarmManager.RTC_WAKEUP, pmSession.getTimeInMillis(), pmSender);
-		return START_STICKY;
+		return Service.START_NOT_STICKY;
 	}
 
 }

@@ -34,15 +34,14 @@ public class DashboardActivity extends Activity
 	private TextView txtNumResponses;
 	private TextView txtResponseTime;
 	private TextView txtQuestionsAvailable;
-	
+
 	private ProgressDialog progressDialog;
-	
+
 	private boolean scheduleDownloaded = false;
 	private boolean questionsDownloaded = false;
 
 	private Activity activity;
 	private Context context;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -59,38 +58,46 @@ public class DashboardActivity extends Activity
 		txtNumResponses = (TextView) findViewById(R.id.txtResponses);
 		txtResponseTime = (TextView) findViewById(R.id.txtResponseTime);
 		txtQuestionsAvailable = (TextView) findViewById(R.id.txtQuestionsAvailable);
-		
+
 		txtQuestionsAvailable.setText("Downloading Questions.");
-		txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_download, 0, 0, 0);
+		txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_download,
+				0, 0, 0);
 
 		btnAnswerTestQuestions.setEnabled(false);
 
-		progressDialog = ProgressDialog.show(context, "Downloading Questions", "Currently downloading questions. Please wait...", true);
-		
+		progressDialog = ProgressDialog.show(context, "Downloading Questions",
+				"Currently downloading questions. Please wait...", true);
+
 		// TODO needs to check to see if questions are already downloaded
 		(new ScheduleDownloadTask()).execute();
 		(new QuestionDownloadTask()).execute();
-		
+
 		int samplesCompletedToday = AppManager.getSamplesCompleteToday(context);
 		txtSamplesToday.setText("You have submitted " + samplesCompletedToday + " samples today.");
-		if (samplesCompletedToday == 1) txtSamplesToday.setText("You have submitted " + samplesCompletedToday + " sample today.");
-		if (samplesCompletedToday < 1) txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_empty_star, 0, 0, 0);
-		else if (samplesCompletedToday == 1) txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_half_star, 0, 0, 0);
-		else txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_full_star, 0, 0, 0);
+		if (samplesCompletedToday == 1)
+			txtSamplesToday
+					.setText("You have submitted " + samplesCompletedToday + " sample today.");
+		if (samplesCompletedToday < 1) txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(
+				R.drawable.action_empty_star, 0, 0, 0);
+		else if (samplesCompletedToday == 1) txtSamplesToday
+				.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_half_star, 0, 0, 0);
+		else txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_full_star,
+				0, 0, 0);
 
 		int numResponses = AppManager.getSamplesComplete(context);
 		txtNumResponses.setText("You have made " + numResponses + " responses so far.");
-		if (numResponses == 1) txtNumResponses.setText("You have made " + numResponses + " response so far.");
-		
+		if (numResponses == 1)
+			txtNumResponses.setText("You have made " + numResponses + " response so far.");
+
 		String avgResponseTime = AppManager.getAverageResponseTime(context);
 		txtResponseTime.setText("Your average response time is " + avgResponseTime + ".");
-		
+
 		if (samplesCompletedToday > 1 && !AppManager.getGotNotification(context))
 		{
 			txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
 			btnAnswerTestQuestions.setEnabled(false);
 		}
-		
+
 		btnAnswerTestQuestions.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -101,9 +108,9 @@ public class DashboardActivity extends Activity
 				finish();
 			}
 		});
-		
+
 		// TODO prevent a user from answering at the wrong time/without a notification
-		
+
 		btnTestNotification.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -115,7 +122,7 @@ public class DashboardActivity extends Activity
 				nb.setContentTitle("New Questions Available");
 				nb.setContentText("Click to participate.");
 				nb.setSmallIcon(R.drawable.next_item);
-				
+
 				Intent clickIntent = new Intent(context, DashboardActivity.class);
 
 				// The stack builder object will contain an artificial back stack for the
@@ -127,36 +134,33 @@ public class DashboardActivity extends Activity
 				stackBuilder.addParentStack(DashboardActivity.class);
 				// Adds the Intent that starts the Activity to the top of the stack
 				stackBuilder.addNextIntent(clickIntent);
-				PendingIntent resultPendingIntent =
-				        stackBuilder.getPendingIntent(
-				            0,
-				            PendingIntent.FLAG_UPDATE_CURRENT
-				        );
+				PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
+						PendingIntent.FLAG_UPDATE_CURRENT);
 				nb.setContentIntent(resultPendingIntent);
 				nb.setAutoCancel(true);
-				
+
 				nb.setSound(Uri.parse("content://settings/system/notification_sound"));
-				
-//				nm.notify(0, nb.build());
-				
-				Intent startServiceIntent = new Intent(context, BootService.class);
-		        context.startService(startServiceIntent);
+
+				nm.notify(0, nb.build());
 			}
 		});
-		
+
 		Button btnDisplayStoredData = (Button) findViewById(R.id.btnDisplayStoredData);
 		btnDisplayStoredData.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				Toast.makeText(context, AppManager.getStoredData(context), Toast.LENGTH_LONG).show();				
+				Toast.makeText(context, AppManager.getStoredData(context), Toast.LENGTH_LONG)
+						.show();
 			}
 		});
-		
+
 		// Perform first-time run actions
 		if (AppManager.isFirstRun(context))
 		{
+			Intent startServiceIntent = new Intent(context, BootService.class);
+			context.startService(startServiceIntent);
 			Intent intent = new Intent(context, FirstRunFormActivity.class);
 			startActivity(intent);
 		}
@@ -193,27 +197,29 @@ public class DashboardActivity extends Activity
 		@Override
 		protected void onPostExecute(Schedule schedule)
 		{
-//			Toast.makeText(context, "Schedule Downloaded.", Toast.LENGTH_LONG).show();
+			// Toast.makeText(context, "Schedule Downloaded.", Toast.LENGTH_LONG).show();
 			if (scheduleDownloaded && questionsDownloaded)
 			{
-				if (progressDialog != null)
-					progressDialog.dismiss();
-				if (AppManager.getSamplesCompleteToday(context) < 2 && AppManager.getGotNotification(context))
+				if (progressDialog != null) progressDialog.dismiss();
+				if (AppManager.getSamplesCompleteToday(context) < 2 && AppManager
+						.getGotNotification(context))
 				{
-				txtQuestionsAvailable.setText("New Questions Available.");
-				txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
-				btnAnswerTestQuestions.setEnabled(true);
+					txtQuestionsAvailable.setText("New Questions Available.");
+					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
+							R.drawable.action_help, 0, 0, 0);
+					btnAnswerTestQuestions.setEnabled(true);
 				}
 				else
 				{
-					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
+					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
+							R.drawable.action_help, 0, 0, 0);
 					txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
 					btnAnswerTestQuestions.setEnabled(false);
 				}
 			}
 		}
 	}
-	
+
 	private class QuestionDownloadTask extends AsyncTask<String, Void, List<Section>>
 	{
 		// The slow code that runs in the background
@@ -237,21 +243,23 @@ public class DashboardActivity extends Activity
 		@Override
 		protected void onPostExecute(List<Section> sections)
 		{
-//			Toast.makeText(context, "Questions Downloaded.", Toast.LENGTH_LONG).show();
+			// Toast.makeText(context, "Questions Downloaded.", Toast.LENGTH_LONG).show();
 			if (scheduleDownloaded && questionsDownloaded)
 			{
-				if (progressDialog != null)
-					progressDialog.dismiss();
-				
-				if (AppManager.getSamplesCompleteToday(context) < 2 && AppManager.getGotNotification(context))
+				if (progressDialog != null) progressDialog.dismiss();
+
+				if (AppManager.getSamplesCompleteToday(context) < 2 && AppManager
+						.getGotNotification(context))
 				{
-				txtQuestionsAvailable.setText("New Questions Available.");
-				txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
-				btnAnswerTestQuestions.setEnabled(true);
+					txtQuestionsAvailable.setText("New Questions Available.");
+					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
+							R.drawable.action_help, 0, 0, 0);
+					btnAnswerTestQuestions.setEnabled(true);
 				}
 				else
 				{
-					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
+					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
+							R.drawable.action_help, 0, 0, 0);
 					txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
 					btnAnswerTestQuestions.setEnabled(false);
 				}
