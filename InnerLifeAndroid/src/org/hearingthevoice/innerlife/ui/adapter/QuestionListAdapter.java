@@ -1,6 +1,7 @@
 package org.hearingthevoice.innerlife.ui.adapter;
 
 import java.util.List;
+import java.util.Map;
 
 import org.hearingthevoice.innerlife.R;
 import org.hearingthevoice.innerlife.model.Question;
@@ -18,11 +19,15 @@ public class QuestionListAdapter extends ArrayAdapter<Question>
 	private Context context;
 	private int rowLayoutResourceID;
 	
-	public QuestionListAdapter(Context context, int rowLayoutResourceID, List<Question> questionList)
+	private Map<Long, Integer> responses;
+	
+	public QuestionListAdapter(Context context, int rowLayoutResourceID, List<Question> questionList, Map<Long, Integer> responses)
 	{
 		super(context, rowLayoutResourceID, questionList);
 		this.context = context;
 		this.rowLayoutResourceID = rowLayoutResourceID;
+		
+		this.responses = responses;
 	}
 
 	@Override
@@ -61,6 +66,11 @@ public class QuestionListAdapter extends ArrayAdapter<Question>
 			if (holder.txtDescription != null)
 			{
 				holder.txtDescription.setText(q.getDescription());
+			}
+			
+			if (holder.txtResponse != null && responses != null)
+			{
+				holder.txtResponse.setText(responses.get(q.getQuestionID()));
 			}
 		}
 		

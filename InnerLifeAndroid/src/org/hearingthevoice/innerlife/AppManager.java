@@ -1,8 +1,8 @@
 package org.hearingthevoice.innerlife;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Map;
 
 import android.app.Application;
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.content.SharedPreferences.Editor;
 public class AppManager extends Application
 {
 	private static AppManager sInstance;
+	
+	private Map<Long, Integer> prevResponses;
 
 	public static final String FIRST_RUN_KEY = "first_run";
 	public static final String PREFERENCES_KEY = "preferences_key";
@@ -38,6 +40,16 @@ public class AppManager extends Application
 	public static AppManager getInstance()
 	{
 		return sInstance;
+	}
+	
+	public Map<Long, Integer> getResponses()
+	{
+		return prevResponses;
+	}
+	
+	public void setResponses(Map<Long, Integer> responses)
+	{
+		prevResponses = responses;
 	}
 
 	public static void clearPreferences(Context context)
