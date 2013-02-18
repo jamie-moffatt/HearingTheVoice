@@ -3,7 +3,10 @@ package org.hearingthevoice.innerlife;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
+
+import org.hearingthevoice.innerlife.model.Section;
 
 import android.app.Application;
 import android.content.Context;
@@ -15,6 +18,7 @@ public class AppManager extends Application
 	private static AppManager sInstance;
 	
 	private Map<Long, Integer> prevResponses;
+	private List<Section> prevSession;
 
 	public static final String FIRST_RUN_KEY = "first_run";
 	public static final String PREFERENCES_KEY = "preferences_key";
@@ -45,15 +49,13 @@ public class AppManager extends Application
 		return sInstance;
 	}
 	
-	public Map<Long, Integer> getResponses()
-	{
-		return prevResponses;
-	}
+	public Map<Long, Integer> getResponses() { return prevResponses; }
 	
-	public void setResponses(Map<Long, Integer> responses)
-	{
-		prevResponses = responses;
-	}
+	public void setResponses(Map<Long, Integer> responses) { prevResponses = responses; }
+	
+	public List<Section> getSection() { return prevSession; }
+	
+	public void setSection(List<Section> sections) { prevSession = sections; }
 
 	public static void clearPreferences(Context context)
 	{
