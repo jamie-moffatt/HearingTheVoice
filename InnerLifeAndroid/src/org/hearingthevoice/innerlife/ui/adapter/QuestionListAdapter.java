@@ -70,7 +70,7 @@ public class QuestionListAdapter extends ArrayAdapter<Question>
 			
 			if (holder.txtResponse != null && responses != null)
 			{
-				holder.txtResponse.setText(responses.get(q.getQuestionID()));
+				holder.txtResponse.setText(""+responses.get(q.getQuestionID()));
 			}
 		}
 		
