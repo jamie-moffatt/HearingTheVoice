@@ -90,14 +90,16 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="Test Notification" />
+                    android:text="Test Notification"
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/btnDisplayStoredData"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="Show Stored Data" />
+                    android:text="Show Stored Data"
+                    android:visibility="gone" />
             </LinearLayout>
         </ScrollView>
     </FrameLayout>

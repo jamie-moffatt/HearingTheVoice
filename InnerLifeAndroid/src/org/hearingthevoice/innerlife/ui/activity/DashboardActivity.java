@@ -97,6 +97,7 @@ public class DashboardActivity extends Activity
 		if (samplesCompletedToday > 1 && !AppManager.getGotNotification(context))
 		{
 			txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
+			if (!AppManager.getGotNotification(context)) txtQuestionsAvailable.setText("Wait for the next notification.");
 			btnAnswerTestQuestions.setEnabled(false);
 		}
 
@@ -222,6 +223,7 @@ public class DashboardActivity extends Activity
 					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
 							R.drawable.action_help, 0, 0, 0);
 					txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
+					if (!AppManager.getGotNotification(context)) txtQuestionsAvailable.setText("Wait for the next notification.");
 					btnAnswerTestQuestions.setEnabled(false);
 				}
 			}
@@ -269,6 +271,7 @@ public class DashboardActivity extends Activity
 					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
 							R.drawable.action_help, 0, 0, 0);
 					txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
+					if (!AppManager.getGotNotification(context)) txtQuestionsAvailable.setText("Wait for the next notification.");
 					btnAnswerTestQuestions.setEnabled(false);
 				}
 			}

@@ -136,6 +136,7 @@ public class MainActivity extends Activity
 		rblResponses = (RadioGroup) findViewById(R.id.rbl_responses);
 
 		responseIDs = new HashMap<Long, Integer>();
+		responseStrings = new HashMap<Long, String>();
 
 		btnBack = (Button) findViewById(R.id.btn_back);
 		btnNext = (Button) findViewById(R.id.btn_next);
