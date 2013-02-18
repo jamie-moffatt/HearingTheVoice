@@ -62,7 +62,7 @@ public class SummaryActivity extends Activity
 			for(Question q : section.getQuestions()) questions.add(q);
 		
 		questionListView = (ListView) findViewById(R.id.questionListView);
-		questionListView.setAdapter(new QuestionListAdapter(context, R.layout.question_list_row_layout, questions, manager.getResponses()));
+		questionListView.setAdapter(new QuestionListAdapter(context, R.layout.question_list_row_layout, questions, manager.getResponseStrings()));
 		
 		btnConfirm = (Button) findViewById(R.id.btnConfirmSubmission);
 		
@@ -125,7 +125,7 @@ public class SummaryActivity extends Activity
 			str.append("notificationTime=\"" + _notificationTime + "\" ");
 			str.append("submissionTime=\"" + _submissionTime + "\">\n");
 
-			for (Entry<Long, Integer> e : manager.getResponses().entrySet())
+			for (Entry<Long, Integer> e : manager.getResponseIDs().entrySet())
 			{
 				str.append("<response ");
 				str.append("questionID=\"" + e.getKey() + "\" ");

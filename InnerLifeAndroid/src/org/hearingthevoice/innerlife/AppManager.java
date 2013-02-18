@@ -17,7 +17,8 @@ public class AppManager extends Application
 {
 	private static AppManager sInstance;
 	
-	private Map<Long, Integer> prevResponses;
+	private Map<Long, Integer> prevResponseIDs;
+	private Map<Long, String> prevResponseStrings;
 	private List<Section> prevSession;
 
 	public static final String FIRST_RUN_KEY = "first_run";
@@ -49,9 +50,13 @@ public class AppManager extends Application
 		return sInstance;
 	}
 	
-	public Map<Long, Integer> getResponses() { return prevResponses; }
+	public Map<Long, Integer> getResponseIDs() { return prevResponseIDs; }
 	
-	public void setResponses(Map<Long, Integer> responses) { prevResponses = responses; }
+	public void setResponseIDs(Map<Long, Integer> responses) { prevResponseIDs = responses; }
+	
+	public Map<Long, String> getResponseStrings() { return prevResponseStrings; }
+	
+	public void setResponseStrings(Map<Long, String> responses) { prevResponseStrings = responses; }
 	
 	public List<Section> getSection() { return prevSession; }
 	

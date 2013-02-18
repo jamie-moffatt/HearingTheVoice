@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -49,6 +48,7 @@ public class MainActivity extends Activity
 
 	private RadioGroup rblResponses;
 	private Map<Long, Integer> responseIDs;
+	private Map<Long, String> responseStrings;
 
 	private Button btnBack;
 	private Button btnNext;
@@ -148,8 +148,13 @@ public class MainActivity extends Activity
 				// Toast.makeText(context, String.format("You chose: %d",
 				// rblResponses.getCheckedRadioButtonId()), Toast.LENGTH_SHORT).show();
 				if (!questions.isEmpty())
-					responseIDs.put(questions.get(question).getQuestionID(),
-							rblResponses.getCheckedRadioButtonId());
+				{
+					responseIDs.put(questions.get(question).getQuestionID(), rblResponses.getCheckedRadioButtonId());
+					
+					RadioButton selection = (RadioButton) rblResponses.getChildAt(rblResponses.getCheckedRadioButtonId());
+					String response = selection == null ? "No Response" : selection.getText().toString();
+					responseStrings.put(questions.get(question).getQuestionID(), response);
+				}
 
 				question--;
 				if (question < 0 && !questions.isEmpty())
@@ -176,8 +181,13 @@ public class MainActivity extends Activity
 				// Toast.makeText(context, String.format("You chose: %d",
 				// rblResponses.getCheckedRadioButtonId()), Toast.LENGTH_SHORT).show();
 				if (!questions.isEmpty())
-					responseIDs.put(questions.get(question).getQuestionID(),
-							rblResponses.getCheckedRadioButtonId());
+				{
+					responseIDs.put(questions.get(question).getQuestionID(), rblResponses.getCheckedRadioButtonId());
+					
+					RadioButton selection = (RadioButton) rblResponses.getChildAt(rblResponses.getCheckedRadioButtonId());
+					String response = selection == null ? "No Response" : selection.getText().toString();
+					responseStrings.put(questions.get(question).getQuestionID(), response);
+				}
 
 				question++;
 				if (question > questions.size() - 1 && !questions.isEmpty() && !sections.isEmpty())
@@ -215,7 +225,8 @@ public class MainActivity extends Activity
 	{
 		Log.d("SESSION", "end of session");
 		
-		manager.setResponses(responseIDs);
+		manager.setResponseIDs(responseIDs);
+		manager.setResponseStrings(responseStrings);
 
 		Intent i = new Intent(context, SummaryActivity.class);
 		startActivity(i);
@@ -232,28 +243,28 @@ public class MainActivity extends Activity
 		{
 			switch (questions.get(question).getType())
 			{
-			case YESNO:
-			{
-				responses.add("No");
-				responses.add("Yes");
-				break;
-			}
-			case RADIO:
-			{
-				responses = sections.get(section).getResponses();
-				break;
-			}
-			case NUMSCALE:
-			{
-				List<String> minmax = sections.get(section).getResponses();
-
-				responses.add("1 - " + minmax.get(0));
-				for (int i = 2; i <= 9; i++)
-					responses.add("" + i);
-				responses.add("10 - " + minmax.get(1));
-
-				break;
-			}
+				case YESNO:
+				{
+					responses.add("No");
+					responses.add("Yes");
+					break;
+				}
+				case RADIO:
+				{
+					responses = sections.get(section).getResponses();
+					break;
+				}
+				case NUMSCALE:
+				{
+					List<String> minmax = sections.get(section).getResponses();
+	
+					responses.add("1 - " + minmax.get(0));
+					for (int i = 2; i <= 9; i++)
+						responses.add("" + i);
+					responses.add("10 - " + minmax.get(1));
+	
+					break;
+				}
 			}
 
 			if (responses.size() > 0)

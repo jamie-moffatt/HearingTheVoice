@@ -19,9 +19,9 @@ public class QuestionListAdapter extends ArrayAdapter<Question>
 	private Context context;
 	private int rowLayoutResourceID;
 	
-	private Map<Long, Integer> responses;
+	private Map<Long, String> responses;
 	
-	public QuestionListAdapter(Context context, int rowLayoutResourceID, List<Question> questionList, Map<Long, Integer> responses)
+	public QuestionListAdapter(Context context, int rowLayoutResourceID, List<Question> questionList, Map<Long, String> responses)
 	{
 		super(context, rowLayoutResourceID, questionList);
 		this.context = context;
