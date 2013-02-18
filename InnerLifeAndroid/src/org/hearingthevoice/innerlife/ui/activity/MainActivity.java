@@ -52,6 +52,8 @@ public class MainActivity extends Activity
 
 	private Button btnBack;
 	private Button btnNext;
+	
+	AppManager manager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -120,7 +122,7 @@ public class MainActivity extends Activity
 			sections = schedule.filterBySession(sections, session);
 			questions = sections.get(0).getQuestions();
 			
-			AppManager manager = AppManager.getInstance();
+			manager = AppManager.getInstance();
 			manager.setSection(sections);
 		}
 		catch (Exception e)
@@ -212,6 +214,8 @@ public class MainActivity extends Activity
 	public void endSession()
 	{
 		Log.d("SESSION", "end of session");
+		
+		manager.setResponses(responseIDs);
 
 		Intent i = new Intent(context, SummaryActivity.class);
 		startActivity(i);
