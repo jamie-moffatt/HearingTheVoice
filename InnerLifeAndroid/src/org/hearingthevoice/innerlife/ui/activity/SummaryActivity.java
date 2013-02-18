@@ -49,10 +49,11 @@ public class SummaryActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.summary_layout);
 		
-		context = getApplicationContext();
+		context = this;
 		activity = this;
 		
 		manager = AppManager.getInstance();
+		Log.d("MANAGER", ""+(manager == null));
 		List<Section> session = manager.getSection();
 		
 		List<Question> questions = new ArrayList<Question>();
