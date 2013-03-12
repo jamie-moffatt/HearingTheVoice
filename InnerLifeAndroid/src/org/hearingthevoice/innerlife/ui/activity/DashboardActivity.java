@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -67,12 +68,37 @@ public class DashboardActivity extends Activity
 
 		btnAnswerTestQuestions.setEnabled(false);
 
-		progressDialog = ProgressDialog.show(context, "Downloading Questions",
-				"Currently downloading questions. Please wait...", true);
+//		progressDialog = ProgressDialog.show(context, "Downloading Questions",
+//				"Currently downloading questions. Please wait...", true);
 
 		// TODO needs to check to see if questions are already downloaded
-		(new ScheduleDownloadTask()).execute();
-		(new QuestionDownloadTask()).execute();
+		// determine whether the questions are cached in the file system
+		
+		String[] files = context.fileList();
+		boolean questionsCached = false;
+		boolean scheduleCached = false;
+		
+		for (String file : files)
+		{
+			if (file.contains("questions"))
+			{
+				questionsCached = true;
+				break;
+			}
+		}
+
+		// determine whether the schedule is cached in the file system
+		for (String file : files)
+		{
+			if (file.contains("schedule"))
+			{
+				scheduleCached = true;
+				break;
+			}
+		}
+		
+//		if(!scheduleCached) (new ScheduleDownloadTask()).execute();
+//		if(!questionsCached) (new QuestionDownloadTask()).execute();
 
 		int samplesCompletedToday = AppManager.getSamplesCompleteToday(context);
 		txtSamplesToday.setText("You have submitted " + samplesCompletedToday + " samples today.");
@@ -182,6 +208,20 @@ public class DashboardActivity extends Activity
 		getMenuInflater().inflate(R.menu.activity_dashboard, menu);
 		return true;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+		case R.id.menu_settings:
+			Intent showSettingsIntent = new Intent(this, SettingsActivity.class);
+			startActivity(showSettingsIntent);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 
 	private class ScheduleDownloadTask extends AsyncTask<String, Integer, Schedule>
 	{

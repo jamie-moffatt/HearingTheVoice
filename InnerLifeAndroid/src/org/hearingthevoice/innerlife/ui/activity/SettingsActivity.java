@@ -1,6 +1,7 @@
 package org.hearingthevoice.innerlife.ui.activity;
 
 import org.hearingthevoice.innerlife.R;
+import org.hearingthevoice.innerlife.ui.view.TimeSelector;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -8,6 +9,7 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TimePicker;
 
 public class SettingsActivity extends Activity
@@ -20,6 +22,16 @@ public class SettingsActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.settings_activity);
 
+		TimeSelector timeSelector = (TimeSelector) findViewById(R.id.timeSelector);
+		timeSelector.setOnTimeChangedListener(new TimeSelector.OnTimeChangedListener()
+		{	
+			@Override
+			public void onTimeChanged(int amTime, int pmTime)
+			{
+				Log.d("TIME_CHANGED", String.format("AM: %d\nPM: %d", amTime, pmTime));
+			}
+		});
+		
 		context = this;
 	}
 	
