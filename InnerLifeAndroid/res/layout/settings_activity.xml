@@ -9,8 +9,15 @@
         android:id="@+id/txtSettingsDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:padding="7dp"
         android:text="Slide the segments to change notification times. Changes will only be applied the next day." />
+    
+    <TextView
+        android:id="@+id/txtSettingsTimeRangeDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="7dp"
+        android:text="You will be notified between 9:00 - 12:00 and 16:00 - 19:00." />
     
     <org.hearingthevoice.innerlife.ui.view.TimeSelector
         android:id="@+id/timeSelector"

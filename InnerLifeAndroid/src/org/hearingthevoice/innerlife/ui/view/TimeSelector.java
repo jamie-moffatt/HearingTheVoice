@@ -15,7 +15,7 @@ import android.graphics.Point;
 import android.graphics.RectF;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -89,14 +89,15 @@ public class TimeSelector extends View
 
 		// Set up a default TextPaint object
 		textPaint = new TextPaint();
-		textPaint.setTextSize(12);
+		textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17,
+				getResources().getDisplayMetrics()));
 		textPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 		textPaint.setTextAlign(Paint.Align.LEFT);
 
 		backgroundPaint = new Paint();
 		backgroundPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 		backgroundPaint.setColor(Color.LTGRAY);
-		
+
 		darkBackgroundPaint = new Paint();
 		darkBackgroundPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 		darkBackgroundPaint.setColor(Color.parseColor("#aaaaaa"));
@@ -105,23 +106,24 @@ public class TimeSelector extends View
 		borderPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 		borderPaint.setColor(Color.BLACK);
 		borderPaint.setStyle(Style.STROKE);
-		borderPaint.setStrokeWidth(5);
+		borderPaint.setStrokeWidth(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3,
+				getResources().getDisplayMetrics()));
 		borderPaint.setStrokeCap(Cap.ROUND);
 
 		dividerPaint = new Paint();
 		dividerPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
-		dividerPaint.setColor(Color.BLACK);
+		dividerPaint.setColor(Color.GRAY);
 		dividerPaint.setStyle(Style.STROKE);
 		dividerPaint.setStrokeWidth(1);
 
 		timeSliceAMFillPaint = new Paint();
 		timeSliceAMFillPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
-		timeSliceAMFillPaint.setColor(Color.rgb(114, 134, 209));
+		timeSliceAMFillPaint.setColor(Color.rgb(125, 162, 150));
 		timeSliceAMFillPaint.setStyle(Style.FILL);
-		
+
 		timeSlicePMFillPaint = new Paint();
 		timeSlicePMFillPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
-		timeSlicePMFillPaint.setColor(Color.rgb(32, 45, 112));
+		timeSlicePMFillPaint.setColor(Color.rgb(125, 132, 162));
 		timeSlicePMFillPaint.setStyle(Style.FILL);
 
 		timeSliceSelectedFillPaint = new Paint();
@@ -204,9 +206,9 @@ public class TimeSelector extends View
 
 		RectF rect = new RectF(centreX - radius, centreY - radius, centreX + radius,
 				centreY + radius);
-		
+
 		canvas.drawCircle(centreX, centreY, radius, backgroundPaint);
-		
+
 		canvas.drawArc(rect, 90, 180, false, darkBackgroundPaint);
 
 		/*
@@ -305,8 +307,10 @@ public class TimeSelector extends View
 
 		canvas.drawCircle(centreX, centreY, radius, borderPaint);
 
-		int hourLabel = 0;
-		
+		canvas.drawLine(centreX, centreY - radius, centreX, centreY + radius, dividerPaint);
+
+		int hour = 0;
+
 		for (int i = 0; i < 90; i += 15)
 		{
 			canvas.drawLine(centreX + radius * (float) Math.sin((i * Math.PI) / 180.0),
@@ -314,8 +318,15 @@ public class TimeSelector extends View
 					centreX + (radius * 0.95f) * (float) Math.sin((i * Math.PI) / 180.0),
 					centreY - (radius * 0.95f) * (float) Math.cos((i * Math.PI) / 180.0),
 					borderPaint);
-			canvas.drawText(""+(hourLabel++), centreX + (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0),
-					centreY - (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0), textPaint);
+			String hourLabel = "" + (hour++);
+			float textWidth = textPaint.measureText(hourLabel);
+			Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
+			float textHeight = fontMetrics.bottom;
+			canvas.drawText(
+					hourLabel,
+					centreX + (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0) - textWidth / 2,
+					centreY - (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0) + textHeight,
+					textPaint);
 		}
 		for (int i = 90; i >= 0; i -= 15)
 		{
@@ -324,8 +335,15 @@ public class TimeSelector extends View
 					centreX + (radius * 0.95f) * (float) Math.sin((i * Math.PI) / 180.0),
 					centreY + (radius * 0.95f) * (float) Math.cos((i * Math.PI) / 180.0),
 					borderPaint);
-			canvas.drawText(""+(hourLabel++), centreX + (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0),
-					centreY + (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0), textPaint);
+			String hourLabel = "" + (hour++);
+			float textWidth = textPaint.measureText(hourLabel);
+			Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
+			float textHeight = fontMetrics.bottom;
+			canvas.drawText(
+					hourLabel,
+					centreX + (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0) - textWidth / 2,
+					centreY + (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0) + textHeight,
+					textPaint);
 		}
 		for (int i = 15; i < 90; i += 15)
 		{
@@ -334,8 +352,15 @@ public class TimeSelector extends View
 					centreX - (radius * 0.95f) * (float) Math.sin((i * Math.PI) / 180.0),
 					centreY + (radius * 0.95f) * (float) Math.cos((i * Math.PI) / 180.0),
 					borderPaint);
-			canvas.drawText(""+(hourLabel++), centreX - (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0),
-					centreY + (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0), textPaint);
+			String hourLabel = "" + (hour++);
+			float textWidth = textPaint.measureText(hourLabel);
+			Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
+			float textHeight = fontMetrics.bottom;
+			canvas.drawText(
+					hourLabel,
+					centreX - (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0) - textWidth / 2,
+					centreY + (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0) + textHeight,
+					textPaint);
 		}
 		for (int i = 90; i >= 15; i -= 15)
 		{
@@ -344,9 +369,19 @@ public class TimeSelector extends View
 					centreX - (radius * 0.95f) * (float) Math.sin((i * Math.PI) / 180.0),
 					centreY - (radius * 0.95f) * (float) Math.cos((i * Math.PI) / 180.0),
 					borderPaint);
-			canvas.drawText(""+(hourLabel++), centreX - (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0),
-					centreY - (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0), textPaint);
+			String hourLabel = "" + (hour++);
+			float textWidth = textPaint.measureText(hourLabel);
+			Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
+			float textHeight = fontMetrics.bottom;
+			canvas.drawText(
+					hourLabel,
+					centreX - (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0) - textWidth / 2,
+					centreY - (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0) + textHeight,
+					textPaint);
 		}
+
+		canvas.drawText("PM", centreX - 1.5f * textPaint.measureText("PM") - 10, centreY, textPaint);
+		canvas.drawText("AM", centreX + 0.5f * textPaint.measureText("AM") + 10, centreY, textPaint);
 
 		if (DEBUG)
 		{
@@ -356,8 +391,6 @@ public class TimeSelector extends View
 				canvas.drawText("" + (Math.toDegrees(theta)), centreX + 5, centreY + 5, textPaint);
 			}
 		}
-
-		canvas.drawLine(centreX, centreY - radius, centreX, centreY + radius, dividerPaint);
 	}
 
 	@Override
@@ -412,16 +445,10 @@ public class TimeSelector extends View
 					if (Math.toDegrees(theta) > amStartTime * 15)
 					{
 						incrementAMTime();
-						Log.d("T", "increment AM");
-						if (timeChangedCallback != null)
-							timeChangedCallback.onTimeChanged(amStartTime, pmStartTime);
 					}
 					if (Math.toDegrees(theta) < amStartTime * 15)
 					{
 						decrementAMTime();
-						Log.d("T", "decrement AM");
-						if (timeChangedCallback != null)
-							timeChangedCallback.onTimeChanged(amStartTime, pmStartTime);
 					}
 				}
 				invalidate();
@@ -432,18 +459,8 @@ public class TimeSelector extends View
 				if (isLeft)
 				{
 					theta = (float) (2 * Math.PI - theta);
-					if (Math.toDegrees(theta) > pmStartTime * 15)
-					{
-						incrementPMTime();
-						if (timeChangedCallback != null)
-							timeChangedCallback.onTimeChanged(amStartTime, pmStartTime);
-					}
-					if (Math.toDegrees(theta) < pmStartTime * 15)
-					{
-						decrementPMTime();
-						if (timeChangedCallback != null)
-							timeChangedCallback.onTimeChanged(amStartTime, pmStartTime);
-					}
+					if (Math.toDegrees(theta) > pmStartTime * 15) incrementPMTime();
+					if (Math.toDegrees(theta) < pmStartTime * 15) decrementPMTime();
 				}
 				invalidate();
 			}
@@ -452,6 +469,8 @@ public class TimeSelector extends View
 		{
 			touching = false;
 			hit = NO_COLLISION;
+			if (timeChangedCallback != null)
+				timeChangedCallback.onTimeChanged(amStartTime, pmStartTime);
 			invalidate();
 		}
 
