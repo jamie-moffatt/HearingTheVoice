@@ -47,6 +47,11 @@
             android:theme="@style/AppTheme" >
         </activity>
 
+        <activity
+            android:name="org.hearingthevoice.innerlife.ui.activity.EndActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme" >
+        </activity>
         <receiver
             android:name="org.hearingthevoice.innerlife.services.AlarmReceiver"
             android:process=":remote" />
