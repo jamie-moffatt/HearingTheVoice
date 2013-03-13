@@ -14,5 +14,6 @@
         <string name="age">Age</string>
         <string name="gender">Gender</string>
         <string name="submit">Submit</string>
+        <string name="settings_time_selector_explaination">Slide the segments to change notification times. Changes will only be applied the next day.</string>
 
 </resources>

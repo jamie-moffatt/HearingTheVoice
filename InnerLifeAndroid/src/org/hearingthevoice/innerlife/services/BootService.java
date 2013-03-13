@@ -2,7 +2,6 @@ package org.hearingthevoice.innerlife.services;
 
 import java.util.Calendar;
 
-import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.R;
 
 import android.app.AlarmManager;
