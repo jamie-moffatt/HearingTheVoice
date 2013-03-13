@@ -153,7 +153,9 @@ public class SummaryActivity extends Activity
 						.show();
 				// TODO might be better ways of doing this now!!!
 				finish();
-				Intent i = new Intent(context, DashboardActivity.class);
+				
+				int samples = AppManager.getSamplesComplete(context);
+				Intent i = new Intent(context, (samples == 28 ? EndActivity.class : DashboardActivity.class));
 				startActivity(i);
 			}
 		}

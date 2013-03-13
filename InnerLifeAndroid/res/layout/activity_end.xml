@@ -36,7 +36,7 @@
                     android:drawablePadding="2dp"
                     android:gravity="center_vertical"
                     android:padding="7dp"
-                    android:text="You have now complete all 26 samples."
+                    android:text="You have now complete all 28 samples."
                     android:textColor="#FFFFFF" />
 
                 <TextView
