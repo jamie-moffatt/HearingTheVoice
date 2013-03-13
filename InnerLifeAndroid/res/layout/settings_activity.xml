@@ -4,35 +4,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/txtSettingsDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:padding="7dp"
+        android:text="@string/settings_time_selector_explaination" />
+
+    <TextView
+        android:id="@+id/txtSettingsTimeRangeDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtSettingsDescription"
+        android:padding="7dp" />
+
+    <org.hearingthevoice.innerlife.ui.view.TimeSelector
+        android:id="@+id/timeSelector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtSettingsTimeRangeDescription"
+        android:layout_above="@+id/btnApplyNotificationTimeChanges"
+        android:padding="10dp" />
+
+    <Button
+        android:id="@+id/btnApplyNotificationTimeChanges"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/txtSettingsDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="7dp"
-            android:text="@string/settings_time_selector_explaination" />
-
-        <TextView
-            android:id="@+id/txtSettingsTimeRangeDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="7dp" />
-
-        <org.hearingthevoice.innerlife.ui.view.TimeSelector
-            android:id="@+id/timeSelector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp" />
-
-        <Button
-            android:id="@+id/btnApplyNotificationTimeChanges"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp" />
-    </LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="applyChanges"
+        android:padding="10dp"
+        android:text="@string/apply_changes" />
 
 </RelativeLayout>

@@ -57,5 +57,8 @@ public class AlarmReceiver extends BroadcastReceiver
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String notificationTime = sdf.format(now.getTime());
 		AppManager.setNotificationTime(context, notificationTime);
+		
+		int notificationsSoFar = AppManager.getPossibleSamplesSoFar(context);
+		AppManager.setPossibleSamplesSoFar(context, notificationsSoFar+1);
 	}
 }

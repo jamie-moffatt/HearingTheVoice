@@ -1,7 +1,9 @@
 package org.hearingthevoice.innerlife.services;
 
 import java.util.Calendar;
+import java.util.Random;
 
+import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.R;
 
 import android.app.AlarmManager;
@@ -40,36 +42,45 @@ public class BootService extends Service
 		// Get the AlarmManager service
 		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 
+		Random random = new Random();
 		Calendar now = Calendar.getInstance();
 
-		if (now.get(Calendar.HOUR_OF_DAY) < 10)
+		int amTime = AppManager.getAMNotificationTime(context);
+				
+		if (now.get(Calendar.HOUR_OF_DAY) < amTime)
 		{
+			int randomizedAMTime = amTime + random.nextInt(4);
+			
 			Calendar amSession = Calendar.getInstance();
-			amSession.set(Calendar.HOUR_OF_DAY, 10); // 10
+			amSession.set(Calendar.HOUR_OF_DAY, randomizedAMTime); // 10
 			amSession.set(Calendar.MINUTE, 0); // 0
-			amSession.set(Calendar.SECOND, 0);
+			amSession.set(Calendar.SECOND, 0); // 0 
 
 			Intent amIntent = new Intent(context, AlarmReceiver.class);
 			amIntent.putExtra("NOTIFICATION_TYPE", "AM");
 			PendingIntent amSender = PendingIntent.getBroadcast(context, 117, amIntent,
 					PendingIntent.FLAG_UPDATE_CURRENT);
 
-			am.set(AlarmManager.RTC_WAKEUP, amSession.getTimeInMillis(), amSender);
+			am.set(AlarmManager.RTC, amSession.getTimeInMillis(), amSender);
 		}
+		
+		int pmTime = AppManager.getPMNotificationTime(context);
 
-		if (now.get(Calendar.HOUR_OF_DAY) < 17)
+		if (now.get(Calendar.HOUR_OF_DAY) < pmTime)
 		{
+			int randomizedPMTime = pmTime + random.nextInt(4);
+			
 			Calendar pmSession = Calendar.getInstance();
-			pmSession.set(Calendar.HOUR_OF_DAY, 17); // 17
+			pmSession.set(Calendar.HOUR_OF_DAY, randomizedPMTime); // 17
 			pmSession.set(Calendar.MINUTE, 0); // 0
-			pmSession.set(Calendar.SECOND, 0);
+			pmSession.set(Calendar.SECOND, 0); // 0
 
 			Intent pmIntent = new Intent(context, AlarmReceiver.class);
 			pmIntent.putExtra("NOTIFICATION_TYPE", "PM");
 			PendingIntent pmSender = PendingIntent.getBroadcast(context, 118, pmIntent,
 					PendingIntent.FLAG_UPDATE_CURRENT);
 
-			am.set(AlarmManager.RTC_WAKEUP, pmSession.getTimeInMillis(), pmSender);
+			am.set(AlarmManager.RTC, pmSession.getTimeInMillis(), pmSender);
 		}
 
 		Calendar tomorrow = Calendar.getInstance();

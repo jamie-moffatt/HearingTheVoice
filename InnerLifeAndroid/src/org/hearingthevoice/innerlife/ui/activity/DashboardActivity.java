@@ -68,11 +68,8 @@ public class DashboardActivity extends Activity
 
 		btnAnswerTestQuestions.setEnabled(false);
 
-//		progressDialog = ProgressDialog.show(context, "Downloading Questions",
-//				"Currently downloading questions. Please wait...", true);
-
-		// TODO needs to check to see if questions are already downloaded
-		// determine whether the questions are cached in the file system
+		progressDialog = ProgressDialog.show(context, "Downloading Questions",
+				"Currently downloading questions. Please wait...", true);
 		
 		String[] files = context.fileList();
 		boolean questionsCached = false;
@@ -97,8 +94,10 @@ public class DashboardActivity extends Activity
 			}
 		}
 		
-//		if(!scheduleCached) (new ScheduleDownloadTask()).execute();
-//		if(!questionsCached) (new QuestionDownloadTask()).execute();
+		if (scheduleCached && questionsCached) progressDialog.dismiss();
+		
+		if(!scheduleCached) (new ScheduleDownloadTask()).execute();
+		if(!questionsCached) (new QuestionDownloadTask()).execute();
 
 		int samplesCompletedToday = AppManager.getSamplesCompleteToday(context);
 		txtSamplesToday.setText("You have submitted " + samplesCompletedToday + " samples today.");
@@ -137,8 +136,6 @@ public class DashboardActivity extends Activity
 				finish();
 			}
 		});
-
-		// TODO prevent a user from answering at the wrong time/without a notification
 
 		btnTestNotification.setOnClickListener(new View.OnClickListener()
 		{
@@ -246,7 +243,6 @@ public class DashboardActivity extends Activity
 		@Override
 		protected void onPostExecute(Schedule schedule)
 		{
-			// Toast.makeText(context, "Schedule Downloaded.", Toast.LENGTH_LONG).show();
 			if (scheduleDownloaded && questionsDownloaded)
 			{
 				if (progressDialog != null) progressDialog.dismiss();
@@ -293,7 +289,6 @@ public class DashboardActivity extends Activity
 		@Override
 		protected void onPostExecute(List<Section> sections)
 		{
-			// Toast.makeText(context, "Questions Downloaded.", Toast.LENGTH_LONG).show();
 			if (scheduleDownloaded && questionsDownloaded)
 			{
 				if (progressDialog != null) progressDialog.dismiss();

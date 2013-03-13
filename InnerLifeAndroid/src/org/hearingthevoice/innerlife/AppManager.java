@@ -315,7 +315,7 @@ public class AppManager extends Application
 	public static int getAMNotificationTime(Context context)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-		return preferences.getInt(AM_NOTIFICATION, 10);
+		return preferences.getInt(AM_NOTIFICATION, 9);
 	}
 	
 	public static void setAMNotificationTime(Context context, int time)
@@ -342,11 +342,15 @@ public class AppManager extends Application
 	
 	public static int getPossibleSamplesSoFar(Context context)
 	{
-		return 0;
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getInt(POSSIBLE_SAMPLES_SO_FAR, 0);
 	}
 	
 	public static void setPossibleSamplesSoFar(Context context, int samples)
 	{
-		
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putInt(POSSIBLE_SAMPLES_SO_FAR, samples);
+		editor.commit();
 	}
 }

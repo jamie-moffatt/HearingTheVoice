@@ -136,6 +136,11 @@ public class TimeSelector extends View
 	{
 		return this.amStartTime;
 	}
+	
+	public void setAMTime(int time)
+	{
+		this.amStartTime = time;
+	}
 
 	private void decrementAMTime()
 	{
@@ -152,6 +157,11 @@ public class TimeSelector extends View
 	public int getPMTime()
 	{
 		return this.pmStartTime;
+	}
+	
+	public void setPMTime(int time)
+	{
+		this.pmStartTime = time;
 	}
 
 	private void decrementPMTime()
