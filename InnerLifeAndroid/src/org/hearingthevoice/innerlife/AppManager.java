@@ -29,6 +29,8 @@ public class AppManager extends Application
 	public static final String SAMPLES_COMPLETE = "samples_complete_key";
 	public static final String SAMPLE_TIMES = "sample_times_key";
 	
+	public static final String POSSIBLE_SAMPLES_SO_FAR = "possible_samples_so_far_key";
+	
 	public static final String USER_CODE = "user_code_key";
 	public static final String USER_AGE = "user_age_key";
 	public static final String USER_GENDER = "user_gender_key";
@@ -336,5 +338,15 @@ public class AppManager extends Application
 		Editor editor = preferences.edit();
 		editor.putInt(PM_NOTIFICATION, time);
 		editor.commit();
+	}
+	
+	public static int getPossibleSamplesSoFar(Context context)
+	{
+		return 0;
+	}
+	
+	public static void setPossibleSamplesSoFar(Context context, int samples)
+	{
+		
 	}
 }
