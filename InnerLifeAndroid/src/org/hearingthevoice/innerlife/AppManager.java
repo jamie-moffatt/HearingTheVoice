@@ -33,6 +33,9 @@ public class AppManager extends Application
 	public static final String USER_AGE = "user_age_key";
 	public static final String USER_GENDER = "user_gender_key";
 	
+	public static final String AM_NOTIFICATION = "am_notification_key";
+	public static final String PM_NOTIFICATION = "pm_notification_key";
+	
 	public static final String GOT_NOTIFICATION = "got_notification_key";
 	public static final String NOTIFICATION_TIME = "notification_time_key";
 	
@@ -305,5 +308,33 @@ public class AppManager extends Application
 		if (avgResponseTime > 0) formattedTime += ((avgResponseTime % (60*60)) % 60) + "s";
 		else return "?";
 		return formattedTime;
+	}
+	
+	public static int getAMNotificationTime(Context context)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getInt(AM_NOTIFICATION, 10);
+	}
+	
+	public static void setAMNotificationTime(Context context, int time)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putInt(AM_NOTIFICATION, time);
+		editor.commit();
+	}
+	
+	public static int getPMNotificationTime(Context context)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getInt(PM_NOTIFICATION, 17);
+	}
+	
+	public static void setPMNotificationTime(Context context, int time)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putInt(PM_NOTIFICATION, time);
+		editor.commit();
 	}
 }
