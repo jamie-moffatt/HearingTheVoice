@@ -154,9 +154,13 @@ public class SummaryActivity extends Activity
 				// TODO might be better ways of doing this now!!!
 				finish();
 				
-				int samples = AppManager.getSamplesComplete(context);
-				Intent i = new Intent(context, (samples == 28 ? EndActivity.class : DashboardActivity.class));
-				startActivity(i);
+				int samples = AppManager.getPossibleSamplesSoFar(context);
+				
+				if(samples == 31)
+				{
+					Intent i = new Intent(context, EndActivity.class);
+					startActivity(i);
+				}
 			}
 		}
 		catch (IOException e)
