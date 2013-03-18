@@ -112,7 +112,11 @@ public class MainActivity extends Activity
 			Log.d("SCHEDULE", "read from file");
 			schedule = QuestionAPI.retrieveCachedSchedule(context);
 
-			session = AppManager.getSamplesComplete(context);
+			int samples = AppManager.getPossibleSamplesSoFar(context);
+			session = (samples == 0) ? 28 : samples - 1;
+			if(samples == 14) session = 29;
+			if(samples  > 14) session = samples - 1;
+			if(samples == 28) session = 30;
 
 			if (session > schedule.numberOfSessions() - 1) session %= schedule.numberOfSessions();
 

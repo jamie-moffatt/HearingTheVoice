@@ -5,6 +5,7 @@ import org.hearingthevoice.innerlife.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -79,6 +80,8 @@ public class FirstRunFormActivity extends Activity
 				
 				AppManager.setFirstRun(context, false);
 				
+				Intent i = new Intent(context, MainActivity.class);
+				startActivity(i);
 				finish();
 			}
 		});
