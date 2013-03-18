@@ -75,8 +75,6 @@ public class QuestionAPI
 	public static List<Section> downloadQuestionXML(Context context, String urlExtension)
 			throws MalformedURLException, IOException, ProtocolException, FactoryConfigurationError
 			{
-		List<Section> questionList = new ArrayList<Section>();
-
 		URL url = new URL(INNER_LIFE_BASE_URL + urlExtension);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -149,8 +147,6 @@ public class QuestionAPI
 	public static Schedule downloadScheduleXML(Context context, String urlExtension)
 			throws MalformedURLException, IOException, ProtocolException, FactoryConfigurationError
 	{
-		Schedule schedule = new Schedule();
-
 		URL url = new URL(INNER_LIFE_BASE_URL + urlExtension);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 

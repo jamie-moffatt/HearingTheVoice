@@ -4,16 +4,13 @@ import java.util.Calendar;
 import java.util.Random;
 
 import org.hearingthevoice.innerlife.AppManager;
-import org.hearingthevoice.innerlife.R;
 
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 
 public class BootService extends Service
 {
@@ -30,13 +27,13 @@ public class BootService extends Service
 
 		// TODO determine whether the app is done with and stop doing things
 
-		NotificationManager nm;
-		nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
-		nb.setContentInfo("BootService started.");
-		nb.setContentText("BootService started.");
-		nb.setContentTitle("BOOT SERVICE");
-		nb.setSmallIcon(R.drawable.next_item);
+//		NotificationManager nm;
+//		nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//		NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+//		nb.setContentInfo("BootService started.");
+//		nb.setContentText("BootService started.");
+//		nb.setContentTitle("BOOT SERVICE");
+//		nb.setSmallIcon(R.drawable.next_item);
 		// nm.notify(784, nb.build());
 
 		// Get the AlarmManager service

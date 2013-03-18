@@ -33,6 +33,13 @@
                 android:layout_margin="5dp"
                 android:background="@drawable/curved_border" />
 
+            <SeekBar
+                android:id="@+id/sbr_scale_response"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/curved_border" />
+
             <RadioGroup
                 android:id="@+id/rbl_responses"
                 android:layout_width="fill_parent"

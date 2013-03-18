@@ -12,6 +12,7 @@ import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.R;
 import org.hearingthevoice.innerlife.io.web.QuestionAPI;
 import org.hearingthevoice.innerlife.model.Question;
+import org.hearingthevoice.innerlife.model.Question.QuestionType;
 import org.hearingthevoice.innerlife.model.Schedule;
 import org.hearingthevoice.innerlife.model.Section;
 
@@ -27,13 +28,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class MainActivity extends Activity
 {
 	private Context context;
-	private Activity activity;
-
 	private Calendar notificationTime;
 
 	private TextView txtQuestionHead;
@@ -47,12 +47,13 @@ public class MainActivity extends Activity
 	private int session = 0;
 
 	private RadioGroup rblResponses;
+	private SeekBar sbrScaleResponse;
 	private Map<Long, Integer> responseIDs;
 	private Map<Long, String> responseStrings;
 
 	private Button btnBack;
 	private Button btnNext;
-	
+
 	AppManager manager;
 
 	@Override
@@ -60,16 +61,12 @@ public class MainActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		context = this;
 
-		context = getApplicationContext();
-		activity = this;
-
-		// The notification time should be taken from the SharedPreferences set by
-		// the background service
 		String notificationTimeStored = AppManager.getNotificationTime(context);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		notificationTime = Calendar.getInstance();
-		
+
 		try
 		{
 			notificationTime.setTime(sdf.parse(notificationTimeStored));
@@ -121,7 +118,7 @@ public class MainActivity extends Activity
 
 			sections = schedule.filterBySession(sections, session);
 			questions = sections.get(0).getQuestions();
-			
+
 			manager = AppManager.getInstance();
 			manager.setSection(sections);
 		}
@@ -134,6 +131,7 @@ public class MainActivity extends Activity
 		txtQuestionBody = (TextView) findViewById(R.id.txt_question_body);
 
 		rblResponses = (RadioGroup) findViewById(R.id.rbl_responses);
+		sbrScaleResponse = (SeekBar) findViewById(R.id.sbr_scale_response);
 
 		responseIDs = new HashMap<Long, Integer>();
 		responseStrings = new HashMap<Long, String>();
@@ -150,10 +148,13 @@ public class MainActivity extends Activity
 				// rblResponses.getCheckedRadioButtonId()), Toast.LENGTH_SHORT).show();
 				if (!questions.isEmpty())
 				{
-					responseIDs.put(questions.get(question).getQuestionID(), rblResponses.getCheckedRadioButtonId());
-					
-					RadioButton selection = (RadioButton) rblResponses.getChildAt(rblResponses.getCheckedRadioButtonId());
-					String response = selection == null ? "No Response" : selection.getText().toString();
+					responseIDs.put(questions.get(question).getQuestionID(),
+							rblResponses.getCheckedRadioButtonId());
+
+					RadioButton selection = (RadioButton) rblResponses.getChildAt(rblResponses
+							.getCheckedRadioButtonId());
+					String response = selection == null ? "No Response" : selection.getText()
+							.toString();
 					responseStrings.put(questions.get(question).getQuestionID(), response);
 				}
 
@@ -183,11 +184,22 @@ public class MainActivity extends Activity
 				// rblResponses.getCheckedRadioButtonId()), Toast.LENGTH_SHORT).show();
 				if (!questions.isEmpty())
 				{
-					responseIDs.put(questions.get(question).getQuestionID(), rblResponses.getCheckedRadioButtonId());
-					
-					RadioButton selection = (RadioButton) rblResponses.getChildAt(rblResponses.getCheckedRadioButtonId());
-					String response = selection == null ? "No Response" : selection.getText().toString();
-					responseStrings.put(questions.get(question).getQuestionID(), response);
+					if (questions.get(question).getType() == QuestionType.NUMSCALE)
+					{
+						responseIDs.put(questions.get(question).getQuestionID(), sbrScaleResponse.getProgress());
+						responseStrings.put(questions.get(question).getQuestionID(), ""+sbrScaleResponse.getProgress());
+					}
+					else
+					{
+						responseIDs.put(questions.get(question).getQuestionID(),
+								rblResponses.getCheckedRadioButtonId());
+
+						RadioButton selection = (RadioButton) rblResponses.getChildAt(rblResponses
+								.getCheckedRadioButtonId());
+						String response = selection == null ? "No Response" : selection.getText()
+								.toString();
+						responseStrings.put(questions.get(question).getQuestionID(), response);
+					}
 				}
 
 				question++;
@@ -225,7 +237,7 @@ public class MainActivity extends Activity
 	public void endSession()
 	{
 		Log.d("SESSION", "end of session");
-		
+
 		manager.setResponseIDs(responseIDs);
 		manager.setResponseStrings(responseStrings);
 
@@ -244,28 +256,39 @@ public class MainActivity extends Activity
 		{
 			switch (questions.get(question).getType())
 			{
-				case YESNO:
-				{
-					responses.add("No");
-					responses.add("Yes");
-					break;
-				}
-				case RADIO:
-				{
-					responses = sections.get(section).getResponses();
-					break;
-				}
-				case NUMSCALE:
-				{
-					List<String> minmax = sections.get(section).getResponses();
-	
-					responses.add("1 - " + minmax.get(0));
-					for (int i = 2; i <= 9; i++)
-						responses.add("" + i);
-					responses.add("10 - " + minmax.get(1));
-	
-					break;
-				}
+			case YESNO:
+			{
+				rblResponses.setVisibility(View.VISIBLE);
+				sbrScaleResponse.setVisibility(View.GONE);
+				responses.add("No");
+				responses.add("Yes");
+				break;
+			}
+			case RADIO:
+			{
+				rblResponses.setVisibility(View.VISIBLE);
+				sbrScaleResponse.setVisibility(View.GONE);
+				responses = sections.get(section).getResponses();
+				break;
+			}
+			case NUMSCALE:
+			{
+				List<String> minmax = sections.get(section).getResponses();
+				//
+				// responses.add("1 - " + minmax.get(0));
+				// for (int i = 2; i <= 9; i++)
+				// responses.add("" + i);
+				// responses.add("10 - " + minmax.get(1));
+
+				rblResponses.setVisibility(View.GONE);
+				sbrScaleResponse.setVisibility(View.VISIBLE);
+				int min = Integer.parseInt(minmax.get(0));
+				int max = Integer.parseInt(minmax.get(1));
+
+				sbrScaleResponse.setMax(max);
+
+				break;
+			}
 			}
 
 			if (responses.size() > 0)
@@ -304,9 +327,8 @@ public class MainActivity extends Activity
 
 	private void loadQuestion()
 	{
-		txtQuestionHead
-				.setText("Section  " + sections.get(section).getSectionID() + ", Question " + questions
-						.get(question).getNumber());
+		txtQuestionHead.setText("Section  " + sections.get(section).getSectionID() + ", Question "
+				+ questions.get(question).getNumber());
 		txtQuestionBody.setText(questions.get(question).getDescription());
 		populateResponses();
 	}
@@ -314,8 +336,8 @@ public class MainActivity extends Activity
 	private void loadPlaceholder()
 	{
 		if (sections.isEmpty()) txtQuestionHead.setText("No Section, No Question");
-		else txtQuestionHead
-				.setText("Section " + sections.get(section).getSectionID() + ", No Question");
+		else txtQuestionHead.setText("Section " + sections.get(section).getSectionID()
+				+ ", No Question");
 		txtQuestionBody.setText("There are currently no questions in this section");
 	}
 }

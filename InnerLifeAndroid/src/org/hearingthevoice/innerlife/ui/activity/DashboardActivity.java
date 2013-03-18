@@ -43,7 +43,6 @@ public class DashboardActivity extends Activity
 	private boolean scheduleDownloaded = false;
 	private boolean questionsDownloaded = false;
 
-	private Activity activity;
 	private Context context;
 
 	@Override
@@ -53,8 +52,6 @@ public class DashboardActivity extends Activity
 		setContentView(R.layout.activity_dashboard);
 
 		context = this;
-		activity = this;
-
 		btnAnswerTestQuestions = (Button) findViewById(R.id.btnAnswerTestQuestions);
 		btnTestNotification = (Button) findViewById(R.id.btnTestNotification);
 		txtSamplesToday = (TextView) findViewById(R.id.txtSamplesToday);
@@ -70,11 +67,11 @@ public class DashboardActivity extends Activity
 
 		progressDialog = ProgressDialog.show(context, "Downloading Questions",
 				"Currently downloading questions. Please wait...", true);
-		
+
 		String[] files = context.fileList();
 		boolean questionsCached = false;
 		boolean scheduleCached = false;
-		
+
 		for (String file : files)
 		{
 			if (file.contains("questions"))
@@ -93,17 +90,28 @@ public class DashboardActivity extends Activity
 				break;
 			}
 		}
-		
-		if (scheduleCached && questionsCached) progressDialog.dismiss();
-		
-		if(!scheduleCached) (new ScheduleDownloadTask()).execute();
-		if(!questionsCached) (new QuestionDownloadTask()).execute();
+
+		if (scheduleCached && questionsCached)
+		{
+			if (progressDialog != null) progressDialog.dismiss();
+			if (AppManager.getSamplesCompleteToday(context) < 2
+					&& AppManager.getGotNotification(context))
+			{
+				txtQuestionsAvailable.setText("New Questions Available.");
+				txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
+						R.drawable.action_help, 0, 0, 0);
+				btnAnswerTestQuestions.setEnabled(true);
+			}
+		}
+
+		if (!scheduleCached) (new ScheduleDownloadTask()).execute();
+		if (!questionsCached) (new QuestionDownloadTask()).execute();
 
 		int samplesCompletedToday = AppManager.getSamplesCompleteToday(context);
 		txtSamplesToday.setText("You have submitted " + samplesCompletedToday + " samples today.");
 		if (samplesCompletedToday == 1)
-			txtSamplesToday
-					.setText("You have submitted " + samplesCompletedToday + " sample today.");
+			txtSamplesToday.setText("You have submitted " + samplesCompletedToday
+					+ " sample today.");
 		if (samplesCompletedToday < 1) txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(
 				R.drawable.action_empty_star, 0, 0, 0);
 		else if (samplesCompletedToday == 1) txtSamplesToday
@@ -122,7 +130,8 @@ public class DashboardActivity extends Activity
 		if (samplesCompletedToday > 1 && !AppManager.getGotNotification(context))
 		{
 			txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
-			if (!AppManager.getGotNotification(context)) txtQuestionsAvailable.setText("Wait for the next notification.");
+			if (!AppManager.getGotNotification(context))
+				txtQuestionsAvailable.setText("Wait for the next notification.");
 			btnAnswerTestQuestions.setEnabled(false);
 		}
 
@@ -168,7 +177,7 @@ public class DashboardActivity extends Activity
 				nb.setSound(Uri.parse("content://settings/system/notification_sound"));
 
 				nm.notify(0, nb.build());
-				
+
 				AppManager.setGotNotification(context, true);
 				Calendar now = Calendar.getInstance();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -205,7 +214,7 @@ public class DashboardActivity extends Activity
 		getMenuInflater().inflate(R.menu.activity_dashboard, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
@@ -218,7 +227,6 @@ public class DashboardActivity extends Activity
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
 
 	private class ScheduleDownloadTask extends AsyncTask<String, Integer, Schedule>
 	{
@@ -246,8 +254,8 @@ public class DashboardActivity extends Activity
 			if (scheduleDownloaded && questionsDownloaded)
 			{
 				if (progressDialog != null) progressDialog.dismiss();
-				if (AppManager.getSamplesCompleteToday(context) < 2 && AppManager
-						.getGotNotification(context))
+				if (AppManager.getSamplesCompleteToday(context) < 2
+						&& AppManager.getGotNotification(context))
 				{
 					txtQuestionsAvailable.setText("New Questions Available.");
 					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
@@ -259,7 +267,8 @@ public class DashboardActivity extends Activity
 					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
 							R.drawable.action_help, 0, 0, 0);
 					txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
-					if (!AppManager.getGotNotification(context)) txtQuestionsAvailable.setText("Wait for the next notification.");
+					if (!AppManager.getGotNotification(context))
+						txtQuestionsAvailable.setText("Wait for the next notification.");
 					btnAnswerTestQuestions.setEnabled(false);
 				}
 			}
@@ -293,8 +302,8 @@ public class DashboardActivity extends Activity
 			{
 				if (progressDialog != null) progressDialog.dismiss();
 
-				if (AppManager.getSamplesCompleteToday(context) < 2 && AppManager
-						.getGotNotification(context))
+				if (AppManager.getSamplesCompleteToday(context) < 2
+						&& AppManager.getGotNotification(context))
 				{
 					txtQuestionsAvailable.setText("New Questions Available.");
 					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
@@ -306,7 +315,8 @@ public class DashboardActivity extends Activity
 					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
 							R.drawable.action_help, 0, 0, 0);
 					txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
-					if (!AppManager.getGotNotification(context)) txtQuestionsAvailable.setText("Wait for the next notification.");
+					if (!AppManager.getGotNotification(context))
+						txtQuestionsAvailable.setText("Wait for the next notification.");
 					btnAnswerTestQuestions.setEnabled(false);
 				}
 			}
