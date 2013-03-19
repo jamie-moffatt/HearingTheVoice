@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -67,13 +68,16 @@ public class MainActivity extends Activity
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		notificationTime = Calendar.getInstance();
 
-		try
+		if (notificationTimeStored != null)
 		{
-			notificationTime.setTime(sdf.parse(notificationTimeStored));
-		}
-		catch (ParseException ex)
-		{
-			ex.printStackTrace();
+			try
+			{
+				notificationTime.setTime(sdf.parse(notificationTimeStored));
+			}
+			catch (ParseException ex)
+			{
+				ex.printStackTrace();
+			}
 		}
 
 		boolean updateQuestions = false;
@@ -114,9 +118,9 @@ public class MainActivity extends Activity
 
 			int samples = AppManager.getPossibleSamplesSoFar(context);
 			session = (samples == 0) ? 28 : samples - 1;
-			if(samples == 14) session = 29;
-			if(samples  > 14) session = samples - 1;
-			if(samples == 28) session = 30;
+			if (samples == 14) session = 29;
+			if (samples > 14) session = samples - 1;
+			if (samples == 28) session = 30;
 
 			if (session > schedule.numberOfSessions() - 1) session %= schedule.numberOfSessions();
 
@@ -190,8 +194,10 @@ public class MainActivity extends Activity
 				{
 					if (questions.get(question).getType() == QuestionType.NUMSCALE)
 					{
-						responseIDs.put(questions.get(question).getQuestionID(), sbrScaleResponse.getProgress());
-						responseStrings.put(questions.get(question).getQuestionID(), ""+sbrScaleResponse.getProgress());
+						responseIDs.put(questions.get(question).getQuestionID(),
+								sbrScaleResponse.getProgress());
+						responseStrings.put(questions.get(question).getQuestionID(), ""
+								+ sbrScaleResponse.getProgress());
 					}
 					else
 					{
@@ -286,10 +292,10 @@ public class MainActivity extends Activity
 
 				rblResponses.setVisibility(View.GONE);
 				sbrScaleResponse.setVisibility(View.VISIBLE);
-				int min = Integer.parseInt(minmax.get(0));
-				int max = Integer.parseInt(minmax.get(1));
+				String minDescription = minmax.get(0);
+				String maxDescription = minmax.get(1);
 
-				sbrScaleResponse.setMax(max);
+				sbrScaleResponse.setMax(10);
 
 				break;
 			}
@@ -314,6 +320,10 @@ public class MainActivity extends Activity
 		{
 			Log.d("CHECKBOX", "Recalling: " + responseIDs.get(questionID));
 			rblResponses.check(responseIDs.get(questionID));
+			if (sbrScaleResponse != null && questions.get(question).getType() == QuestionType.NUMSCALE)
+			{
+					sbrScaleResponse.setProgress(responseIDs.get(questionID));
+			}
 		}
 		else
 		{
@@ -333,7 +343,7 @@ public class MainActivity extends Activity
 	{
 		txtQuestionHead.setText("Section  " + sections.get(section).getSectionID() + ", Question "
 				+ questions.get(question).getNumber());
-		txtQuestionBody.setText(questions.get(question).getDescription());
+		txtQuestionBody.setText(Html.fromHtml("<b>" + sections.get(section).getDescription() + "</b><br /><br />" + questions.get(question).getDescription()));
 		populateResponses();
 	}
 
