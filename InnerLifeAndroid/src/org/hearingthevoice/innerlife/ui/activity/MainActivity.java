@@ -27,6 +27,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -48,7 +49,9 @@ public class MainActivity extends Activity
 	private int session = 0;
 
 	private RadioGroup rblResponses;
+	private LinearLayout sliderContainer;
 	private SeekBar sbrScaleResponse;
+	private TextView txtSliderValue;
 	private Map<Long, Integer> responseIDs;
 	private Map<Long, String> responseStrings;
 
@@ -137,9 +140,29 @@ public class MainActivity extends Activity
 
 		txtQuestionHead = (TextView) findViewById(R.id.txt_question_header);
 		txtQuestionBody = (TextView) findViewById(R.id.txt_question_body);
-
 		rblResponses = (RadioGroup) findViewById(R.id.rbl_responses);
 		sbrScaleResponse = (SeekBar) findViewById(R.id.sbr_scale_response);
+		sliderContainer = (LinearLayout) findViewById(R.id.slider_container);
+		txtSliderValue = (TextView) findViewById(R.id.txt_slider_value);
+
+		sbrScaleResponse.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+		{
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar)
+			{
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar)
+			{
+			}
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
+			{
+				txtSliderValue.setText(""+(progress+1));
+			}
+		});
 
 		responseIDs = new HashMap<Long, Integer>();
 		responseStrings = new HashMap<Long, String>();
@@ -269,7 +292,7 @@ public class MainActivity extends Activity
 			case YESNO:
 			{
 				rblResponses.setVisibility(View.VISIBLE);
-				sbrScaleResponse.setVisibility(View.GONE);
+				sliderContainer.setVisibility(View.GONE);
 				responses.add("No");
 				responses.add("Yes");
 				break;
@@ -277,7 +300,7 @@ public class MainActivity extends Activity
 			case RADIO:
 			{
 				rblResponses.setVisibility(View.VISIBLE);
-				sbrScaleResponse.setVisibility(View.GONE);
+				sliderContainer.setVisibility(View.GONE);
 				responses = sections.get(section).getResponses();
 				break;
 			}
@@ -291,11 +314,11 @@ public class MainActivity extends Activity
 				// responses.add("10 - " + minmax.get(1));
 
 				rblResponses.setVisibility(View.GONE);
-				sbrScaleResponse.setVisibility(View.VISIBLE);
+				sliderContainer.setVisibility(View.VISIBLE);
 				String minDescription = minmax.get(0);
 				String maxDescription = minmax.get(1);
 
-				sbrScaleResponse.setMax(10);
+				sbrScaleResponse.setMax(9);
 
 				break;
 			}
@@ -320,15 +343,17 @@ public class MainActivity extends Activity
 		{
 			Log.d("CHECKBOX", "Recalling: " + responseIDs.get(questionID));
 			rblResponses.check(responseIDs.get(questionID));
-			if (sbrScaleResponse != null && questions.get(question).getType() == QuestionType.NUMSCALE)
+			if (sbrScaleResponse != null
+					&& questions.get(question).getType() == QuestionType.NUMSCALE)
 			{
-					sbrScaleResponse.setProgress(responseIDs.get(questionID));
+				sbrScaleResponse.setProgress(responseIDs.get(questionID));
 			}
 		}
 		else
 		{
 			Log.d("CHECKBOX", "Clearing");
 			rblResponses.clearCheck();
+			sbrScaleResponse.setProgress(0);
 		}
 	}
 
@@ -343,7 +368,8 @@ public class MainActivity extends Activity
 	{
 		txtQuestionHead.setText("Section  " + sections.get(section).getSectionID() + ", Question "
 				+ questions.get(question).getNumber());
-		txtQuestionBody.setText(Html.fromHtml("<b>" + sections.get(section).getDescription() + "</b><br /><br />" + questions.get(question).getDescription()));
+		txtQuestionBody.setText(Html.fromHtml("<b>" + sections.get(section).getDescription()
+				+ "</b><br /><br />" + questions.get(question).getDescription()));
 		populateResponses();
 	}
 
