@@ -83,11 +83,7 @@ public class MainActivity extends Activity
 			}
 		}
 
-		boolean updateQuestions = false;
-		boolean updateSchedule = false;
-
 		boolean questionsCached = false;
-		boolean scheduleCached = false;
 
 		String[] files = context.fileList();
 
@@ -97,16 +93,6 @@ public class MainActivity extends Activity
 			if (file.contains("questions"))
 			{
 				questionsCached = true;
-				break;
-			}
-		}
-
-		// determine whether the schedule is cached in the file system
-		for (String file : files)
-		{
-			if (file.contains("schedule"))
-			{
-				scheduleCached = true;
 				break;
 			}
 		}

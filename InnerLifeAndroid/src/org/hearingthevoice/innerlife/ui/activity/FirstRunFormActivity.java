@@ -4,6 +4,8 @@ import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.R;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class FirstRunFormActivity extends Activity
 {
 	private Context context;
 
+	private TextView txtUserIDHint;
 	private EditText edtUserCode;
 	private EditText edtUserAge;
 	private Spinner spnGender;
@@ -30,6 +34,7 @@ public class FirstRunFormActivity extends Activity
 
 		context = this;
 
+		txtUserIDHint = (TextView) findViewById(R.id.txt_user_id_hint);
 		edtUserCode = (EditText) findViewById(R.id.edtUserCode);
 		edtUserAge = (EditText) findViewById(R.id.edtUserAge);
 		spnGender = (Spinner) findViewById(R.id.spnGender);
@@ -43,7 +48,7 @@ public class FirstRunFormActivity extends Activity
 
 		// TODO needs to prevent users from submitting or navigating back if
 		// there's missing data
-		
+
 		btnSubmitUserDetails.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -68,24 +73,34 @@ public class FirstRunFormActivity extends Activity
 					userGender = "FEMALE";
 					break;
 				}
-				
-				//Toast.makeText(context, "userCode: " + userCode + "\nuserAge: " + userAge + "\nuserGender: " + userGender, Toast.LENGTH_LONG).show();
-				
+
+				// Toast.makeText(context, "userCode: " + userCode + "\nuserAge: " + userAge +
+				// "\nuserGender: " + userGender, Toast.LENGTH_LONG).show();
+
 				// I think this is supposed to be submitted to the database
 				// but for now just store the details locally
-				
+
 				AppManager.setUserCode(context, userCode);
 				AppManager.setUserAge(context, userAge);
 				AppManager.setUserGender(context, userGender);
-				
+
 				AppManager.setFirstRun(context, false);
-				
+
 				Intent i = new Intent(context, MainActivity.class);
 				startActivity(i);
 				finish();
 			}
 		});
 
-	}
+		txtUserIDHint.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View arg0)
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setTitle("Anonymous User Code").setMessage(R.string.user_id_help_string).show();
+			}
+		});
 
+	}
 }
