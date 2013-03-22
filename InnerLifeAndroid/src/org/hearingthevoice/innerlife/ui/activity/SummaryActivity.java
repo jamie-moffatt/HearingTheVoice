@@ -35,12 +35,12 @@ public class SummaryActivity extends Activity
 	private Context context;
 	private Activity activity;
 	private AppManager manager;
-	
+
 	private String filename;
-	
+
 	private ListView questionListView;
 	private Button btnConfirm;
-	
+
 	private ProgressDialog submissionProgressDialog;
 
 	@Override
@@ -48,57 +48,59 @@ public class SummaryActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.summary_layout);
-		
+
 		context = this;
 		activity = this;
-		
+
 		manager = AppManager.getInstance();
-		Log.d("MANAGER", ""+(manager == null));
+		Log.d("MANAGER", "" + (manager == null));
 		List<Section> session = manager.getSection();
-		
+
 		List<Question> questions = new ArrayList<Question>();
-		
-		for(Section section : session)
-			for(Question q : section.getQuestions()) questions.add(q);
-		
+
+		for (Section section : session)
+			for (Question q : section.getQuestions())
+				questions.add(q);
+
 		questionListView = (ListView) findViewById(R.id.questionListView);
-		questionListView.setAdapter(new QuestionListAdapter(context, R.layout.question_list_row_layout, questions, manager.getResponseStrings()));
-		
+		questionListView.setAdapter(new QuestionListAdapter(context,
+				R.layout.question_list_row_layout, questions, manager.getResponseStrings()));
+
 		btnConfirm = (Button) findViewById(R.id.btnConfirmSubmission);
-		
+
 		btnConfirm.setOnClickListener(new OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
 				submissionProgressDialog = ProgressDialog.show(v.getContext(),
-						"Submitting Questions",
-						"Submitting your responses. Please wait...", true);
-				
+						"Submitting Questions", "Submitting your responses. Please wait...", true);
+
 				confirmSubmission();
 			}
 		});
 	}
-	
+
 	public void confirmSubmission()
 	{
 		try
 		{
 			int session = AppManager.getSamplesComplete(context);
-			
+
 			String notificationTimeStored = AppManager.getNotificationTime(context);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Calendar notificationTime = Calendar.getInstance();
-			
+
 			try
 			{
-				notificationTime.setTime(sdf.parse(notificationTimeStored));
+				if (notificationTimeStored != null)
+					notificationTime.setTime(sdf.parse(notificationTimeStored));
 			}
 			catch (ParseException ex)
 			{
 				ex.printStackTrace();
 			}
-			
+
 			Calendar submissionTime = Calendar.getInstance();
 			String extension = new SimpleDateFormat("yyyyMMddHHmmss").format(submissionTime
 					.getTime());
@@ -135,10 +137,10 @@ public class SummaryActivity extends Activity
 			str.append("</submission>");
 
 			Log.d("SUBMISSION_DATA", str.toString());
-			
+
 			fos.write(str.toString().getBytes());
 			fos.close();
-			
+
 			AppManager.updateAverageResponseTime(context, _notificationTime, _submissionTime);
 
 			if (QuestionAPI.networkIsConnected(activity)) (new SubmitTask())
@@ -153,10 +155,10 @@ public class SummaryActivity extends Activity
 						.show();
 				// TODO might be better ways of doing this now!!!
 				finish();
-				
+
 				int samples = AppManager.getPossibleSamplesSoFar(context);
-				
-				if(samples == 31)
+
+				if (samples == 31)
 				{
 					Intent i = new Intent(context, EndActivity.class);
 					startActivity(i);
@@ -168,7 +170,7 @@ public class SummaryActivity extends Activity
 			e.printStackTrace();
 		}
 	}
-	
+
 	private class SubmitTask extends AsyncTask<String, Void, Boolean>
 	{
 		@Override

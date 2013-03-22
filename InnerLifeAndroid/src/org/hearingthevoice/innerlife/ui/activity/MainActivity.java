@@ -327,7 +327,6 @@ public class MainActivity extends Activity
 
 		if (responseIDs.containsKey(questionID))
 		{
-			Log.d("CHECKBOX", "Recalling: " + responseIDs.get(questionID));
 			rblResponses.check(responseIDs.get(questionID));
 			if (sbrScaleResponse != null
 					&& questions.get(question).getType() == QuestionType.NUMSCALE)
@@ -337,7 +336,6 @@ public class MainActivity extends Activity
 		}
 		else
 		{
-			Log.d("CHECKBOX", "Clearing");
 			rblResponses.clearCheck();
 			sbrScaleResponse.setProgress(0);
 		}
