@@ -207,6 +207,7 @@ public class DashboardActivity extends Activity
 			context.startService(startServiceIntent);
 			Intent intent = new Intent(context, FirstRunFormActivity.class);
 			startActivity(intent);
+			finish();
 		}
 	}
 
