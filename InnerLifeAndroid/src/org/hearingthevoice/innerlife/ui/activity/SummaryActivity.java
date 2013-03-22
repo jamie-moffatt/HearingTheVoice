@@ -113,10 +113,10 @@ public class SummaryActivity extends Activity
 
 			StringBuffer str = new StringBuffer();
 
-			str.append("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+			str.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 
 			str.append("<submission ");
-			str.append("userID=\"" + AppManager.getUserCode(context) + "\" ");
+			str.append("userID=\"" + AppManager.getUserID(context) + "\" ");
 			str.append("sessionID=\"" + session + "\" ");
 
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -204,7 +204,6 @@ public class SummaryActivity extends Activity
 				{
 					submissionProgressDialog.dismiss();
 				}
-				// TODO might be better ways of doing this now!!!
 				finish();
 				Intent i = new Intent(context, DashboardActivity.class);
 				startActivity(i);
