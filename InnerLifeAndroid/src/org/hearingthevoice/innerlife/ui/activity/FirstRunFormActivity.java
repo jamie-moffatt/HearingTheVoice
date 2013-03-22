@@ -3,6 +3,8 @@ package org.hearingthevoice.innerlife.ui.activity;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -206,7 +208,7 @@ public class FirstRunFormActivity extends Activity
 
 			AppManager.setUserID(context, userID);
 			AppManager.setFirstRun(context, false);
-
+			AppManager.setNotificationTime(context, new SimpleDateFormat("yyyy-MM-dd").format((Calendar.getInstance()).getTime()));
 			Intent i = new Intent(context, MainActivity.class);
 			startActivity(i);
 			finish();
