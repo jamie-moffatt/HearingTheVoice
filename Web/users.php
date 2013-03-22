@@ -67,10 +67,11 @@ elseif ($_SERVER['REQUEST_METHOD'] === "POST")
 		// create xml object
 		$xml = simplexml_load_string($post_data);
 		
-		$dob = mysqli_real_escape_string($mysqli, $xml['dob']);
+		$user_code = mysqli_real_escape_string($mysqli, $xml['code']);
+		$age = mysqli_real_escape_string($mysqli, $xml['age']);
 		$gender = mysqli_real_escape_string($mysqli, $xml['gender']);
 		
-		if ($mysqli->query("INSERT INTO `User` (`DOB`, `gender`) VALUES ('$dob', '$gender')"))
+		if ($mysqli->query("INSERT INTO `User` (`code`, `age`, `gender`) VALUES ('$user_code', '$age', '$gender')"))
 		{
 			print($mysqli->insert_id);
 		}
@@ -95,7 +96,7 @@ else
 
 function getNumberOfSubmissions($mysqli, $userID)
 {
-	// make be better to do this client side
+	// might be better to do this client side
 }
 
 function getAverageResponseTime($mysqli, $userID)
