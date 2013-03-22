@@ -31,6 +31,7 @@ public class AppManager extends Application
 	
 	public static final String POSSIBLE_SAMPLES_SO_FAR = "possible_samples_so_far_key";
 	
+	public static final String USER_ID = "user_id_key";
 	public static final String USER_CODE = "user_code_key";
 	public static final String USER_AGE = "user_age_key";
 	public static final String USER_GENDER = "user_gender_key";
@@ -152,6 +153,21 @@ public class AppManager extends Application
 				Context.MODE_PRIVATE);
 		return preferences.getInt(time, 0);
 	}
+	
+	public static void setUserID(Context context, int userID)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		
+		editor.putInt(USER_ID, userID);
+		editor.commit();
+	}
+	
+	public static int getUserID(Context context)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getInt(USER_ID, 0);
+	}
 
 	public static void setUserCode(Context context, String userCode)
 	{
@@ -171,26 +187,25 @@ public class AppManager extends Application
 		return preferences.getString(USER_CODE, "1");
 	}
 
-	// userAge should potentially be an int, but since it's being taken straight from an EditText
-	public static void setUserAge(Context context, String userAge)
+	public static void setUserAge(Context context, int userAge)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
 				Context.MODE_PRIVATE);
 		Editor editor = preferences.edit();
 
-		editor.putString(USER_AGE, userAge);
+		editor.putInt(USER_AGE, userAge);
 
 		editor.commit();
 	}
 
-	public static String getUserAge(Context context)
+	public static int getUserAge(Context context)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
 				Context.MODE_PRIVATE);
-		return preferences.getString(USER_AGE, "0");
+		return preferences.getInt(USER_AGE, 0);
 	}
 
-	// again, userGender could be an enum, but that seems like overkill
+	// userGender could be an enum, but that seems like overkill
 	public static void setUserGender(Context context, String userGender)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
