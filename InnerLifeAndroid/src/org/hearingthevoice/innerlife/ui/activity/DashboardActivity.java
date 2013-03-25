@@ -195,8 +195,8 @@ public class DashboardActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				Toast.makeText(context, AppManager.getStoredData(context), Toast.LENGTH_LONG)
-						.show();
+				Intent i = new Intent(context, DebugActivity.class);
+				startActivity(i);
 			}
 		});
 

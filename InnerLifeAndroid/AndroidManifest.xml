@@ -13,8 +13,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name="org.hearingthevoice.innerlife.AppManager"
         android:allowBackup="false"
-         android:name=".AppManager"
         android:icon="@drawable/rsz_publication2"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
@@ -46,12 +46,12 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme" >
         </activity>
-
         <activity
             android:name="org.hearingthevoice.innerlife.ui.activity.EndActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" >
         </activity>
+
         <receiver
             android:name="org.hearingthevoice.innerlife.services.AlarmReceiver"
             android:process=":remote" />
@@ -62,6 +62,11 @@
         </receiver>
 
         <service android:name="org.hearingthevoice.innerlife.services.BootService" />
+
+        <activity
+            android:name="org.hearingthevoice.innerlife.ui.activity.DebugActivity"
+            android:label="@string/title_activity_debug" >
+        </activity>
     </application>
 
 </manifest>
