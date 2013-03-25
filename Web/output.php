@@ -1,4 +1,22 @@
 <?php
+if ($_GET['format'] === "csv")
+{
+	header('Content-Disposition: attachment; filename="responses.csv"');
+	header('Content-type: text/csv');
+}
+else
+{
+	print("<!DOCTYPE html>");
+	print("<head>");
+	print("<title>Inner Life</title>");
+	print('<meta charset="UTF-8">');
+	print('<link rel="stylesheet" type="text/css" href="output.css">');
+	print('<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>');
+	print('<script src="js/output.js"></script>');
+	print('</head>');
+	print('<body>');
+}
+
 // read database configuration
 $config = parse_ini_file("dbconfig.ini");
 
@@ -18,10 +36,7 @@ $sections = array();
 $questions = array();
 $sectionCodes = getSectionCodes($mysqli);
 
-header('Content-Disposition: attachment; filename="responses.csv"');
-header('Content-type: text/csv');
-
-if ($result = $mysqli->query("SELECT * FROM `Schedule` ORDER BY `order`"))
+if ($result = $mysqli->query("SELECT * FROM `Schedule` WHERE scheduleID < 29 ORDER BY `order`"))
 {
 	while ($row = $result->fetch_assoc())
 	{
@@ -43,32 +58,80 @@ foreach ($sections as $scheduleID => $sectionArray)
 	}
 }
 
+if ($_GET['format'] !== "csv")
+{
+	print('<table>');
+	
+	print('<tr><td style="font-weight: bold;">Session</td>');
+	foreach ($sections as $scheduleID => $sectionArray)
+	{
+		printf('<td colspan="%d">%d</td>', getNumberOfQuestionsInSession($mysqli, $scheduleID), $scheduleID);
+	}
+	print('</tr>');
+	
+	print('<tr><td style="font-weight: bold;">Section</td>');
+	foreach ($sections as $scheduleID => $sectionArray)
+	{
+		for ($i = 0; $i < count($sectionArray); ++$i)
+		{
+			printf('<td colspan="%d">%d</td>', count($questions[$sectionArray[$i]]), $sectionArray[$i]);
+		}
+	}
+	print('</tr>');
+}
+
+if ($_GET['format'] === "csv")
+	print("Participant");
+else
+	print("<tr><th>Participant</th>");
+
 foreach ($sections as $scheduleID => $sectionArray)
 {
 	foreach ($sectionArray as $section)
 	{
 		foreach ($questions[$section] as $questionID)
 		{
-			printf(",S%d%s%d", $scheduleID, $sectionCodes[$section], getQuestionNumber($mysqli, $questionID));
+			if ($_GET['format'] === "csv")
+				printf(',S%d%s%d', $scheduleID, $sectionCodes[$section], getQuestionNumber($mysqli, $questionID));
+			else
+				printf('<th class="%s" data-section-id="%d" data-section-name="%s" data-question-id="%d">S%d%s%d</th>', $sectionCodes[$section], $section, getSectionName($mysqli, $section), $questionID, $scheduleID, $sectionCodes[$section], getQuestionNumber($mysqli, $questionID));
 		}
 		
 	}
 }
 
+if ($_GET['format'] === "csv")
+	print("\n");
+else
+	print("</tr>");
+
 foreach (getUsers($mysqli) as $user)
 {
-	printf("\n%d", $user);
+	if ($_GET['format'] === "csv")
+		printf("%d : %s", $user, getUserCode($mysqli, $user));
+	else
+		printf("<tr><td>%d : %s</td>", $user, getUserCode($mysqli, $user));
 	foreach ($sections as $scheduleID => $sectionArray)
 	{
 		foreach ($sectionArray as $section)
 		{
 			foreach ($questions[$section] as $questionID)
 			{
-				printf(",%s", getResponse($mysqli, $user, $scheduleID, $questionID));
+				if ($_GET['format'] === "csv")
+					printf(',%s', getResponse($mysqli, $user, $scheduleID, $questionID));
+				else
+					printf('<td class="%s">%s</td>', $sectionCodes[$section], getResponse($mysqli, $user, $scheduleID, $questionID));
 			}
 		}
 	}
+	if ($_GET['format'] === "csv")
+		print("\n");
+	else
+		print("</tr>");
 }
+
+if ($_GET['format'] !== "csv")
+	print("</table>");
 	
 $mysqli->close();
 
@@ -154,4 +217,45 @@ function getQuestionNumber($mysqli, $questionID)
 	return $response;
 }
 
+function getUserCode($mysqli, $userID)
+{
+	if ($result = $mysqli->query("SELECT `code` FROM `User` WHERE `userID` = $userID"))
+	{
+		while ($row = $result->fetch_assoc())
+		{
+			$userCode = $row['code'];
+		}
+		$result->free();
+	}
+	return $userCode;
+}
+
+function getSectionName($mysqli, $sectionID)
+{
+	if ($result = $mysqli->query("SELECT `name` FROM `Section` WHERE `sectionID` = $sectionID"))
+	{
+		while ($row = $result->fetch_assoc())
+		{
+			$sectionName = $row['name'];
+		}
+		$result->free();
+	}
+	return $sectionName;
+}
+
+function getNumberOfQuestionsInSession($mysqli, $scheduleID)
+{
+	if ($result = $mysqli->query("SELECT COUNT(`questionID`) AS `count` FROM `SectionSchedule`, `Question`, `Section` WHERE `scheduleID` = $scheduleID AND `Question`.`sectionID` = `Section`.`sectionID` AND `Section`.`sectionID` = `SectionSchedule`.`sectionID`"))
+	{
+		while ($row = $result->fetch_assoc())
+		{
+			$count = $row['count'];
+		}
+		$result->free();
+	}
+	return $count;
+}
+
+if ($_GET['format'] !== "csv")
+	print('</body>');
 ?>
