@@ -85,7 +85,7 @@ public class SummaryActivity extends Activity
 	{
 		try
 		{
-			int session = AppManager.getSamplesComplete(context);
+			int session = AppManager.getPossibleSamplesSoFar(context);
 
 			String notificationTimeStored = AppManager.getNotificationTime(context);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -151,9 +151,7 @@ public class SummaryActivity extends Activity
 				{
 					submissionProgressDialog.dismiss();
 				}
-				Toast.makeText(activity, "No Connection. Saving responses.", Toast.LENGTH_LONG)
-						.show();
-				// TODO might be better ways of doing this now!!!
+				Toast.makeText(activity, "No Connection. Saving responses.", Toast.LENGTH_LONG).show();
 				finish();
 
 				int samples = AppManager.getPossibleSamplesSoFar(context);
