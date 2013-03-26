@@ -23,6 +23,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -54,6 +55,7 @@ public class MainActivity extends Activity
 	private TextView txtSliderValue;
 	private Map<Long, Integer> responseIDs;
 	private Map<Long, String> responseStrings;
+	private Map<Long, String> responseValues;
 
 	private Button btnBack;
 	private Button btnNext;
@@ -152,6 +154,7 @@ public class MainActivity extends Activity
 
 		responseIDs = new HashMap<Long, Integer>();
 		responseStrings = new HashMap<Long, String>();
+		responseValues = new HashMap<Long, String>();
 
 		btnBack = (Button) findViewById(R.id.btn_back);
 		btnNext = (Button) findViewById(R.id.btn_next);
@@ -165,14 +168,37 @@ public class MainActivity extends Activity
 				// rblResponses.getCheckedRadioButtonId()), Toast.LENGTH_SHORT).show();
 				if (!questions.isEmpty())
 				{
-					responseIDs.put(questions.get(question).getQuestionID(),
-							rblResponses.getCheckedRadioButtonId());
+					if (questions.get(question).getType() == QuestionType.NUMSCALE)
+					{
+						responseIDs.put(questions.get(question).getQuestionID(),
+								sbrScaleResponse.getProgress());
+						responseStrings.put(questions.get(question).getQuestionID(), ""
+								+ sbrScaleResponse.getProgress());
+						responseValues.put(questions.get(question).getQuestionID(), ""
+								+ +sbrScaleResponse.getProgress());
+					}
+					else
+					{
+						responseIDs.put(questions.get(question).getQuestionID(),
+								rblResponses.getCheckedRadioButtonId());
+						if (rblResponses.getCheckedRadioButtonId() > 0)
+						{
+							responseValues.put(
+									questions.get(question).getQuestionID(),
+									sections.get(section).getResponses()
+											.get(rblResponses.getCheckedRadioButtonId()).second);
+						}
+						else
+						{
+							responseValues.put(questions.get(question).getQuestionID(), "N/A");
+						}
 
-					RadioButton selection = (RadioButton) rblResponses.getChildAt(rblResponses
-							.getCheckedRadioButtonId());
-					String response = selection == null ? "No Response" : selection.getText()
-							.toString();
-					responseStrings.put(questions.get(question).getQuestionID(), response);
+						RadioButton selection = (RadioButton) rblResponses.getChildAt(rblResponses
+								.getCheckedRadioButtonId());
+						String response = selection == null ? "No Response" : selection.getText()
+								.toString();
+						responseStrings.put(questions.get(question).getQuestionID(), response);
+					}
 				}
 
 				question--;
@@ -207,11 +233,24 @@ public class MainActivity extends Activity
 								sbrScaleResponse.getProgress());
 						responseStrings.put(questions.get(question).getQuestionID(), ""
 								+ sbrScaleResponse.getProgress());
+						responseValues.put(questions.get(question).getQuestionID(), ""
+								+ +sbrScaleResponse.getProgress());
 					}
 					else
 					{
 						responseIDs.put(questions.get(question).getQuestionID(),
 								rblResponses.getCheckedRadioButtonId());
+						if (rblResponses.getCheckedRadioButtonId() > 0)
+						{
+						responseValues.put(
+								questions.get(question).getQuestionID(),
+								sections.get(section).getResponses()
+										.get(rblResponses.getCheckedRadioButtonId()).second);
+						}
+						else
+						{
+							responseValues.put(questions.get(question).getQuestionID(), "N/A");
+						}
 
 						RadioButton selection = (RadioButton) rblResponses.getChildAt(rblResponses
 								.getCheckedRadioButtonId());
@@ -261,6 +300,7 @@ public class MainActivity extends Activity
 
 		manager.setResponseIDs(responseIDs);
 		manager.setResponseStrings(responseStrings);
+		manager.setResponseValues(responseValues);
 
 		Intent i = new Intent(context, SummaryActivity.class);
 		startActivity(i);
@@ -271,7 +311,7 @@ public class MainActivity extends Activity
 	{
 		rblResponses.removeAllViews();
 
-		List<String> responses = new ArrayList<String>();
+		List<Pair<String, String>> responses = new ArrayList<Pair<String, String>>();
 
 		if (sections != null && sections.size() > 0)
 		{
@@ -281,8 +321,8 @@ public class MainActivity extends Activity
 			{
 				rblResponses.setVisibility(View.VISIBLE);
 				sliderContainer.setVisibility(View.GONE);
-				responses.add("No");
-				responses.add("Yes");
+				responses.add(Pair.create("No", "0"));
+				responses.add(Pair.create("Yes", "1"));
 				break;
 			}
 			case RADIO:
@@ -294,17 +334,13 @@ public class MainActivity extends Activity
 			}
 			case NUMSCALE:
 			{
-				List<String> minmax = sections.get(section).getResponses();
-				//
-				// responses.add("1 - " + minmax.get(0));
-				// for (int i = 2; i <= 9; i++)
-				// responses.add("" + i);
-				// responses.add("10 - " + minmax.get(1));
+				// TODO add labels for low and high values
+				List<Pair<String, String>> minmax = sections.get(section).getResponses();
 
 				rblResponses.setVisibility(View.GONE);
 				sliderContainer.setVisibility(View.VISIBLE);
-				String minDescription = minmax.get(0);
-				String maxDescription = minmax.get(1);
+				String minDescription = minmax.get(0).first;
+				String maxDescription = minmax.get(1).first;
 
 				sbrScaleResponse.setMax(9);
 
@@ -317,7 +353,7 @@ public class MainActivity extends Activity
 				for (int i = 0; i < responses.size(); i++)
 				{
 					RadioButton rb = new RadioButton(context);
-					rb.setText(responses.get(i));
+					rb.setText(responses.get(i).first);
 					rb.setTextColor(Color.BLACK);
 					rb.setId(i);
 					rblResponses.addView(rb);

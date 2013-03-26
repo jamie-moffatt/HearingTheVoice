@@ -19,6 +19,7 @@ public class AppManager extends Application
 	
 	private Map<Long, Integer> prevResponseIDs;
 	private Map<Long, String> prevResponseStrings;
+	private Map<Long, String> prevResponseValues;
 	private List<Section> prevSession;
 
 	public static final String FIRST_RUN_KEY = "first_run";
@@ -67,6 +68,16 @@ public class AppManager extends Application
 	public List<Section> getSection() { return prevSession; }
 	
 	public void setSection(List<Section> sections) { prevSession = sections; }
+
+	public Map<Long, String> getResponseValues()
+	{
+		return prevResponseValues;
+	}
+
+	public void setResponseValues(Map<Long, String> responseValues)
+	{
+		this.prevResponseValues = responseValues;
+	}
 
 	public static void clearPreferences(Context context)
 	{
@@ -368,4 +379,5 @@ public class AppManager extends Application
 		editor.putInt(POSSIBLE_SAMPLES_SO_FAR, samples);
 		editor.commit();
 	}
+
 }

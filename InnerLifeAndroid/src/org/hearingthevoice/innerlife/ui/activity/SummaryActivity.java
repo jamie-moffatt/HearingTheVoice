@@ -127,7 +127,7 @@ public class SummaryActivity extends Activity
 			str.append("notificationTime=\"" + _notificationTime + "\" ");
 			str.append("submissionTime=\"" + _submissionTime + "\">\n");
 
-			for (Entry<Long, Integer> e : manager.getResponseIDs().entrySet())
+			for (Entry<Long, String> e : manager.getResponseValues().entrySet())
 			{
 				str.append("<response ");
 				str.append("questionID=\"" + e.getKey() + "\" ");

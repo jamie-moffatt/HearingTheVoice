@@ -3,6 +3,8 @@ package org.hearingthevoice.innerlife.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Pair;
+
 public class Section
 {
 	long sectionID;
@@ -10,12 +12,12 @@ public class Section
 	String description;
 	
 	List<Question> questions;
-	List<String> responses;
+	List<Pair<String, String>> responses;
 
 	public Section()
 	{
 		questions = new ArrayList<Question>();
-		responses = new ArrayList<String>();
+		responses = new ArrayList<Pair<String,String>>();
 	}
 
 	public long getSectionID() {
@@ -50,11 +52,11 @@ public class Section
 		this.questions = questions;
 	}
 
-	public List<String> getResponses() {
+	public List<Pair<String,String>> getResponses() {
 		return responses;
 	}
 
-	public void setResponses(List<String> responses) {
+	public void setResponses(List<Pair<String,String>> responses) {
 		this.responses = responses;
 	}
 	

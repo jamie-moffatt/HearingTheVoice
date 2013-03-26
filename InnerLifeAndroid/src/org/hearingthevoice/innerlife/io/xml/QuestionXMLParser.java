@@ -9,6 +9,8 @@ import org.hearingthevoice.innerlife.model.Question.QuestionType;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
+import android.util.Pair;
+
 public class QuestionXMLParser extends DefaultHandler
 {
 	private Section section;
@@ -16,7 +18,7 @@ public class QuestionXMLParser extends DefaultHandler
 	private Question question;
 	private List<Question> questionList;
 	
-	private List<String> responses;
+	private List<Pair<String, String>> responses;
 
 	public QuestionXMLParser(List<Section> sectionList)
 	{
@@ -24,7 +26,7 @@ public class QuestionXMLParser extends DefaultHandler
 		this.sectionList = sectionList;
 		
 		questionList = new ArrayList<Question>();
-		responses = new ArrayList<String>();
+		responses = new ArrayList<Pair<String,String>>();
 		
 	}
 
@@ -59,11 +61,11 @@ public class QuestionXMLParser extends DefaultHandler
 		}
 		else if (localName.equalsIgnoreCase("choices"))
 		{
-			responses = new ArrayList<String>();
+			responses = new ArrayList<Pair<String,String>>();
 		}
 		else if (localName.equalsIgnoreCase("choice"))
 		{
-			responses.add(attributes.getValue("text"));
+			responses.add(Pair.create(attributes.getValue("text"), attributes.getValue("value")));
 		}
 	}
 
