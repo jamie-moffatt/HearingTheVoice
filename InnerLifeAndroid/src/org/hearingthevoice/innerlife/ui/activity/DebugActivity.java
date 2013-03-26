@@ -2,6 +2,7 @@ package org.hearingthevoice.innerlife.ui.activity;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.R;
@@ -47,11 +48,8 @@ public class DebugActivity extends Activity
 		final Editor editor = preferences.edit();
 		Map<String, ?> prefMap = preferences.getAll();
 
-		Iterator<?> it = prefMap.entrySet().iterator();
-
-		while (it.hasNext())
+		for (final Entry<String,?> pairs : prefMap.entrySet())
 		{
-			final Map.Entry<String, ?> pairs = (Map.Entry<String, ?>) it.next();
 			TableRow row = new TableRow(context);
 			TextView txtKey = new TextView(context);
 			txtKey.setText(pairs.getKey());

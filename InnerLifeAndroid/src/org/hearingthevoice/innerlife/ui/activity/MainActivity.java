@@ -32,6 +32,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity
 {
@@ -146,7 +147,7 @@ public class MainActivity extends Activity
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
 			{
-				txtSliderValue.setText(""+(progress+1));
+				txtSliderValue.setText("" + (progress + 1));
 			}
 		});
 
@@ -221,23 +222,25 @@ public class MainActivity extends Activity
 					}
 				}
 
-				question++;
-				if (question > questions.size() - 1 && !questions.isEmpty() && !sections.isEmpty())
+				if (sections.isEmpty() || questions.isEmpty())
 				{
-					if (section < sections.size() - 1) section++;
-					questions = sections.get(section).getQuestions();
-					question = 0;
+					loadPlaceholder();
 				}
 
 				if (section == sections.size() - 1 && question == questions.size() - 1)
 				{
 					endSession();
 				}
-				else
+				
+				if (question == questions.size() - 1)
 				{
-					if (!questions.isEmpty()) loadQuestion();
-					else loadPlaceholder();
+					if (section < sections.size() - 1) section++;
+					questions = sections.get(section).getQuestions();
+					question = -1;
 				}
+
+				question++;
+				loadQuestion();
 
 				btnBack.setEnabled(section != 0 || question != 0);
 			}
