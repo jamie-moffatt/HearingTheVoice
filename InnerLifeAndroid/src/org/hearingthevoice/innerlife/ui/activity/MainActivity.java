@@ -241,11 +241,20 @@ public class MainActivity extends Activity
 						responseIDs.put(questions.get(question).getQuestionID(),
 								rblResponses.getCheckedRadioButtonId());
 						if (rblResponses.getCheckedRadioButtonId() > 0)
-						{
-						responseValues.put(
-								questions.get(question).getQuestionID(),
-								sections.get(section).getResponses()
-										.get(rblResponses.getCheckedRadioButtonId()).second);
+						{							
+							if (questions.get(question).getType() == QuestionType.YESNO)
+							{
+								responseValues.put(
+										questions.get(question).getQuestionID(),
+										""+rblResponses.getCheckedRadioButtonId());
+							}
+							else
+							{
+								responseValues.put(
+										questions.get(question).getQuestionID(),
+										sections.get(section).getResponses()
+												.get(rblResponses.getCheckedRadioButtonId()).second);
+							}
 						}
 						else
 						{
@@ -269,7 +278,7 @@ public class MainActivity extends Activity
 				{
 					endSession();
 				}
-				
+
 				if (question == questions.size() - 1)
 				{
 					if (section < sections.size() - 1) section++;
