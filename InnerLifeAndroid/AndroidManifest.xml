@@ -15,7 +15,7 @@
     <application
         android:name="org.hearingthevoice.innerlife.AppManager"
         android:allowBackup="false"
-        android:icon="@drawable/rsz_publication2"
+        android:icon="@drawable/innerlife_icon_96x96_xhdpi"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
