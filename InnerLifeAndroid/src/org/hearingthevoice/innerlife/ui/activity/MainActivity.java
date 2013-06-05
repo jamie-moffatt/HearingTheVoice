@@ -53,9 +53,11 @@ public class MainActivity extends Activity
 	private LinearLayout sliderContainer;
 	private SeekBar sbrScaleResponse;
 	private TextView txtSliderValue;
-	private Map<Long, Integer> responseIDs;
-	private Map<Long, String> responseStrings;
-	private Map<Long, String> responseValues;
+	
+	// stored the values of question responses, mapped  by unique question ID
+	private Map<Long, Integer> responseIDs;     // in terms of widget
+	private Map<Long, String>  responseStrings; // in terms of natural language
+	private Map<Long, String>  responseValues;  // in terms of data entry
 
 	private Button btnBack;
 	private Button btnNext;
@@ -108,12 +110,14 @@ public class MainActivity extends Activity
 			schedule = QuestionAPI.retrieveCachedSchedule(context);
 
 			int samples = AppManager.getPossibleSamplesSoFar(context);
-			session = (samples == 0) ? 28 : samples - 1;
-			if (samples == 14) session = 29;
-			if (samples > 14) session = samples - 1;
-			if (samples == 28) session = 30;
+			session = (samples == 0) ? 28 : samples - 1; // if first sample, load trait questions
+			if (samples == 14) session = 29; // if half way through samples, load trait questions
+			if (samples  > 14) session = samples - 1;
+			if (samples == 28) session = 30; // if end of samples, load trait questions
 
-			if (session > schedule.numberOfSessions() - 1) session %= schedule.numberOfSessions();
+			// TODO this may have been causing last sessions to not be loaded due to trait questions
+			// adding extra sessions.
+			// if (session > schedule.numberOfSessions() - 1) session %= schedule.numberOfSessions();
 
 			sections = schedule.filterBySession(sections, session);
 			questions = sections.get(0).getQuestions();
@@ -166,56 +170,28 @@ public class MainActivity extends Activity
 			{
 				// Toast.makeText(context, String.format("You chose: %d",
 				// rblResponses.getCheckedRadioButtonId()), Toast.LENGTH_SHORT).show();
-				if (!questions.isEmpty())
-				{
-					if (questions.get(question).getType() == QuestionType.NUMSCALE)
-					{
-						responseIDs.put(questions.get(question).getQuestionID(),
-								sbrScaleResponse.getProgress());
-						responseStrings.put(questions.get(question).getQuestionID(), ""
-								+ sbrScaleResponse.getProgress());
-						responseValues.put(questions.get(question).getQuestionID(), ""
-								+ +sbrScaleResponse.getProgress());
-					}
-					else
-					{
-						responseIDs.put(questions.get(question).getQuestionID(),
-								rblResponses.getCheckedRadioButtonId());
-						if (rblResponses.getCheckedRadioButtonId() > 0)
-						{
-							responseValues.put(
-									questions.get(question).getQuestionID(),
-									sections.get(section).getResponses()
-											.get(rblResponses.getCheckedRadioButtonId()).second);
-						}
-						else
-						{
-							responseValues.put(questions.get(question).getQuestionID(), "N/A");
-						}
+				
+				if (!questions.isEmpty()) recordResponse();
 
-						RadioButton selection = (RadioButton) rblResponses.getChildAt(rblResponses
-								.getCheckedRadioButtonId());
-						String response = selection == null ? "No Response" : selection.getText()
-								.toString();
-						responseStrings.put(questions.get(question).getQuestionID(), response);
-					}
-				}
-
-				question--;
+				question--; // cycle back to previous question
+				
 				if (question < 0 && !questions.isEmpty())
 				{
-					if (section > 0) section--;
-					questions = sections.get(section).getQuestions();
-					question = questions.size() - 1;
+					// if the question index is < 0, cycle back to previous section
+					if (section > 0) section--; // cannot cycle back if on first section
+					questions = sections.get(section).getQuestions(); // set questions to those of previous section
+					question = questions.size() - 1; // set current question to last question in section upon cycling back
 				}
 
 				if (!questions.isEmpty()) loadQuestion();
 				else loadPlaceholder();
-
-				btnBack.setEnabled(section != 0 || question != 0);
+				
+				// if on the first question of the first section, there is no
+				// question to go back to so the back button is disabled.
+				btnBack.setEnabled(section != 0 || question != 0); // De Morgan's Law
 			}
 		});
-
+		// back button starts as being disabled as activity opens on section 1 (0), question 1 (0)
 		btnBack.setEnabled(false);
 
 		btnNext.setOnClickListener(new OnClickListener()
@@ -225,71 +201,27 @@ public class MainActivity extends Activity
 			{
 				// Toast.makeText(context, String.format("You chose: %d",
 				// rblResponses.getCheckedRadioButtonId()), Toast.LENGTH_SHORT).show();
-				if (!questions.isEmpty())
+				
+				if (!questions.isEmpty()) recordResponse();
+
+				// upon clicking next on the last question of the last section, end the session
+				if (section == sections.size() - 1 && question == questions.size() - 1) endSession();
+				
+				if (question == questions.size() - 1) // if next is clicked on the last question...
 				{
-					if (questions.get(question).getType() == QuestionType.NUMSCALE)
-					{
-						responseIDs.put(questions.get(question).getQuestionID(),
-								sbrScaleResponse.getProgress());
-						responseStrings.put(questions.get(question).getQuestionID(), ""
-								+ sbrScaleResponse.getProgress());
-						responseValues.put(questions.get(question).getQuestionID(), ""
-								+ +sbrScaleResponse.getProgress());
-					}
-					else
-					{
-						responseIDs.put(questions.get(question).getQuestionID(),
-								rblResponses.getCheckedRadioButtonId());
-						if (rblResponses.getCheckedRadioButtonId() > 0)
-						{							
-							if (questions.get(question).getType() == QuestionType.YESNO)
-							{
-								responseValues.put(
-										questions.get(question).getQuestionID(),
-										""+rblResponses.getCheckedRadioButtonId());
-							}
-							else
-							{
-								responseValues.put(
-										questions.get(question).getQuestionID(),
-										sections.get(section).getResponses()
-												.get(rblResponses.getCheckedRadioButtonId()).second);
-							}
-						}
-						else
-						{
-							responseValues.put(questions.get(question).getQuestionID(), "N/A");
-						}
-
-						RadioButton selection = (RadioButton) rblResponses.getChildAt(rblResponses
-								.getCheckedRadioButtonId());
-						String response = selection == null ? "No Response" : selection.getText()
-								.toString();
-						responseStrings.put(questions.get(question).getQuestionID(), response);
-					}
+					section++; // move onto next section
+					questions = sections.get(section).getQuestions(); // set questions to those of next section
+					question = -1; // for post increment below to work correctly
 				}
+				
+				question++; // cycle to next question
 
-				if (sections.isEmpty() || questions.isEmpty())
-				{
-					loadPlaceholder();
-				}
+				if (!questions.isEmpty()) loadQuestion();
+				else loadPlaceholder();
 
-				if (section == sections.size() - 1 && question == questions.size() - 1)
-				{
-					endSession();
-				}
-
-				if (question == questions.size() - 1)
-				{
-					if (section < sections.size() - 1) section++;
-					questions = sections.get(section).getQuestions();
-					question = -1;
-				}
-
-				question++;
-				loadQuestion();
-
-				btnBack.setEnabled(section != 0 || question != 0);
+				// re-enable the back button when user proceeds from the first question
+				// of the first section.
+				btnBack.setEnabled(section != 0 || question != 0); // De Morgan's Law
 			}
 		});
 
@@ -297,7 +229,7 @@ public class MainActivity extends Activity
 		{
 			if (sections != null && sections.size() > 0)
 			{
-				loadQuestion();
+				loadQuestion(); // load first question
 			}
 			populateResponses();
 		}
@@ -316,6 +248,13 @@ public class MainActivity extends Activity
 		finish();
 	}
 
+	/**
+	 * This method adds an appropriate widget to the user interface allowing the user
+	 * to select an appropriate response to the current question. This widget may vary
+	 * depending on the style of question; for example, a seek bar is used for numeral
+	 * answers while a group of radio buttons is used if there is a finite number of
+	 * natural language responses. 
+	 */
 	public void populateResponses()
 	{
 		rblResponses.removeAllViews();
@@ -395,6 +334,10 @@ public class MainActivity extends Activity
 		return true;
 	}
 
+	/**
+	 * Based on the current section and question IDs, this method loads the
+	 * appropriate question and all of the available answers on screen.
+	 */
 	private void loadQuestion()
 	{
 		txtQuestionHead.setText("Section  " + sections.get(section).getSectionID() + ", Question "
@@ -404,11 +347,55 @@ public class MainActivity extends Activity
 		populateResponses();
 	}
 
+	/**
+	 * This method is called when the appropriate question cannot be loaded
+	 * due to an error (e.g. question data cannot be loaded / is null). 
+	 */
 	private void loadPlaceholder()
 	{
 		if (sections.isEmpty()) txtQuestionHead.setText("No Section, No Question");
 		else txtQuestionHead.setText("Section " + sections.get(section).getSectionID()
 				+ ", No Question");
 		txtQuestionBody.setText("There are currently no questions in this section");
+	}
+
+	private void recordResponse()
+	{
+		long id = questions.get(question).getQuestionID();
+		
+		if (questions.get(question).getType() == QuestionType.NUMSCALE)
+		{
+			int response = sbrScaleResponse.getProgress();
+			
+			responseIDs    .put(id, response);
+			responseStrings.put(id, "" + response); // convert to string
+			responseValues .put(id, "" + response);
+		}
+		else
+		{
+			int responseID = rblResponses.getCheckedRadioButtonId();
+			responseIDs.put(id, responseID);
+			
+			if (responseID > 0)
+			{							
+				if (questions.get(question).getType() == QuestionType.YESNO)
+				{
+					responseValues.put(id, "" + responseID);
+				}
+				else
+				{
+					responseValues.put(id, sections.get(section).getResponses().get(responseID).second);
+				}
+			}
+			else
+			{
+				responseValues.put(questions.get(question).getQuestionID(), "N/A");
+			}
+
+			RadioButton selection = (RadioButton) rblResponses.getChildAt(responseID);
+			String response = (selection == null) ? "No Response" : selection.getText().toString();
+			
+			responseStrings.put(id, response);
+		}
 	}
 }
