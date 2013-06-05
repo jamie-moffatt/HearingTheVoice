@@ -51,14 +51,44 @@
                     android:text="Your average response time was --."
                     android:textColor="#FFFFFF" />
 
-                <Button
-                    android:id="@+id/btnCloseApp"
+                <TextView
+                    android:id="@+id/TextView01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="The data collection is complete. If you are happy for your data to be used in the study, please select YES, otherwise, select NO."
+                    android:textColor="#FFFFFF" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Dpne" />
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/Button01"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:onClick="acceptDataSubmission"
+                        android:text="Yes" />
+
+                    <Button
+                        android:id="@+id/btnCloseApp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:onClick="declineDataSubmission"
+                        android:text="No" />
+
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </FrameLayout>

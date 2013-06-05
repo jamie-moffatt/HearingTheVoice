@@ -379,5 +379,27 @@ public class AppManager extends Application
 		editor.putInt(POSSIBLE_SAMPLES_SO_FAR, samples);
 		editor.commit();
 	}
+	
+	public static boolean getAllowDataUse(Context context)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public static void setAllowDataUse(Context context, boolean allowDataUse)
+	{
+		// TODO Auto-generated method stub
+	}
+	
+	public static boolean getDataUsePreferenceSyncedWithDatabase(Context context)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public static void setDataUsePreferenceSyncedWithDatabase(Context context, boolean success)
+	{
+		// TODO Auto-generated method stub
+	}
 
 }
