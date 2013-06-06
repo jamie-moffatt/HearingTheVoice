@@ -380,26 +380,36 @@ public class AppManager extends Application
 		editor.commit();
 	}
 	
+	public static final String ALLOW_DATA_USE = "allow_data_use_key";
+
 	public static boolean getAllowDataUse(Context context)
 	{
-		// TODO Auto-generated method stub
-		return false;
+	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+	    return preferences.getBoolean(ALLOW_DATA_USE, false);
 	}
 
-	public static void setAllowDataUse(Context context, boolean allowDataUse)
+	public static void setAllowDataUse(Context context, boolean value)
 	{
-		// TODO Auto-generated method stub
+	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+	    Editor editor = preferences.edit();
+	    editor.putBoolean(ALLOW_DATA_USE, value);
+	    editor.commit();
 	}
 	
+	public static final String DATA_USE_PREFERENCE_SYNCED_WITH_DATABASE = "data_use_preference_synced_with_database_key";
+
 	public static boolean getDataUsePreferenceSyncedWithDatabase(Context context)
 	{
-		// TODO Auto-generated method stub
-		return false;
+	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+	    return preferences.getBoolean(DATA_USE_PREFERENCE_SYNCED_WITH_DATABASE, false);
 	}
 
-	public static void setDataUsePreferenceSyncedWithDatabase(Context context, boolean success)
+	public static void setDataUsePreferenceSyncedWithDatabase(Context context, boolean value)
 	{
-		// TODO Auto-generated method stub
+	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+	    Editor editor = preferences.edit();
+	    editor.putBoolean(DATA_USE_PREFERENCE_SYNCED_WITH_DATABASE, value);
+	    editor.commit();
 	}
 
 }
