@@ -257,7 +257,7 @@ public class MainActivity extends Activity
 	 */
 	public void populateResponses()
 	{
-		rblResponses.removeAllViews();
+		rblResponses.removeAllViews(); // remove current responses prior to repopulation
 
 		List<Pair<String, String>> responses = new ArrayList<Pair<String, String>>();
 
@@ -265,35 +265,35 @@ public class MainActivity extends Activity
 		{
 			switch (questions.get(question).getType())
 			{
-			case YESNO:
-			{
-				rblResponses.setVisibility(View.VISIBLE);
-				sliderContainer.setVisibility(View.GONE);
-				responses.add(Pair.create("No", "0"));
-				responses.add(Pair.create("Yes", "1"));
-				break;
-			}
-			case RADIO:
-			{
-				rblResponses.setVisibility(View.VISIBLE);
-				sliderContainer.setVisibility(View.GONE);
-				responses = sections.get(section).getResponses();
-				break;
-			}
-			case NUMSCALE:
-			{
-				// TODO add labels for low and high values
-				List<Pair<String, String>> minmax = sections.get(section).getResponses();
-
-				rblResponses.setVisibility(View.GONE);
-				sliderContainer.setVisibility(View.VISIBLE);
-				String minDescription = minmax.get(0).first;
-				String maxDescription = minmax.get(1).first;
-
-				sbrScaleResponse.setMax(9);
-
-				break;
-			}
+				case YESNO:
+				{
+					rblResponses.setVisibility(View.VISIBLE);
+					sliderContainer.setVisibility(View.GONE);
+					responses.add(Pair.create("No", "0"));
+					responses.add(Pair.create("Yes", "1"));
+					break;
+				}
+				case RADIO:
+				{
+					rblResponses.setVisibility(View.VISIBLE);
+					sliderContainer.setVisibility(View.GONE);
+					responses = sections.get(section).getResponses();
+					break;
+				}
+				case NUMSCALE:
+				{
+					// TODO add labels for low and high values
+					List<Pair<String, String>> minmax = sections.get(section).getResponses();
+	
+					rblResponses.setVisibility(View.GONE);
+					sliderContainer.setVisibility(View.VISIBLE);
+					String minDescription = minmax.get(0).first;
+					String maxDescription = minmax.get(1).first;
+	
+					sbrScaleResponse.setMax(9);
+	
+					break;
+				}
 			}
 
 			if (responses.size() > 0)
@@ -304,16 +304,23 @@ public class MainActivity extends Activity
 					rb.setText(responses.get(i).first);
 					rb.setTextColor(Color.BLACK);
 					rb.setId(i);
-					rblResponses.addView(rb);
+					rblResponses.addView(rb); // add choice to radio group
 				}
 			}
 		}
 
-		long questionID = questions.get(question).getQuestionID();
+		reloadResponse();
+	}
 
+	private void reloadResponse()
+	{
+		long questionID = questions.get(question).getQuestionID();
+		// attempt to load 'response widget' with a previously entered response
+		// if the user is returning to a particular question / screen.
 		if (responseIDs.containsKey(questionID))
 		{
 			rblResponses.check(responseIDs.get(questionID));
+			
 			if (sbrScaleResponse != null
 					&& questions.get(question).getType() == QuestionType.NUMSCALE)
 			{
@@ -376,21 +383,18 @@ public class MainActivity extends Activity
 			int responseID = rblResponses.getCheckedRadioButtonId();
 			responseIDs.put(id, responseID);
 			
-			if (responseID > 0)
+			if (responseID > -1)
 			{							
 				if (questions.get(question).getType() == QuestionType.YESNO)
 				{
-					responseValues.put(id, "" + responseID);
+					responseValues.put(id, "" + responseID); // yes/np values have direct mapping
 				}
 				else
 				{
 					responseValues.put(id, sections.get(section).getResponses().get(responseID).second);
 				}
 			}
-			else
-			{
-				responseValues.put(questions.get(question).getQuestionID(), "N/A");
-			}
+			else responseValues.put(questions.get(question).getQuestionID(), "N/A"); // placeholder for skipped question
 
 			RadioButton selection = (RadioButton) rblResponses.getChildAt(responseID);
 			String response = (selection == null) ? "No Response" : selection.getText().toString();
