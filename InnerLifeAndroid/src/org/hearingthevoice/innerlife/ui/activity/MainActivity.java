@@ -218,7 +218,7 @@ public class MainActivity extends Activity
 				if (question == questions.size() - 1) // if next is clicked on the last question...
 				{
 					section++; // move onto next section
-					questions = sections.get(section).getQuestions(); // set questions to those of next section
+					questions = sections.get(section).getQuestions(); // set questions to those of next section //TODO ArrayIndexOutOfBounds
 					question = -1; // for post increment below to work correctly
 				}
 				
