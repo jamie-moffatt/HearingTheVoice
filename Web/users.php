@@ -63,14 +63,14 @@ elseif ($_SERVER['REQUEST_METHOD'] === "POST")
 		{
 			die("Failed to connect to MySQL: " . $mysqli->connect_error);
 		}
-		
+
 		// create xml object
 		$xml = simplexml_load_string($post_data);
-		
+
 		$user_code = mysqli_real_escape_string($mysqli, $xml['code']);
 		$age = mysqli_real_escape_string($mysqli, $xml['age']);
 		$gender = mysqli_real_escape_string($mysqli, $xml['gender']);
-		
+
 		if ($mysqli->query("INSERT INTO `User` (`code`, `age`, `gender`) VALUES ('$user_code', '$age', '$gender')"))
 		{
 			print($mysqli->insert_id);
@@ -114,6 +114,7 @@ function getAverageResponseTime($mysqli, $userID)
 		}
 		$result->free();
 		
+		if (count($timeArray) == 0) return 0;
 		return array_sum($timeArray) / count($timeArray);
 	}
 	else
