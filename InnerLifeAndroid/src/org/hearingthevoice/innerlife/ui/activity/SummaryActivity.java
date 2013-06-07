@@ -196,12 +196,17 @@ public class SummaryActivity extends Activity
 				Toast.makeText(activity, "Responses submitted.", Toast.LENGTH_LONG).show();
 				Log.d("RESPONSES", "deleting file");
 				context.deleteFile(filename);
+				
 				AppManager.setGotNotification(context, false);
 				AppManager.setNotificationTime(context, null);
+				
 				if (submissionProgressDialog != null && submissionProgressDialog.isShowing())
 				{
 					submissionProgressDialog.dismiss();
 				}
+				
+				manager.clearSample();
+				
 				finish();
 				Intent i = new Intent(context, DashboardActivity.class);
 				startActivity(i);

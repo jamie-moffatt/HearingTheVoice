@@ -45,8 +45,8 @@ public class MainActivity extends Activity
 	private List<Question> questions = new ArrayList<Question>();
 	private Schedule schedule;
 
-	private int section = 0;
-	private int question = 0;
+	private int section;
+	private int question;
 	private int session = 0;
 
 	private RadioGroup rblResponses;
@@ -120,10 +120,14 @@ public class MainActivity extends Activity
 			// if (session > schedule.numberOfSessions() - 1) session %= schedule.numberOfSessions();
 
 			sections = schedule.filterBySession(sections, session);
-			questions = sections.get(0).getQuestions();
 
 			manager = AppManager.getInstance();
 			manager.setSection(sections);
+			
+			question = manager.question;
+			section = manager.section;
+			
+			questions = sections.get(section).getQuestions();	
 		}
 		catch (Exception e)
 		{
@@ -156,9 +160,10 @@ public class MainActivity extends Activity
 			}
 		});
 
-		responseIDs = new HashMap<Long, Integer>();
-		responseStrings = new HashMap<Long, String>();
-		responseValues = new HashMap<Long, String>();
+		// attempt to load stored values from application when screen refreshes
+		responseIDs     = (manager.getResponseIDs()     == null) ? new HashMap<Long, Integer>() : manager.getResponseIDs();
+		responseStrings = (manager.getResponseStrings() == null) ? new HashMap<Long, String>()  : manager.getResponseStrings();
+		responseValues  = (manager.getResponseValues()  == null) ? new HashMap<Long, String>()  : manager.getResponseValues();
 
 		btnBack = (Button) findViewById(R.id.btn_back);
 		btnNext = (Button) findViewById(R.id.btn_next);
@@ -189,6 +194,9 @@ public class MainActivity extends Activity
 				// if on the first question of the first section, there is no
 				// question to go back to so the back button is disabled.
 				btnBack.setEnabled(section != 0 || question != 0); // De Morgan's Law
+				
+				manager.question = question;
+				manager.section = section;
 			}
 		});
 		// back button starts as being disabled as activity opens on section 1 (0), question 1 (0)
@@ -222,6 +230,9 @@ public class MainActivity extends Activity
 				// re-enable the back button when user proceeds from the first question
 				// of the first section.
 				btnBack.setEnabled(section != 0 || question != 0); // De Morgan's Law
+				
+				manager.question = question;
+				manager.section = section;
 			}
 		});
 
@@ -269,7 +280,7 @@ public class MainActivity extends Activity
 				{
 					rblResponses.setVisibility(View.VISIBLE);
 					sliderContainer.setVisibility(View.GONE);
-					responses.add(Pair.create("No", "0"));
+					responses.add(Pair.create("No" , "0"));
 					responses.add(Pair.create("Yes", "1"));
 					break;
 				}
@@ -383,7 +394,7 @@ public class MainActivity extends Activity
 			int responseID = rblResponses.getCheckedRadioButtonId();
 			responseIDs.put(id, responseID);
 			
-			if (responseID > -1)
+			if (responseID > -1) // -1 is used as an invalid ID by the Android API 
 			{							
 				if (questions.get(question).getType() == QuestionType.YESNO)
 				{
@@ -401,5 +412,9 @@ public class MainActivity extends Activity
 			
 			responseStrings.put(id, response);
 		}
+		
+		manager.setResponseIDs(responseIDs);
+		manager.setResponseStrings(responseStrings);
+		manager.setResponseValues(responseValues);
 	}
 }

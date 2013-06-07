@@ -21,6 +21,9 @@ public class AppManager extends Application
 	private Map<Long, String> prevResponseStrings;
 	private Map<Long, String> prevResponseValues;
 	private List<Section> prevSession;
+	
+	public int question;
+	public int section;
 
 	public static final String FIRST_RUN_KEY = "first_run";
 	public static final String PREFERENCES_KEY = "preferences_key";
@@ -55,6 +58,16 @@ public class AppManager extends Application
 	public static AppManager getInstance()
 	{
 		return sInstance;
+	}
+	
+	public void clearSample()
+	{
+		prevResponseIDs = null;
+		prevResponseStrings = null;
+		prevResponseValues = null;
+		
+		question = 0;
+		section = 0;
 	}
 	
 	public Map<Long, Integer> getResponseIDs() { return prevResponseIDs; }
