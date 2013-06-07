@@ -1,5 +1,13 @@
 package org.hearingthevoice.innerlife.ui.activity;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
+
 import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.R;
 
@@ -84,10 +92,42 @@ public class EndActivity extends Activity
 			}
 		}
 
-		public boolean notifyDatabase(boolean allowSubmission)
+		public boolean notifyDatabase(boolean allowDataUse)
 		{
-			// TODO: unimplemented method
-			return false;
+			try
+			{
+				URL url = new URL("https://www.dur.ac.uk/matthew.bates/HearingTheVoice/user-perimissions.php");
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+				conn.setReadTimeout(10000 /* milliseconds */);
+				conn.setConnectTimeout(15000 /* milliseconds */);
+				conn.setRequestMethod("POST");
+				conn.setDoInput(true);
+
+				conn.connect();
+				int httpResponseCode = conn.getResponseCode();
+
+				if (httpResponseCode != HttpURLConnection.HTTP_OK) throw new IOException();
+
+				PrintWriter pw = new PrintWriter(conn.getOutputStream());
+				pw.print(String.format("<user id=\"%d\" useDataPermission=\"%s\" />", AppManager.getUserID(context), allowDataUse ? "true" : "false"));
+				pw.flush();
+				pw.close();
+
+				String response = "";
+				Scanner sc = new Scanner(conn.getInputStream());
+				if (sc.hasNextLine()) response = sc.nextLine();
+
+				conn.disconnect();
+
+				if (response.contains("success")) return true;
+				else return false;
+			}
+			catch (Exception ex)
+			{
+				ex.printStackTrace();
+				return false;
+			}
 		}
 
 		//
@@ -95,7 +135,7 @@ public class EndActivity extends Activity
 		protected void onPostExecute(Boolean submitted)
 		{
 			if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-			
+
 			if (submitted)
 			{
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
