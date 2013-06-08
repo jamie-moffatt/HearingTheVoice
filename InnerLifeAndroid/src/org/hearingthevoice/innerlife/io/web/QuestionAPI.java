@@ -34,19 +34,17 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 public class QuestionAPI
-{	
+{
 	public static final String INNER_LIFE_BASE_URL = "https://www.dur.ac.uk/matthew.bates/HearingTheVoice/";
-	
-	public static InputStream getHTTPResponseStream(String url, String httpMethod,
-			byte[] postData) throws IOException
+
+	public static InputStream getHTTPResponseStream(String url, String httpMethod, byte[] postData) throws IOException
 	{
 		InputStream inputStream = null;
 		int responseCode = -1;
 
 		URLConnection urlConnection = (new URL(INNER_LIFE_BASE_URL + url)).openConnection();
 
-		if (!(urlConnection instanceof HttpURLConnection))
-			throw new IOException("Not an HTTP connection");
+		if (!(urlConnection instanceof HttpURLConnection)) throw new IOException("Not an HTTP connection");
 
 		HttpURLConnection httpConnection = (HttpURLConnection) urlConnection;
 		httpConnection.setAllowUserInteraction(false);
@@ -61,20 +59,20 @@ public class QuestionAPI
 			requestOutput.write(postData);
 			requestOutput.close();
 		}
-		
+
 		httpConnection.connect();
 		responseCode = httpConnection.getResponseCode();
-		
-		Log.d("RESPONSE_CODE", ""+responseCode);
-		
+
+		Log.d("RESPONSE_CODE", "" + responseCode);
+
 		inputStream = httpConnection.getInputStream();
 
 		return inputStream;
 	}
 
-	public static List<Section> downloadQuestionXML(Context context, String urlExtension)
-			throws MalformedURLException, IOException, ProtocolException, FactoryConfigurationError
-			{
+	public static List<Section> downloadQuestionXML(Context context, String urlExtension) throws MalformedURLException,
+			IOException, ProtocolException, FactoryConfigurationError
+	{
 		URL url = new URL(INNER_LIFE_BASE_URL + urlExtension);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -94,7 +92,8 @@ public class QuestionAPI
 
 		FileOutputStream fos = context.openFileOutput("questions", Context.MODE_PRIVATE);
 
-		while(scanner.hasNextLine()) fos.write(scanner.nextLine().getBytes());
+		while (scanner.hasNextLine())
+			fos.write(scanner.nextLine().getBytes());
 
 		fos.close();
 		inputStream.close();
@@ -104,8 +103,8 @@ public class QuestionAPI
 		return retrieveCachedQuestions(context);
 	}
 
-	public static List<Section> retrieveCachedQuestions(Context context)
-			throws MalformedURLException, IOException, ProtocolException, FactoryConfigurationError
+	public static List<Section> retrieveCachedQuestions(Context context) throws MalformedURLException, IOException,
+			ProtocolException, FactoryConfigurationError
 	{
 		List<Section> questionList = new ArrayList<Section>();
 
@@ -119,12 +118,12 @@ public class QuestionAPI
 
 			QuestionXMLParser myXMLHandler = new QuestionXMLParser(questionList);
 
-			Log.d("QUESTION_LIST", ""+questionList.size());
+			Log.d("QUESTION_LIST", "" + questionList.size());
 
 			reader.setContentHandler(myXMLHandler);
 			reader.parse(new InputSource(inputStream));
 
-			Log.d("QUESTION_LIST", ""+questionList.size());
+			Log.d("QUESTION_LIST", "" + questionList.size());
 		}
 		catch (SAXException e)
 		{
@@ -144,8 +143,8 @@ public class QuestionAPI
 		return questionList;
 	}
 
-	public static Schedule downloadScheduleXML(Context context, String urlExtension)
-			throws MalformedURLException, IOException, ProtocolException, FactoryConfigurationError
+	public static Schedule downloadScheduleXML(Context context, String urlExtension) throws MalformedURLException,
+			IOException, ProtocolException, FactoryConfigurationError
 	{
 		URL url = new URL(INNER_LIFE_BASE_URL + urlExtension);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -166,7 +165,8 @@ public class QuestionAPI
 
 		FileOutputStream fos = context.openFileOutput("schedule", Context.MODE_PRIVATE);
 
-		while(scanner.hasNextLine()) fos.write(scanner.nextLine().getBytes());
+		while (scanner.hasNextLine())
+			fos.write(scanner.nextLine().getBytes());
 
 		fos.close();
 		inputStream.close();
@@ -175,9 +175,9 @@ public class QuestionAPI
 
 		return retrieveCachedSchedule(context);
 	}
-	
-	public static Schedule retrieveCachedSchedule(Context context)
-			throws MalformedURLException, IOException, ProtocolException, FactoryConfigurationError
+
+	public static Schedule retrieveCachedSchedule(Context context) throws MalformedURLException, IOException,
+			ProtocolException, FactoryConfigurationError
 	{
 		Schedule schedule = new Schedule();
 
@@ -211,11 +211,37 @@ public class QuestionAPI
 
 		return schedule;
 	}
-	
+
 	public static boolean networkIsConnected(Activity activity)
 	{
 		ConnectivityManager connMgr = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 		return (networkInfo != null && networkInfo.isConnected());
 	}
+
+	public static boolean areQuestionsCached(Context context)
+	{
+		String[] files = context.fileList();
+
+		for (String file : files)
+		{
+			if (file.contains("questions")) { return true; }
+		}
+		return false;
+	}
+	
+	public static boolean isScheduleCached(Context context)
+	{
+		String[] files = context.fileList();
+
+		for (String file : files)
+		{
+			if (file.contains("schedule"))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }

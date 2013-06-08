@@ -17,7 +17,9 @@ import org.hearingthevoice.innerlife.model.Schedule;
 import org.hearingthevoice.innerlife.model.Section;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -70,6 +72,13 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		context = this;
+		
+		txtQuestionHead = (TextView) findViewById(R.id.txt_question_header);
+		txtQuestionBody = (TextView) findViewById(R.id.txt_question_body);
+		rblResponses = (RadioGroup) findViewById(R.id.rbl_responses);
+		sbrScaleResponse = (SeekBar) findViewById(R.id.sbr_scale_response);
+		sliderContainer = (LinearLayout) findViewById(R.id.slider_container);
+		txtSliderValue = (TextView) findViewById(R.id.txt_slider_value);
 
 		String notificationTimeStored = AppManager.getNotificationTime(context);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -87,18 +96,21 @@ public class MainActivity extends Activity
 			}
 		}
 
-		boolean questionsCached = false;
-
-		String[] files = context.fileList();
-
-		// determine whether the questions are cached in the file system
-		for (String file : files)
+		if (!(QuestionAPI.areQuestionsCached(context) && QuestionAPI.isScheduleCached(context)))
 		{
-			if (file.contains("questions"))
+			AlertDialog.Builder bd = new AlertDialog.Builder(context);
+			bd.setTitle("Failed to Download Questions");
+			bd.setMessage("Ensure that you are connected to an Internet connection and then restart the application.");
+			bd.setPositiveButton("OK", new DialogInterface.OnClickListener()
 			{
-				questionsCached = true;
-				break;
-			}
+				@Override
+				public void onClick(DialogInterface dialog, int which)
+				{
+					finish();
+				}
+			});
+			bd.show();
+			return;
 		}
 
 		try
@@ -133,13 +145,6 @@ public class MainActivity extends Activity
 		{
 			e.printStackTrace();
 		}
-
-		txtQuestionHead = (TextView) findViewById(R.id.txt_question_header);
-		txtQuestionBody = (TextView) findViewById(R.id.txt_question_body);
-		rblResponses = (RadioGroup) findViewById(R.id.rbl_responses);
-		sbrScaleResponse = (SeekBar) findViewById(R.id.sbr_scale_response);
-		sliderContainer = (LinearLayout) findViewById(R.id.slider_container);
-		txtSliderValue = (TextView) findViewById(R.id.txt_slider_value);
 
 		sbrScaleResponse.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
 		{
@@ -240,7 +245,7 @@ public class MainActivity extends Activity
 			}
 		});
 
-		if (questionsCached)
+		if (QuestionAPI.areQuestionsCached(context) && QuestionAPI.isScheduleCached(context))
 		{
 			if (sections != null && sections.size() > 0)
 			{
@@ -384,7 +389,7 @@ public class MainActivity extends Activity
 	 */
 	private void loadPlaceholder()
 	{
-		if (sections.isEmpty()) txtQuestionHead.setText("No Section, No Question");
+		if (sections == null || sections.isEmpty()) txtQuestionHead.setText("No Section, No Question");
 		else txtQuestionHead.setText("Section " + sections.get(section).getSectionID()
 				+ ", No Question");
 		txtQuestionBody.setText("There are currently no questions in this section");
