@@ -46,4 +46,10 @@ public class Question
 			else return RADIO;
 		}
 	}
+	
+	@Override
+	public String toString()
+	{
+		return String.format("(%d, %d)", questionID, number);
+	}
 }
