@@ -24,41 +24,45 @@ public class AlarmReceiver extends BroadcastReceiver
 	{
 		// TODO check whether an addition notification needs to be created
 
-		NotificationManager nm;
-		nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
-		nb.setContentTitle("New Questions Available");
-		nb.setContentText("Click to participate. " + intent.getStringExtra("NOTIFICATION_TYPE"));
-		nb.setSmallIcon(R.drawable.next_item);
+		if (!AppManager.getStopNotifications(context))
+		{
 
-		Intent clickIntent = new Intent(context, DashboardActivity.class);
+			NotificationManager nm;
+			nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+			NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+			nb.setContentTitle("New Questions Available");
+			nb.setContentText("Click to participate. " + intent.getStringExtra("NOTIFICATION_TYPE"));
+			nb.setSmallIcon(R.drawable.next_item);
 
-		// The stack builder object will contain an artificial back stack for the
-		// started Activity.
-		// This ensures that navigating backward from the Activity leads out of
-		// your application to the Home screen.
-		TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-		// Adds the back stack for the Intent (but not the Intent itself)
-		stackBuilder.addParentStack(DashboardActivity.class);
-		// Adds the Intent that starts the Activity to the top of the stack
-		stackBuilder.addNextIntent(clickIntent);
-		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-		nb.setContentIntent(resultPendingIntent);
-		nb.setAutoCancel(true);
+			Intent clickIntent = new Intent(context, DashboardActivity.class);
 
-		nb.setSound(Uri.parse("content://settings/system/notification_sound"));
+			// The stack builder object will contain an artificial back stack for the
+			// started Activity.
+			// This ensures that navigating backward from the Activity leads out of
+			// your application to the Home screen.
+			TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+			// Adds the back stack for the Intent (but not the Intent itself)
+			stackBuilder.addParentStack(DashboardActivity.class);
+			// Adds the Intent that starts the Activity to the top of the stack
+			stackBuilder.addNextIntent(clickIntent);
+			PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+			nb.setContentIntent(resultPendingIntent);
+			nb.setAutoCancel(true);
 
-		if (intent.getStringExtra("NOTIFICATION_TYPE").equals("AM")) nm.notify(0, nb.build());
-		else if ((intent.getStringExtra("NOTIFICATION_TYPE").equals("PM"))) nm.notify(1, nb.build());
-		
-		AppManager.setGotNotification(context, true);
-		Calendar now = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String notificationTime = sdf.format(now.getTime());
-		AppManager.setNotificationTime(context, notificationTime);
-		
-		int notificationsSoFar = AppManager.getPossibleSamplesSoFar(context);
-		AppManager.setPossibleSamplesSoFar(context, notificationsSoFar+1);
+			nb.setSound(Uri.parse("content://settings/system/notification_sound"));
+
+			if (intent.getStringExtra("NOTIFICATION_TYPE").equals("AM")) nm.notify(0, nb.build());
+			else if ((intent.getStringExtra("NOTIFICATION_TYPE").equals("PM"))) nm.notify(1, nb.build());
+
+			AppManager.setGotNotification(context, true);
+			Calendar now = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String notificationTime = sdf.format(now.getTime());
+			AppManager.setNotificationTime(context, notificationTime);
+
+			int notificationsSoFar = AppManager.getPossibleSamplesSoFar(context);
+			AppManager.setPossibleSamplesSoFar(context, notificationsSoFar + 1);
+
+		}
 	}
 }
