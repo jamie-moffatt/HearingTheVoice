@@ -200,7 +200,7 @@ public class MainActivity extends Activity
 			}
 		});
 		// back button starts as being disabled as activity opens on section 1 (0), question 1 (0)
-		btnBack.setEnabled(false);
+		btnBack.setEnabled(section != 0 || question != 0);
 
 		btnNext.setOnClickListener(new OnClickListener()
 		{
