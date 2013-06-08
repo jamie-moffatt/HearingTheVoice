@@ -54,8 +54,8 @@ public class SummaryActivity extends Activity
 
 		manager = AppManager.getInstance();
 		Log.d("MANAGER", "" + (manager == null));
-		List<Section> session = manager.getSection();
-
+		
+		List<Section>  session = manager.getSection();
 		List<Question> questions = new ArrayList<Question>();
 
 		for (Section section : session)
@@ -85,7 +85,11 @@ public class SummaryActivity extends Activity
 	{
 		try
 		{
-			int session = AppManager.getPossibleSamplesSoFar(context);
+			int samples = AppManager.getPossibleSamplesSoFar(context);
+			int sessionID = (samples == 0) ? 28 : samples - 1; // if first sample, load trait questions
+			if (samples == 14) sessionID = 29; // if half way through samples, load trait questions
+			if (samples  > 14) sessionID = samples - 1;
+			if (samples == 28) sessionID = 30; // if end of samples, load trait questions
 
 			String notificationTimeStored = AppManager.getNotificationTime(context);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -117,7 +121,7 @@ public class SummaryActivity extends Activity
 
 			str.append("<submission ");
 			str.append("userID=\"" + AppManager.getUserID(context) + "\" ");
-			str.append("sessionID=\"" + session + "\" ");
+			str.append("sessionID=\"" + sessionID + "\" ");
 
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -154,10 +158,11 @@ public class SummaryActivity extends Activity
 				Toast.makeText(activity, "No Connection. Saving responses.", Toast.LENGTH_LONG).show();
 				finish();
 
-				int samples = AppManager.getPossibleSamplesSoFar(context);
+				int sample = AppManager.getPossibleSamplesSoFar(context);
 
-				if (samples == 31)
+				if (sample == 28)
 				{
+					
 					Intent i = new Intent(context, EndActivity.class);
 					startActivity(i);
 				}
