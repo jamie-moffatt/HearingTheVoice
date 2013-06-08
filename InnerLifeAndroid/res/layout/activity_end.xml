@@ -58,7 +58,7 @@
                     android:layout_marginTop="5dp"
                     android:gravity="center_vertical"
                     android:padding="8dp"
-                    android:text="The data collection is complete. If you are happy for your data to be used in the study, please select YES, otherwise, select NO."
+                    android:text="Thank you for your responses: you have now reached the end of the study.\nAll the data you provided will be stored anonymously and confidentially.\n\nIf you are happy for us to use your data in our research, select YES.\nIf you would prefer that we didn't, select NO."
                     android:textColor="#FFFFFF" />
 
                 <LinearLayout

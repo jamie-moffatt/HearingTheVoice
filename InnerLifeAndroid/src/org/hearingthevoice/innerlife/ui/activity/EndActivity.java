@@ -18,11 +18,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 public class EndActivity extends Activity
 {
+	private static final String THANK_YOU_TEXT = "Thanks!\n\n" +
+			"You can now uninstall Inner Life via your Applications folder.\n\n" +
+			"If you have any questions about the app, you can contact Dr Ben Alderson-Day at benjamin.alderson-day@durham.ac.uk.";
+	
 	private Context context;
 
 	private TextView txtResponseTime;
@@ -96,7 +101,7 @@ public class EndActivity extends Activity
 		{
 			try
 			{
-				URL url = new URL("https://www.dur.ac.uk/matthew.bates/HearingTheVoice/user-perimissions.php");
+				URL url = new URL("https://www.dur.ac.uk/matthew.bates/HearingTheVoice/user-permissions.php");
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 				conn.setReadTimeout(10000 /* milliseconds */);
@@ -105,22 +110,25 @@ public class EndActivity extends Activity
 				conn.setDoInput(true);
 
 				conn.connect();
-				int httpResponseCode = conn.getResponseCode();
-
-				if (httpResponseCode != HttpURLConnection.HTTP_OK) throw new IOException();
-
+				
 				PrintWriter pw = new PrintWriter(conn.getOutputStream());
 				pw.print(String.format("<user id=\"%d\" useDataPermission=\"%s\" />", AppManager.getUserID(context), allowDataUse ? "true" : "false"));
 				pw.flush();
 				pw.close();
+				
+				Log.d("USER PERMISSION CONNECT", "made connection");
+				Log.d("USER PERMISSION HTTP RESPONSE MESSAGE", conn.getResponseMessage());
+				Log.d("USER PERMISSION HTTP CODE", ""+conn.getResponseCode());
 
 				String response = "";
 				Scanner sc = new Scanner(conn.getInputStream());
-				if (sc.hasNextLine()) response = sc.nextLine();
+				while (sc.hasNextLine()) response += sc.nextLine();
 
 				conn.disconnect();
+				
+				Log.d("USER PERMISSION RESPONSE", response);
 
-				if (response.contains("success")) return true;
+				if (response.contains("Success")) return true;
 				else return false;
 			}
 			catch (Exception ex)
@@ -140,7 +148,7 @@ public class EndActivity extends Activity
 			{
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				AlertDialog dialog = builder.setTitle("Request Successfully Submitted.")
-						.setMessage("You may now close and uninstall the application.")
+						.setMessage(THANK_YOU_TEXT)
 						.setPositiveButton("OK", new DialogInterface.OnClickListener()
 						{
 							@Override
