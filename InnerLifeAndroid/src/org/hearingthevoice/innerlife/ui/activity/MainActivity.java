@@ -161,7 +161,7 @@ public class MainActivity extends Activity
 		});
 
 		// attempt to load stored values from application when screen refreshes
-		responseIDs     = (manager.getResponseIDs()     == null) ? new HashMap<Long, Integer>() : manager.getResponseIDs();
+		responseIDs     = (manager.getResponseIDs()     == null) ? new HashMap<Long, Integer>() : manager.getResponseIDs(); // TODO need to check that questions are actually downloaded
 		responseStrings = (manager.getResponseStrings() == null) ? new HashMap<Long, String>()  : manager.getResponseStrings();
 		responseValues  = (manager.getResponseValues()  == null) ? new HashMap<Long, String>()  : manager.getResponseValues();
 
