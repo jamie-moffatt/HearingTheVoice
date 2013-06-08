@@ -16,12 +16,12 @@ import android.content.SharedPreferences.Editor;
 public class AppManager extends Application
 {
 	private static AppManager sInstance;
-	
+
 	private Map<Long, Integer> prevResponseIDs;
 	private Map<Long, String> prevResponseStrings;
 	private Map<Long, String> prevResponseValues;
 	private List<Section> prevSession;
-	
+
 	public int question;
 	public int section;
 
@@ -32,20 +32,20 @@ public class AppManager extends Application
 
 	public static final String SAMPLES_COMPLETE = "samples_complete_key";
 	public static final String SAMPLE_TIMES = "sample_times_key";
-	
+
 	public static final String POSSIBLE_SAMPLES_SO_FAR = "possible_samples_so_far_key";
-	
+
 	public static final String USER_ID = "user_id_key";
 	public static final String USER_CODE = "user_code_key";
 	public static final String USER_AGE = "user_age_key";
 	public static final String USER_GENDER = "user_gender_key";
-	
+
 	public static final String AM_NOTIFICATION = "am_notification_key";
 	public static final String PM_NOTIFICATION = "pm_notification_key";
-	
+
 	public static final String GOT_NOTIFICATION = "got_notification_key";
 	public static final String NOTIFICATION_TIME = "notification_time_key";
-	
+
 	public static final String AVERAGE_RESPONSE_TIME = "average_response_time_key";
 
 	@Override
@@ -59,28 +59,46 @@ public class AppManager extends Application
 	{
 		return sInstance;
 	}
-	
+
 	public void clearSample()
 	{
 		prevResponseIDs = null;
 		prevResponseStrings = null;
 		prevResponseValues = null;
-		
+
 		question = 0;
 		section = 0;
 	}
-	
-	public Map<Long, Integer> getResponseIDs() { return prevResponseIDs; }
-	
-	public void setResponseIDs(Map<Long, Integer> responses) { prevResponseIDs = responses; }
-	
-	public Map<Long, String> getResponseStrings() { return prevResponseStrings; }
-	
-	public void setResponseStrings(Map<Long, String> responses) { prevResponseStrings = responses; }
-	
-	public List<Section> getSection() { return prevSession; }
-	
-	public void setSection(List<Section> sections) { prevSession = sections; }
+
+	public Map<Long, Integer> getResponseIDs()
+	{
+		return prevResponseIDs;
+	}
+
+	public void setResponseIDs(Map<Long, Integer> responses)
+	{
+		prevResponseIDs = responses;
+	}
+
+	public Map<Long, String> getResponseStrings()
+	{
+		return prevResponseStrings;
+	}
+
+	public void setResponseStrings(Map<Long, String> responses)
+	{
+		prevResponseStrings = responses;
+	}
+
+	public List<Section> getSection()
+	{
+		return prevSession;
+	}
+
+	public void setSection(List<Section> sections)
+	{
+		prevSession = sections;
+	}
 
 	public Map<Long, String> getResponseValues()
 	{
@@ -101,8 +119,7 @@ public class AppManager extends Application
 
 	public static boolean isFirstRun(Context context)
 	{
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
-				Context.MODE_PRIVATE);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getBoolean(FIRST_RUN_KEY, true);
 	}
 
@@ -122,8 +139,7 @@ public class AppManager extends Application
 
 	public static int getLastSession(Context context)
 	{
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
-				Context.MODE_PRIVATE);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getInt(LAST_SESSION_ID, -1);
 	}
 
@@ -136,15 +152,13 @@ public class AppManager extends Application
 
 	public static boolean isSessionComplete(Context context)
 	{
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
-				Context.MODE_PRIVATE);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getBoolean(LAST_SESSION_COMPLETE, false);
 	}
 
 	public static void recordSampleComplete(Context context, String time)
 	{
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
-				Context.MODE_PRIVATE);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		Editor editor = preferences.edit();
 
 		editor.putInt(SAMPLES_COMPLETE, preferences.getInt(SAMPLES_COMPLETE, 0) + 1);
@@ -155,15 +169,13 @@ public class AppManager extends Application
 
 	public static int getSamplesComplete(Context context)
 	{
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
-				Context.MODE_PRIVATE);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getInt(SAMPLES_COMPLETE, 0);
 	}
 
 	public static int getSamplesComplete(Context context, String time)
 	{
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
-				Context.MODE_PRIVATE);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getInt(time, 0);
 	}
 
@@ -173,20 +185,19 @@ public class AppManager extends Application
 
 		String time = new SimpleDateFormat("yyyy-MM-dd").format(today.getTime());
 
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
-				Context.MODE_PRIVATE);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getInt(time, 0);
 	}
-	
+
 	public static void setUserID(Context context, int userID)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		Editor editor = preferences.edit();
-		
+
 		editor.putInt(USER_ID, userID);
 		editor.commit();
 	}
-	
+
 	public static int getUserID(Context context)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
@@ -195,8 +206,7 @@ public class AppManager extends Application
 
 	public static void setUserCode(Context context, String userCode)
 	{
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
-				Context.MODE_PRIVATE);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		Editor editor = preferences.edit();
 
 		editor.putString(USER_CODE, userCode);
@@ -206,15 +216,13 @@ public class AppManager extends Application
 
 	public static String getUserCode(Context context)
 	{
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
-				Context.MODE_PRIVATE);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getString(USER_CODE, "1");
 	}
 
 	public static void setUserAge(Context context, int userAge)
 	{
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
-				Context.MODE_PRIVATE);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		Editor editor = preferences.edit();
 
 		editor.putInt(USER_AGE, userAge);
@@ -224,16 +232,14 @@ public class AppManager extends Application
 
 	public static int getUserAge(Context context)
 	{
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
-				Context.MODE_PRIVATE);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getInt(USER_AGE, 0);
 	}
 
 	// userGender could be an enum, but that seems like overkill
 	public static void setUserGender(Context context, String userGender)
 	{
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
-				Context.MODE_PRIVATE);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		Editor editor = preferences.edit();
 
 		editor.putString(USER_GENDER, userGender);
@@ -243,15 +249,14 @@ public class AppManager extends Application
 
 	public static String getUserGender(Context context)
 	{
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY,
-				Context.MODE_PRIVATE);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getString(USER_GENDER, "");
 	}
-	
+
 	public static String getStoredData(Context context)
 	{
 		StringBuffer sb = new StringBuffer();
-		
+
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		sb.append(FIRST_RUN_KEY + ": " + preferences.getBoolean(FIRST_RUN_KEY, true) + "\n");
 		sb.append(LAST_SESSION_ID + ": " + preferences.getInt(LAST_SESSION_ID, 0) + "\n");
@@ -263,10 +268,10 @@ public class AppManager extends Application
 		sb.append(USER_GENDER + ": " + preferences.getString(USER_GENDER, "--") + "\n");
 		sb.append(GOT_NOTIFICATION + ": " + preferences.getBoolean(GOT_NOTIFICATION, false) + "\n");
 		sb.append(NOTIFICATION_TIME + ": " + preferences.getString(NOTIFICATION_TIME, "--") + "\n");
-		
+
 		return sb.toString();
 	}
-	
+
 	public static void setGotNotification(Context context, boolean sentNotification)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
@@ -276,13 +281,13 @@ public class AppManager extends Application
 
 		editor.commit();
 	}
-	
+
 	public static boolean getGotNotification(Context context)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getBoolean(GOT_NOTIFICATION, false);
 	}
-	
+
 	public static void setNotificationTime(Context context, String time)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
@@ -292,20 +297,20 @@ public class AppManager extends Application
 
 		editor.commit();
 	}
-	
+
 	public static String getNotificationTime(Context context)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getString(NOTIFICATION_TIME, null);
 	}
-	
+
 	public static void updateAverageResponseTime(Context context, String notificationTime, String responseTime)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		Editor editor = preferences.edit();
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
+
 		Calendar nT = Calendar.getInstance();
 		try
 		{
@@ -316,7 +321,7 @@ public class AppManager extends Application
 			e.printStackTrace();
 			return;
 		}
-		
+
 		Calendar rT = Calendar.getInstance();
 		try
 		{
@@ -327,36 +332,37 @@ public class AppManager extends Application
 			e.printStackTrace();
 			return;
 		}
-		
+
 		long newResponseTime = (rT.getTimeInMillis() / 1000) - (nT.getTimeInMillis() / 1000);
-		
+
 		int currentAvgResponseTime = preferences.getInt(AVERAGE_RESPONSE_TIME, 0);
 		int weightedAvgResponseTime = currentAvgResponseTime * (preferences.getInt(SAMPLES_COMPLETE, 0) - 1);
-		float newAverageResponseTime = (weightedAvgResponseTime + newResponseTime) / (float) (preferences.getInt(SAMPLES_COMPLETE, 0));
-		
+		float newAverageResponseTime = (weightedAvgResponseTime + newResponseTime)
+				/ (float) (preferences.getInt(SAMPLES_COMPLETE, 0));
+
 		editor.putInt(AVERAGE_RESPONSE_TIME, (int) newAverageResponseTime);
 
 		editor.commit();
 	}
-	
+
 	public static String getAverageResponseTime(Context context)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		int avgResponseTime = preferences.getInt(AVERAGE_RESPONSE_TIME, 0);
 		String formattedTime = "";
-		if (avgResponseTime > (60*60)) formattedTime += (avgResponseTime / (60*60)) + "h";
-		if (avgResponseTime > 60) formattedTime += ((avgResponseTime % (60*60)) / 60) + "m";
-		if (avgResponseTime > 0) formattedTime += ((avgResponseTime % (60*60)) % 60) + "s";
+		if (avgResponseTime > (60 * 60)) formattedTime += (avgResponseTime / (60 * 60)) + "h";
+		if (avgResponseTime > 60) formattedTime += ((avgResponseTime % (60 * 60)) / 60) + "m";
+		if (avgResponseTime > 0) formattedTime += ((avgResponseTime % (60 * 60)) % 60) + "s";
 		else return "?";
 		return formattedTime;
 	}
-	
+
 	public static int getAMNotificationTime(Context context)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getInt(AM_NOTIFICATION, 9);
 	}
-	
+
 	public static void setAMNotificationTime(Context context, int time)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
@@ -364,13 +370,13 @@ public class AppManager extends Application
 		editor.putInt(AM_NOTIFICATION, time);
 		editor.commit();
 	}
-	
+
 	public static int getPMNotificationTime(Context context)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getInt(PM_NOTIFICATION, 17);
 	}
-	
+
 	public static void setPMNotificationTime(Context context, int time)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
@@ -378,13 +384,13 @@ public class AppManager extends Application
 		editor.putInt(PM_NOTIFICATION, time);
 		editor.commit();
 	}
-	
+
 	public static int getPossibleSamplesSoFar(Context context)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getInt(POSSIBLE_SAMPLES_SO_FAR, 0);
 	}
-	
+
 	public static void setPossibleSamplesSoFar(Context context, int samples)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
@@ -392,36 +398,100 @@ public class AppManager extends Application
 		editor.putInt(POSSIBLE_SAMPLES_SO_FAR, samples);
 		editor.commit();
 	}
-	
+
 	public static final String ALLOW_DATA_USE = "allow_data_use_key";
 
 	public static boolean getAllowDataUse(Context context)
 	{
-	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-	    return preferences.getBoolean(ALLOW_DATA_USE, false);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getBoolean(ALLOW_DATA_USE, false);
 	}
 
 	public static void setAllowDataUse(Context context, boolean value)
 	{
-	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-	    Editor editor = preferences.edit();
-	    editor.putBoolean(ALLOW_DATA_USE, value);
-	    editor.commit();
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putBoolean(ALLOW_DATA_USE, value);
+		editor.commit();
 	}
-	
+
 	public static final String DATA_USE_PREFERENCE_SYNCED_WITH_DATABASE = "data_use_preference_synced_with_database_key";
 
 	public static boolean getDataUsePreferenceSyncedWithDatabase(Context context)
 	{
-	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-	    return preferences.getBoolean(DATA_USE_PREFERENCE_SYNCED_WITH_DATABASE, false);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getBoolean(DATA_USE_PREFERENCE_SYNCED_WITH_DATABASE, false);
 	}
 
 	public static void setDataUsePreferenceSyncedWithDatabase(Context context, boolean value)
 	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putBoolean(DATA_USE_PREFERENCE_SYNCED_WITH_DATABASE, value);
+		editor.commit();
+	}
+
+	public static final String SUBMITTED_START_TRAIT = "submitted_start_trait_key";
+
+	public static boolean getSubmittedStartTrait(Context context)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getBoolean(SUBMITTED_START_TRAIT, false);
+	}
+
+	public static void setSubmittedStartTrait(Context context, boolean value)
+	{
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putBoolean(SUBMITTED_START_TRAIT, value);
+		editor.commit();
+	}
+	
+	public static final String SUBMITTED_MIDDLE_TRAIT = "submitted_middle_trait_key";
+
+	public static boolean getSubmittedMiddleTrait(Context context)
+	{
+	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+	    return preferences.getBoolean(SUBMITTED_MIDDLE_TRAIT, false);
+	}
+
+	public static void setSubmittedMiddleTrait(Context context, boolean value)
+	{
 	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 	    Editor editor = preferences.edit();
-	    editor.putBoolean(DATA_USE_PREFERENCE_SYNCED_WITH_DATABASE, value);
+	    editor.putBoolean(SUBMITTED_MIDDLE_TRAIT, value);
+	    editor.commit();
+	}
+	
+	public static final String SUBMITTED_END_TRAIT = "submitted_end_trait_key";
+
+	public static boolean getSubmittedEndTrait(Context context)
+	{
+	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+	    return preferences.getBoolean(SUBMITTED_END_TRAIT, false);
+	}
+
+	public static void setSubmittedEndTrait(Context context, boolean value)
+	{
+	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+	    Editor editor = preferences.edit();
+	    editor.putBoolean(SUBMITTED_END_TRAIT, value);
+	    editor.commit();
+	}
+	
+	public static final String STOP_NOTIFICATIONS = "stop_notifications_key";
+
+	public static boolean getStopNotifications(Context context)
+	{
+	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+	    return preferences.getBoolean(STOP_NOTIFICATIONS, false);
+	}
+
+	public static void setStopNotifications(Context context, boolean value)
+	{
+	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+	    Editor editor = preferences.edit();
+	    editor.putBoolean(STOP_NOTIFICATIONS, value);
 	    editor.commit();
 	}
 
