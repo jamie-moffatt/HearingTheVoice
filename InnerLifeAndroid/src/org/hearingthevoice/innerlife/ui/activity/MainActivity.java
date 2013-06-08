@@ -213,7 +213,11 @@ public class MainActivity extends Activity
 				if (!questions.isEmpty()) recordResponse();
 
 				// upon clicking next on the last question of the last section, end the session
-				if (section == sections.size() - 1 && question == questions.size() - 1) endSession();
+				if (section == sections.size() - 1 && question == questions.size() - 1)
+				{
+					endSession();
+					return;
+				}
 				
 				if (question == questions.size() - 1) // if next is clicked on the last question...
 				{
@@ -407,7 +411,7 @@ public class MainActivity extends Activity
 			{							
 				if (questions.get(question).getType() == QuestionType.YESNO)
 				{
-					responseValues.put(id, "" + responseID); // yes/np values have direct mapping
+					responseValues.put(id, "" + responseID); // yes/no values have direct mapping
 				}
 				else
 				{
