@@ -358,10 +358,19 @@ public class MainActivity extends Activity
 	 */
 	private void loadQuestion()
 	{
-		txtQuestionHead.setText("Section  " + sections.get(section).getSectionID() + ", Question "
-				+ questions.get(question).getNumber());
-		txtQuestionBody.setText(Html.fromHtml("<b>" + sections.get(section).getDescription()
+		txtQuestionHead.setText("Section " + sections.get(section).getSectionID()
+			+ ", Question " + questions.get(question).getNumber());
+		
+		if (sections.get(section).getDescription().length() == 0)
+		{
+			txtQuestionBody.setText(questions.get(question).getDescription());
+		}
+		else
+		{
+			txtQuestionBody.setText(Html.fromHtml("<b>" + sections.get(section).getDescription()
 				+ "</b><br /><br />" + questions.get(question).getDescription()));
+		}
+		
 		populateResponses();
 	}
 
