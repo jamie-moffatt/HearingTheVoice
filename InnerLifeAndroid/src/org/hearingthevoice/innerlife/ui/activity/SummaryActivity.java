@@ -162,7 +162,7 @@ public class SummaryActivity extends Activity
 
 				if (sample == 28)
 				{
-					
+					AppManager.setStopNotifications(context, true);
 					Intent i = new Intent(context, EndActivity.class);
 					startActivity(i);
 				}
