@@ -91,7 +91,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
                     android:text="Test Notification"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <Button
                     android:id="@+id/btnDisplayStoredData"
@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:text="Debug Menu"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
             </LinearLayout>
         </ScrollView>
     </FrameLayout>
