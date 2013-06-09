@@ -90,6 +90,8 @@ public class SummaryActivity extends Activity
 			if (samples == 14) sessionID = 29; // if half way through samples, load trait questions
 			if (samples  > 14) sessionID = samples - 1;
 			if (samples == 28) sessionID = 30; // if end of samples, load trait questions
+			
+			sessionID++; // session IDs not zero indexed in database
 
 			String notificationTimeStored = AppManager.getNotificationTime(context);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -109,7 +111,8 @@ public class SummaryActivity extends Activity
 			String extension = new SimpleDateFormat("yyyyMMddHHmmss").format(submissionTime
 					.getTime());
 
-			AppManager.recordSampleComplete(context,
+			if(sessionID < 29)
+				AppManager.recordSampleComplete(context,
 					new SimpleDateFormat("yyyy-MM-dd").format(submissionTime.getTime()));
 
 			filename = extension + " responses";
