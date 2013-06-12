@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST")
 		
 		$userID = mysqli_real_escape_string($mysqli, $xml['userID']);
 		$sessionID = mysqli_real_escape_string($mysqli, $xml['sessionID']);
+		$sessionID = $sessionID + 1; // hot fix for Ben's current version of the app
 		$notificationTime = mysqli_real_escape_string($mysqli, $xml['notificationTime']);
 		$submissionTime = mysqli_real_escape_string($mysqli, $xml['submissionTime']);
 		
