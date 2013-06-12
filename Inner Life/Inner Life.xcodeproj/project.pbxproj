@@ -26,6 +26,10 @@
 		4792ED131768A7B900441527 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ECE51768A7B800441527 /* Foundation.framework */; };
 		4792ED1B1768A7B900441527 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4792ED191768A7B900441527 /* InfoPlist.strings */; };
 		4792ED1E1768A7B900441527 /* Inner_LifeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED1D1768A7B900441527 /* Inner_LifeTests.m */; };
+		4792ED301768BD8600441527 /* InnerLife-iOS-57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 4792ED2F1768BD8600441527 /* InnerLife-iOS-57x57.png */; };
+		4792ED321768BDA300441527 /* InnerLife-iOS-114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 4792ED311768BDA300441527 /* InnerLife-iOS-114x114.png */; };
+		4792ED341768BDFB00441527 /* InnerLife-iOS-72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = 4792ED331768BDFB00441527 /* InnerLife-iOS-72x72.png */; };
+		4792ED361768BE0200441527 /* InnerLife-iOS-144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = 4792ED351768BE0100441527 /* InnerLife-iOS-144x144.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +70,10 @@
 		4792ED1A1768A7B900441527 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4792ED1C1768A7B900441527 /* Inner_LifeTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Inner_LifeTests.h; sourceTree = "<group>"; };
 		4792ED1D1768A7B900441527 /* Inner_LifeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Inner_LifeTests.m; sourceTree = "<group>"; };
+		4792ED2F1768BD8600441527 /* InnerLife-iOS-57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "InnerLife-iOS-57x57.png"; sourceTree = "<group>"; };
+		4792ED311768BDA300441527 /* InnerLife-iOS-114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "InnerLife-iOS-114x114.png"; sourceTree = "<group>"; };
+		4792ED331768BDFB00441527 /* InnerLife-iOS-72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "InnerLife-iOS-72x72.png"; sourceTree = "<group>"; };
+		4792ED351768BE0100441527 /* InnerLife-iOS-144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "InnerLife-iOS-144x144.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +103,10 @@
 		4792ECD71768A7B800441527 = {
 			isa = PBXGroup;
 			children = (
+				4792ED351768BE0100441527 /* InnerLife-iOS-144x144.png */,
+				4792ED331768BDFB00441527 /* InnerLife-iOS-72x72.png */,
+				4792ED311768BDA300441527 /* InnerLife-iOS-114x114.png */,
+				4792ED2F1768BD8600441527 /* InnerLife-iOS-57x57.png */,
 				4792ECE91768A7B800441527 /* Inner Life */,
 				4792ED161768A7B900441527 /* Inner LifeTests */,
 				4792ECE21768A7B800441527 /* Frameworks */,
@@ -251,6 +263,10 @@
 				4792ECFA1768A7B900441527 /* Default-568h@2x.png in Resources */,
 				4792ED061768A7B900441527 /* MainStoryboard_iPhone.storyboard in Resources */,
 				4792ED091768A7B900441527 /* MainStoryboard_iPad.storyboard in Resources */,
+				4792ED301768BD8600441527 /* InnerLife-iOS-57x57.png in Resources */,
+				4792ED321768BDA300441527 /* InnerLife-iOS-114x114.png in Resources */,
+				4792ED341768BDFB00441527 /* InnerLife-iOS-72x72.png in Resources */,
+				4792ED361768BE0200441527 /* InnerLife-iOS-144x144.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,6 +496,7 @@
 				4792ED231768A7B900441527 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4792ED241768A7B900441527 /* Build configuration list for PBXNativeTarget "Inner LifeTests" */ = {
 			isa = XCConfigurationList;
@@ -488,6 +505,7 @@
 				4792ED261768A7B900441527 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
