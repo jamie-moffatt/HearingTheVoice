@@ -30,6 +30,11 @@
 		4792ED321768BDA300441527 /* InnerLife-iOS-114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 4792ED311768BDA300441527 /* InnerLife-iOS-114x114.png */; };
 		4792ED341768BDFB00441527 /* InnerLife-iOS-72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = 4792ED331768BDFB00441527 /* InnerLife-iOS-72x72.png */; };
 		4792ED361768BE0200441527 /* InnerLife-iOS-144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = 4792ED351768BE0100441527 /* InnerLife-iOS-144x144.png */; };
+		4792ED3B1769185300441527 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED3A1769185300441527 /* Reachability.m */; };
+		4792ED3D17691ABF00441527 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ED3C17691ABF00441527 /* SystemConfiguration.framework */; };
+		4792ED451769260C00441527 /* ILQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED441769260C00441527 /* ILQuestion.m */; };
+		4792ED48176928C900441527 /* ILSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED47176928C900441527 /* ILSchedule.m */; };
+		4792ED4B1769293300441527 /* ILSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED4A1769293300441527 /* ILSession.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,10 +75,19 @@
 		4792ED1A1768A7B900441527 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4792ED1C1768A7B900441527 /* Inner_LifeTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Inner_LifeTests.h; sourceTree = "<group>"; };
 		4792ED1D1768A7B900441527 /* Inner_LifeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Inner_LifeTests.m; sourceTree = "<group>"; };
-		4792ED2F1768BD8600441527 /* InnerLife-iOS-57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "InnerLife-iOS-57x57.png"; sourceTree = "<group>"; };
-		4792ED311768BDA300441527 /* InnerLife-iOS-114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "InnerLife-iOS-114x114.png"; sourceTree = "<group>"; };
-		4792ED331768BDFB00441527 /* InnerLife-iOS-72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "InnerLife-iOS-72x72.png"; sourceTree = "<group>"; };
-		4792ED351768BE0100441527 /* InnerLife-iOS-144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "InnerLife-iOS-144x144.png"; sourceTree = "<group>"; };
+		4792ED2F1768BD8600441527 /* InnerLife-iOS-57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "InnerLife-iOS-57x57.png"; path = "../InnerLife-iOS-57x57.png"; sourceTree = "<group>"; };
+		4792ED311768BDA300441527 /* InnerLife-iOS-114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "InnerLife-iOS-114x114.png"; path = "../InnerLife-iOS-114x114.png"; sourceTree = "<group>"; };
+		4792ED331768BDFB00441527 /* InnerLife-iOS-72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "InnerLife-iOS-72x72.png"; path = "../InnerLife-iOS-72x72.png"; sourceTree = "<group>"; };
+		4792ED351768BE0100441527 /* InnerLife-iOS-144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "InnerLife-iOS-144x144.png"; path = "../InnerLife-iOS-144x144.png"; sourceTree = "<group>"; };
+		4792ED391769185300441527 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		4792ED3A1769185300441527 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		4792ED3C17691ABF00441527 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4792ED431769260C00441527 /* ILQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILQuestion.h; sourceTree = "<group>"; };
+		4792ED441769260C00441527 /* ILQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuestion.m; sourceTree = "<group>"; };
+		4792ED46176928C900441527 /* ILSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSchedule.h; sourceTree = "<group>"; };
+		4792ED47176928C900441527 /* ILSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSchedule.m; sourceTree = "<group>"; };
+		4792ED491769293300441527 /* ILSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSession.h; sourceTree = "<group>"; };
+		4792ED4A1769293300441527 /* ILSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSession.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4792ED3D17691ABF00441527 /* SystemConfiguration.framework in Frameworks */,
 				4792ECE41768A7B800441527 /* UIKit.framework in Frameworks */,
 				4792ECE61768A7B800441527 /* Foundation.framework in Frameworks */,
 				4792ECE81768A7B800441527 /* CoreGraphics.framework in Frameworks */,
@@ -103,10 +118,7 @@
 		4792ECD71768A7B800441527 = {
 			isa = PBXGroup;
 			children = (
-				4792ED351768BE0100441527 /* InnerLife-iOS-144x144.png */,
-				4792ED331768BDFB00441527 /* InnerLife-iOS-72x72.png */,
-				4792ED311768BDA300441527 /* InnerLife-iOS-114x114.png */,
-				4792ED2F1768BD8600441527 /* InnerLife-iOS-57x57.png */,
+				4792ED3C17691ABF00441527 /* SystemConfiguration.framework */,
 				4792ECE91768A7B800441527 /* Inner Life */,
 				4792ED161768A7B900441527 /* Inner LifeTests */,
 				4792ECE21768A7B800441527 /* Frameworks */,
@@ -137,16 +149,11 @@
 		4792ECE91768A7B800441527 /* Inner Life */ = {
 			isa = PBXGroup;
 			children = (
+				4792ED3E17691FD500441527 /* Model */,
+				4792ED3F17691FF000441527 /* View */,
+				4792ED401769200200441527 /* Controller */,
 				4792ECF21768A7B900441527 /* ILAppDelegate.h */,
 				4792ECF31768A7B900441527 /* ILAppDelegate.m */,
-				4792ECFB1768A7B900441527 /* ILRootViewController.h */,
-				4792ECFC1768A7B900441527 /* ILRootViewController.m */,
-				4792ECFE1768A7B900441527 /* ILDataViewController.h */,
-				4792ECFF1768A7B900441527 /* ILDataViewController.m */,
-				4792ED011768A7B900441527 /* ILModelController.h */,
-				4792ED021768A7B900441527 /* ILModelController.m */,
-				4792ED041768A7B900441527 /* MainStoryboard_iPhone.storyboard */,
-				4792ED071768A7B900441527 /* MainStoryboard_iPad.storyboard */,
 				4792ECEA1768A7B800441527 /* Supporting Files */,
 			);
 			path = "Inner Life";
@@ -155,6 +162,8 @@
 		4792ECEA1768A7B800441527 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4792ED381769183500441527 /* Reachability */,
+				4792ED371768FE5600441527 /* Images */,
 				4792ECEB1768A7B800441527 /* Inner Life-Info.plist */,
 				4792ECEC1768A7B800441527 /* InfoPlist.strings */,
 				4792ECEF1768A7B900441527 /* main.m */,
@@ -183,6 +192,77 @@
 				4792ED191768A7B900441527 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4792ED371768FE5600441527 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				4792ED351768BE0100441527 /* InnerLife-iOS-144x144.png */,
+				4792ED331768BDFB00441527 /* InnerLife-iOS-72x72.png */,
+				4792ED311768BDA300441527 /* InnerLife-iOS-114x114.png */,
+				4792ED2F1768BD8600441527 /* InnerLife-iOS-57x57.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		4792ED381769183500441527 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				4792ED391769185300441527 /* Reachability.h */,
+				4792ED3A1769185300441527 /* Reachability.m */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
+		4792ED3E17691FD500441527 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4792ED421769211B00441527 /* XML */,
+				4792ED411769210F00441527 /* Data */,
+				4792ED011768A7B900441527 /* ILModelController.h */,
+				4792ED021768A7B900441527 /* ILModelController.m */,
+				4792ED431769260C00441527 /* ILQuestion.h */,
+				4792ED441769260C00441527 /* ILQuestion.m */,
+				4792ED46176928C900441527 /* ILSchedule.h */,
+				4792ED47176928C900441527 /* ILSchedule.m */,
+				4792ED491769293300441527 /* ILSession.h */,
+				4792ED4A1769293300441527 /* ILSession.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		4792ED3F17691FF000441527 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4792ED041768A7B900441527 /* MainStoryboard_iPhone.storyboard */,
+				4792ED071768A7B900441527 /* MainStoryboard_iPad.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		4792ED401769200200441527 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4792ECFB1768A7B900441527 /* ILRootViewController.h */,
+				4792ECFC1768A7B900441527 /* ILRootViewController.m */,
+				4792ECFE1768A7B900441527 /* ILDataViewController.h */,
+				4792ECFF1768A7B900441527 /* ILDataViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		4792ED411769210F00441527 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		4792ED421769211B00441527 /* XML */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = XML;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -306,6 +386,10 @@
 				4792ECFD1768A7B900441527 /* ILRootViewController.m in Sources */,
 				4792ED001768A7B900441527 /* ILDataViewController.m in Sources */,
 				4792ED031768A7B900441527 /* ILModelController.m in Sources */,
+				4792ED3B1769185300441527 /* Reachability.m in Sources */,
+				4792ED451769260C00441527 /* ILQuestion.m in Sources */,
+				4792ED48176928C900441527 /* ILSchedule.m in Sources */,
+				4792ED4B1769293300441527 /* ILSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
