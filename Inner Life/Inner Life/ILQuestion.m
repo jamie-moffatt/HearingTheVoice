@@ -15,4 +15,24 @@
     return [NSString stringWithFormat:@"(%d,%d)", _questionID, _number];
 }
 
++ (ILQuestionType) typeFromString: (NSString*)string
+{
+    if ([string isEqualToString:@"radio"])
+    {
+        return RADIO;
+    }
+    else if ([string isEqualToString:@"yesno"])
+    {
+        return YESNO;
+    }
+    else if ([string isEqualToString:@"numscale"])
+    {
+        return NUMSCALE;
+    }
+    else
+    {
+        return RADIO;
+    }
+}
+
 @end

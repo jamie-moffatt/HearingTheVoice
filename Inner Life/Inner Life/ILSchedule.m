@@ -10,6 +10,17 @@
 
 @implementation ILSchedule
 
+- (id)init
+{
+    self = [super init];
+    if (self)
+    {
+        _sessions = [NSMutableArray new];
+    }
+    
+    return self;
+}
+
 - (NSString*)description
 {
     NSMutableString *sb = [NSMutableString new];
@@ -18,6 +29,11 @@
         [sb appendFormat:@"%@\n", session];
     }
     return sb;
+}
+
+- (void)add:(NSArray *)session
+{
+    [_sessions addObject:session];
 }
 
 @end

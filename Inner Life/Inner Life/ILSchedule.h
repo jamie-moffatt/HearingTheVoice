@@ -12,4 +12,6 @@
 
 @property NSMutableArray *sessions;
 
+- (void)add:(NSArray *)session;
+
 @end

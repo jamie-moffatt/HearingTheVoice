@@ -15,6 +15,6 @@
 @property NSString *sectionDescription;
 
 @property NSMutableArray *questions;
-@property NSMutableArray *responses;
+@property NSMutableArray *choices;
 
 @end

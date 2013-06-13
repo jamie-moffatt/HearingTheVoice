@@ -23,4 +23,6 @@ typedef enum ILQuestionTypeEnum
 @property ILQuestionType type;
 @property NSString *questionDescription;
 
++ (ILQuestionType) typeFromString: (NSString*)string;
+
 @end
