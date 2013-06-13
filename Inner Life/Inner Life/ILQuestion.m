@@ -10,4 +10,9 @@
 
 @implementation ILQuestion
 
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"(%d,%d)", _questionID, _number];
+}
+
 @end

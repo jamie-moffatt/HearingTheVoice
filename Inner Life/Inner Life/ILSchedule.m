@@ -10,4 +10,14 @@
 
 @implementation ILSchedule
 
+- (NSString*)description
+{
+    NSMutableString *sb = [NSMutableString new];
+    for (NSMutableArray *session in _sessions)
+    {
+        [sb appendFormat:@"%@\n", session];
+    }
+    return sb;
+}
+
 @end

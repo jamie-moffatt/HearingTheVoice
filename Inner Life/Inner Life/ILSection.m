@@ -10,4 +10,9 @@
 
 @implementation ILSection
 
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"(%d,%@)", _sectionID, _name];
+}
+
 @end

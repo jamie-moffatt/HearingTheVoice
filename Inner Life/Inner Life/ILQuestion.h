@@ -21,6 +21,6 @@ typedef enum ILQuestionTypeEnum
 @property NSInteger sectionID;
 @property NSInteger number;
 @property ILQuestionType type;
-@property NSString *description;
+@property NSString *questionDescription;
 
 @end
