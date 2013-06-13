@@ -34,7 +34,7 @@
 		4792ED3D17691ABF00441527 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ED3C17691ABF00441527 /* SystemConfiguration.framework */; };
 		4792ED451769260C00441527 /* ILQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED441769260C00441527 /* ILQuestion.m */; };
 		4792ED48176928C900441527 /* ILSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED47176928C900441527 /* ILSchedule.m */; };
-		4792ED4B1769293300441527 /* ILSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED4A1769293300441527 /* ILSession.m */; };
+		4792ED4B1769293300441527 /* ILSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED4A1769293300441527 /* ILSection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,8 +86,8 @@
 		4792ED441769260C00441527 /* ILQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuestion.m; sourceTree = "<group>"; };
 		4792ED46176928C900441527 /* ILSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSchedule.h; sourceTree = "<group>"; };
 		4792ED47176928C900441527 /* ILSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSchedule.m; sourceTree = "<group>"; };
-		4792ED491769293300441527 /* ILSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSession.h; sourceTree = "<group>"; };
-		4792ED4A1769293300441527 /* ILSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSession.m; sourceTree = "<group>"; };
+		4792ED491769293300441527 /* ILSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSection.h; sourceTree = "<group>"; };
+		4792ED4A1769293300441527 /* ILSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSection.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,8 +225,8 @@
 				4792ED441769260C00441527 /* ILQuestion.m */,
 				4792ED46176928C900441527 /* ILSchedule.h */,
 				4792ED47176928C900441527 /* ILSchedule.m */,
-				4792ED491769293300441527 /* ILSession.h */,
-				4792ED4A1769293300441527 /* ILSession.m */,
+				4792ED491769293300441527 /* ILSection.h */,
+				4792ED4A1769293300441527 /* ILSection.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -389,7 +389,7 @@
 				4792ED3B1769185300441527 /* Reachability.m in Sources */,
 				4792ED451769260C00441527 /* ILQuestion.m in Sources */,
 				4792ED48176928C900441527 /* ILSchedule.m in Sources */,
-				4792ED4B1769293300441527 /* ILSession.m in Sources */,
+				4792ED4B1769293300441527 /* ILSection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

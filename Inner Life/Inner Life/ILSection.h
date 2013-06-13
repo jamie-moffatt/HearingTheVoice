@@ -1,5 +1,5 @@
 //
-//  ILSession.h
+//  ILSection.h
 //  Inner Life
 //
 //  Created by Matthew Bates on 12/06/2013.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ILSession : NSObject
+@interface ILSection : NSObject
 
 @property NSInteger sectionID;
 @property NSString *name;
