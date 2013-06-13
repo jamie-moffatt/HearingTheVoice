@@ -12,7 +12,7 @@
 
 @property NSInteger sectionID;
 @property NSString *name;
-@property NSString *description;
+@property NSString *sectionDescription;
 
 @property NSMutableArray *questions;
 @property NSMutableArray *responses;
