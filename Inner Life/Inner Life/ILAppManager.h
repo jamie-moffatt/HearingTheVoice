@@ -1,5 +1,5 @@
 //
-//  ILTimeUtils.h
+//  ILAppManager.h
 //  Inner Life
 //
 //  Created by Matthew Bates on 15/06/2013.
@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ILTimeUtils : NSObject
+@interface ILAppManager : NSObject
 
-+ (NSInteger)getSessionByRegistrationDate:(NSDate*)date;
++ (void)setDefaults;
+
++ (NSString *)userDefaultsToString;
 
 @end

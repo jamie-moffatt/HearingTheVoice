@@ -1,5 +1,5 @@
 //
-//  ILTimeUtils.h
+//  ILNetworkDataHandler.h
 //  Inner Life
 //
 //  Created by Matthew Bates on 15/06/2013.
@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ILTimeUtils : NSObject
-
-+ (NSInteger)getSessionByRegistrationDate:(NSDate*)date;
+@interface ILNetworkDataHandler : NSObject
 
 @end

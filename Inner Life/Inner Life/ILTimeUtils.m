@@ -10,4 +10,15 @@
 
 @implementation ILTimeUtils
 
++ (NSInteger)getSessionByRegistrationDate:(NSDate*)date
+{
+    if (ABS([date timeIntervalSinceNow]) < 60*60*24) return -1;
+    
+    NSDateComponents* dateComps = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:date];
+    dateComps.day = dateComps.day+1;
+    NSDate* dayAfterRegistration = [[NSCalendar currentCalendar] dateFromComponents:dateComps];
+    
+    NSTimeInterval timeOnSchedule = [[NSDate date] timeIntervalSinceDate:dayAfterRegistration];
+    return ((NSInteger)timeOnSchedule / (60*60*12)) + 1;
+}
 @end
