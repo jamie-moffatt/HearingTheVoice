@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		473343CB176CB7120027D61D /* ILTimeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 473343CA176CB7120027D61D /* ILTimeUtils.m */; };
 		4792ECE41768A7B800441527 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ECE31768A7B800441527 /* UIKit.framework */; };
 		4792ECE61768A7B800441527 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ECE51768A7B800441527 /* Foundation.framework */; };
 		4792ECE81768A7B800441527 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ECE71768A7B800441527 /* CoreGraphics.framework */; };
@@ -51,6 +52,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		473343C9176CB7120027D61D /* ILTimeUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILTimeUtils.h; sourceTree = "<group>"; };
+		473343CA176CB7120027D61D /* ILTimeUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILTimeUtils.m; sourceTree = "<group>"; };
 		4792ECE01768A7B800441527 /* Inner Life.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Inner Life.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4792ECE31768A7B800441527 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4792ECE51768A7B800441527 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -265,6 +268,8 @@
 		4792ED411769210F00441527 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				473343C9176CB7120027D61D /* ILTimeUtils.h */,
+				473343CA176CB7120027D61D /* ILTimeUtils.m */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -408,6 +413,7 @@
 				47F217E3176A1DB10098FF4A /* ILQuestionXMLParser.m in Sources */,
 				47F217E6176A1DD50098FF4A /* ILScheduleXMLParser.m in Sources */,
 				47F217E9176A209E0098FF4A /* ILChoice.m in Sources */,
+				473343CB176CB7120027D61D /* ILTimeUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
