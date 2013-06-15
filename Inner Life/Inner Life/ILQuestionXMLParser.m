@@ -14,7 +14,7 @@
 {
     if ([elementName isEqualToString:@"section"])
     {
-        _currentSection = [ILSection new];
+        _currentSection = [[ILSection alloc] init];
         
         _currentSection.sectionID = [[attributeDict objectForKey:@"id"] integerValue];
         _currentSection.name = [attributeDict objectForKey:@"name"];
@@ -23,11 +23,11 @@
     }
     else if ([elementName isEqualToString:@"questions"])
     {
-        _currentQuestionList = [NSMutableArray new];
+        _currentQuestionList = [[NSMutableArray alloc] init];
     }
     else if ([elementName isEqualToString:@"question"])
     {
-        _currentQuestion = [ILQuestion new];
+        _currentQuestion = [[ILQuestion alloc] init];
         
         _currentQuestion.questionID = [[attributeDict objectForKey:@"id"] integerValue];
         _currentQuestion.sectionID = _currentSection.sectionID;
@@ -39,7 +39,7 @@
     }
     else if ([elementName isEqualToString:@"choices"])
     {
-        _currentChoiceList = [NSMutableArray new];
+        _currentChoiceList = [[NSMutableArray alloc] init];
     }
     else if ([elementName isEqualToString:@"choice"])
     {

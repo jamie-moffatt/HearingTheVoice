@@ -14,7 +14,7 @@
 {
     if ([elementName isEqualToString:@"session"])
     {
-        _currentSession = [NSMutableArray new];
+        _currentSession = [[NSMutableArray alloc] init];
     }
     else if ([elementName isEqualToString:@"section"])
     {

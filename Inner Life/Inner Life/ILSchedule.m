@@ -15,7 +15,7 @@
     self = [super init];
     if (self)
     {
-        _sessions = [NSMutableArray new];
+        _sessions = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -23,7 +23,7 @@
 
 - (NSString*)description
 {
-    NSMutableString *sb = [NSMutableString new];
+    NSMutableString *sb = [[NSMutableString alloc] init];
     for (NSMutableArray *session in _sessions)
     {
         [sb appendFormat:@"%@\n", session];
