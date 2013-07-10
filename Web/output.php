@@ -1,5 +1,5 @@
 <?php
-if ($_GET['format'] === "csv")
+if (isset($_GET['format']) && $_GET['format'] === "csv")
 {
 	header('Content-Disposition: attachment; filename="responses.csv"');
 	header('Content-type: text/csv');
@@ -58,7 +58,7 @@ foreach ($sections as $scheduleID => $sectionArray)
 	}
 }
 
-if ($_GET['format'] !== "csv")
+if ((isset($_GET['format']) && $_GET['format'] !== "csv") || (!isset($_GET['format'])))
 {
 	print('<table>');
 	
@@ -80,7 +80,7 @@ if ($_GET['format'] !== "csv")
 	print('</tr>');
 }
 
-if ($_GET['format'] === "csv")
+if (isset($_GET['format']) && $_GET['format'] === "csv")
 	print("Participant");
 else
 	print("<tr><th>Participant</th>");
@@ -91,7 +91,7 @@ foreach ($sections as $scheduleID => $sectionArray)
 	{
 		foreach ($questions[$section] as $questionID)
 		{
-			if ($_GET['format'] === "csv")
+			if (isset($_GET['format']) && $_GET['format'] === "csv")
 				printf(',S%d%s%d', $scheduleID, $sectionCodes[$section], getQuestionNumber($mysqli, $questionID));
 			else
 				printf('<th class="%s" data-section-id="%d" data-section-name="%s" data-question-id="%d">S%d%s%d</th>', $sectionCodes[$section], $section, getSectionName($mysqli, $section), $questionID, $scheduleID, $sectionCodes[$section], getQuestionNumber($mysqli, $questionID));
@@ -100,14 +100,14 @@ foreach ($sections as $scheduleID => $sectionArray)
 	}
 }
 
-if ($_GET['format'] === "csv")
+if (isset($_GET['format']) && $_GET['format'] === "csv")
 	print("\n");
 else
 	print("</tr>");
 
 foreach (getUsers($mysqli) as $user)
 {
-	if ($_GET['format'] === "csv")
+	if (isset($_GET['format']) && $_GET['format'] === "csv")
 		printf("%d : %s", $user, getUserCode($mysqli, $user));
 	else
 		printf("<tr><td>%d : %s</td>", $user, getUserCode($mysqli, $user));
@@ -117,20 +117,20 @@ foreach (getUsers($mysqli) as $user)
 		{
 			foreach ($questions[$section] as $questionID)
 			{
-				if ($_GET['format'] === "csv")
+				if (isset($_GET['format']) && $_GET['format'] === "csv")
 					printf(',%s', getResponse($mysqli, $user, $scheduleID, $questionID));
 				else
 					printf('<td class="%s">%s</td>', $sectionCodes[$section], getResponse($mysqli, $user, $scheduleID, $questionID));
 			}
 		}
 	}
-	if ($_GET['format'] === "csv")
+	if (isset($_GET['format']) && $_GET['format'] === "csv")
 		print("\n");
 	else
 		print("</tr>");
 }
 
-if ($_GET['format'] !== "csv")
+if ((isset($_GET['format']) && $_GET['format'] !== "csv") || (!isset($_GET['format'])))
 	print("</table>");
 	
 $mysqli->close();
@@ -201,7 +201,7 @@ function getResponse($mysqli, $user, $scheduleID, $questionID)
 		}
 		$result->free();
 	}	
-	return $response;
+	return isset($response) ? $response : '';
 }
 
 function getQuestionNumber($mysqli, $questionID)
@@ -256,6 +256,6 @@ function getNumberOfQuestionsInSession($mysqli, $scheduleID)
 	return $count;
 }
 
-if ($_GET['format'] !== "csv")
-	print('</body>');
+if ((isset($_GET['format']) && $_GET['format'] !== "csv") || (!isset($_GET['format'])))
+	print('</body></html>');
 ?>
