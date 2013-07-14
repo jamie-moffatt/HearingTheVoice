@@ -20,11 +20,7 @@
 		4792ECF61768A7B900441527 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4792ECF51768A7B900441527 /* Default.png */; };
 		4792ECF81768A7B900441527 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4792ECF71768A7B900441527 /* Default@2x.png */; };
 		4792ECFA1768A7B900441527 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4792ECF91768A7B900441527 /* Default-568h@2x.png */; };
-		4792ECFD1768A7B900441527 /* ILRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ECFC1768A7B900441527 /* ILRootViewController.m */; };
-		4792ED001768A7B900441527 /* ILDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ECFF1768A7B900441527 /* ILDataViewController.m */; };
-		4792ED031768A7B900441527 /* ILModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED021768A7B900441527 /* ILModelController.m */; };
-		4792ED061768A7B900441527 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4792ED041768A7B900441527 /* MainStoryboard_iPhone.storyboard */; };
-		4792ED091768A7B900441527 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4792ED071768A7B900441527 /* MainStoryboard_iPad.storyboard */; };
+		4792ECFD1768A7B900441527 /* ILDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ECFC1768A7B900441527 /* ILDashboardViewController.m */; };
 		4792ED111768A7B900441527 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ED101768A7B900441527 /* SenTestingKit.framework */; };
 		4792ED121768A7B900441527 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ECE31768A7B800441527 /* UIKit.framework */; };
 		4792ED131768A7B900441527 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ECE51768A7B800441527 /* Foundation.framework */; };
@@ -39,6 +35,9 @@
 		4792ED451769260C00441527 /* ILQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED441769260C00441527 /* ILQuestion.m */; };
 		4792ED48176928C900441527 /* ILSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED47176928C900441527 /* ILSchedule.m */; };
 		4792ED4B1769293300441527 /* ILSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED4A1769293300441527 /* ILSection.m */; };
+		47E733451792B9AC00F23708 /* ILDashboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E733441792B9AC00F23708 /* ILDashboard.xib */; };
+		47E733861793090400F23708 /* ILUserFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E733841793090400F23708 /* ILUserFormViewController.m */; };
+		47E733871793090400F23708 /* ILUserForm.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E733851793090400F23708 /* ILUserForm.xib */; };
 		47F217E3176A1DB10098FF4A /* ILQuestionXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E2176A1DB10098FF4A /* ILQuestionXMLParser.m */; };
 		47F217E6176A1DD50098FF4A /* ILScheduleXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E5176A1DD50098FF4A /* ILScheduleXMLParser.m */; };
 		47F217E9176A209E0098FF4A /* ILChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E8176A209E0098FF4A /* ILChoice.m */; };
@@ -76,14 +75,8 @@
 		4792ECF51768A7B900441527 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		4792ECF71768A7B900441527 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		4792ECF91768A7B900441527 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		4792ECFB1768A7B900441527 /* ILRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILRootViewController.h; sourceTree = "<group>"; };
-		4792ECFC1768A7B900441527 /* ILRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ILRootViewController.m; sourceTree = "<group>"; };
-		4792ECFE1768A7B900441527 /* ILDataViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILDataViewController.h; sourceTree = "<group>"; };
-		4792ECFF1768A7B900441527 /* ILDataViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ILDataViewController.m; sourceTree = "<group>"; };
-		4792ED011768A7B900441527 /* ILModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILModelController.h; sourceTree = "<group>"; };
-		4792ED021768A7B900441527 /* ILModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ILModelController.m; sourceTree = "<group>"; };
-		4792ED051768A7B900441527 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		4792ED081768A7B900441527 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		4792ECFB1768A7B900441527 /* ILDashboardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILDashboardViewController.h; sourceTree = "<group>"; };
+		4792ECFC1768A7B900441527 /* ILDashboardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ILDashboardViewController.m; sourceTree = "<group>"; };
 		4792ED0F1768A7B900441527 /* Inner LifeTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Inner LifeTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4792ED101768A7B900441527 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		4792ED181768A7B900441527 /* Inner LifeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Inner LifeTests-Info.plist"; sourceTree = "<group>"; };
@@ -103,6 +96,10 @@
 		4792ED47176928C900441527 /* ILSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSchedule.m; sourceTree = "<group>"; };
 		4792ED491769293300441527 /* ILSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSection.h; sourceTree = "<group>"; };
 		4792ED4A1769293300441527 /* ILSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSection.m; sourceTree = "<group>"; };
+		47E733441792B9AC00F23708 /* ILDashboard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILDashboard.xib; sourceTree = "<group>"; };
+		47E733831793090400F23708 /* ILUserFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUserFormViewController.h; sourceTree = "<group>"; };
+		47E733841793090400F23708 /* ILUserFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUserFormViewController.m; sourceTree = "<group>"; };
+		47E733851793090400F23708 /* ILUserForm.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILUserForm.xib; sourceTree = "<group>"; };
 		47F217E1176A1DB10098FF4A /* ILQuestionXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILQuestionXMLParser.h; sourceTree = "<group>"; };
 		47F217E2176A1DB10098FF4A /* ILQuestionXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuestionXMLParser.m; sourceTree = "<group>"; };
 		47F217E4176A1DD50098FF4A /* ILScheduleXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILScheduleXMLParser.h; sourceTree = "<group>"; };
@@ -139,7 +136,6 @@
 		4792ECD71768A7B800441527 = {
 			isa = PBXGroup;
 			children = (
-				4792ED3C17691ABF00441527 /* SystemConfiguration.framework */,
 				4792ECE91768A7B800441527 /* Inner Life */,
 				4792ED161768A7B900441527 /* Inner LifeTests */,
 				4792ECE21768A7B800441527 /* Frameworks */,
@@ -159,6 +155,7 @@
 		4792ECE21768A7B800441527 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4792ED3C17691ABF00441527 /* SystemConfiguration.framework */,
 				4792ECE31768A7B800441527 /* UIKit.framework */,
 				4792ECE51768A7B800441527 /* Foundation.framework */,
 				4792ECE71768A7B800441527 /* CoreGraphics.framework */,
@@ -240,8 +237,6 @@
 			children = (
 				4792ED411769210F00441527 /* Data */,
 				4792ED421769211B00441527 /* XML */,
-				4792ED011768A7B900441527 /* ILModelController.h */,
-				4792ED021768A7B900441527 /* ILModelController.m */,
 				4792ED431769260C00441527 /* ILQuestion.h */,
 				4792ED441769260C00441527 /* ILQuestion.m */,
 				4792ED46176928C900441527 /* ILSchedule.h */,
@@ -257,8 +252,8 @@
 		4792ED3F17691FF000441527 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4792ED041768A7B900441527 /* MainStoryboard_iPhone.storyboard */,
-				4792ED071768A7B900441527 /* MainStoryboard_iPad.storyboard */,
+				47E733441792B9AC00F23708 /* ILDashboard.xib */,
+				47E733851793090400F23708 /* ILUserForm.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -266,10 +261,10 @@
 		4792ED401769200200441527 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4792ECFB1768A7B900441527 /* ILRootViewController.h */,
-				4792ECFC1768A7B900441527 /* ILRootViewController.m */,
-				4792ECFE1768A7B900441527 /* ILDataViewController.h */,
-				4792ECFF1768A7B900441527 /* ILDataViewController.m */,
+				4792ECFB1768A7B900441527 /* ILDashboardViewController.h */,
+				4792ECFC1768A7B900441527 /* ILDashboardViewController.m */,
+				47E733831793090400F23708 /* ILUserFormViewController.h */,
+				47E733841793090400F23708 /* ILUserFormViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -376,12 +371,12 @@
 				4792ECF61768A7B900441527 /* Default.png in Resources */,
 				4792ECF81768A7B900441527 /* Default@2x.png in Resources */,
 				4792ECFA1768A7B900441527 /* Default-568h@2x.png in Resources */,
-				4792ED061768A7B900441527 /* MainStoryboard_iPhone.storyboard in Resources */,
-				4792ED091768A7B900441527 /* MainStoryboard_iPad.storyboard in Resources */,
 				4792ED301768BD8600441527 /* InnerLife-iOS-57x57.png in Resources */,
 				4792ED321768BDA300441527 /* InnerLife-iOS-114x114.png in Resources */,
 				4792ED341768BDFB00441527 /* InnerLife-iOS-72x72.png in Resources */,
 				4792ED361768BE0200441527 /* InnerLife-iOS-144x144.png in Resources */,
+				47E733451792B9AC00F23708 /* ILDashboard.xib in Resources */,
+				47E733871793090400F23708 /* ILUserForm.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,9 +413,7 @@
 			files = (
 				4792ECF01768A7B900441527 /* main.m in Sources */,
 				4792ECF41768A7B900441527 /* ILAppDelegate.m in Sources */,
-				4792ECFD1768A7B900441527 /* ILRootViewController.m in Sources */,
-				4792ED001768A7B900441527 /* ILDataViewController.m in Sources */,
-				4792ED031768A7B900441527 /* ILModelController.m in Sources */,
+				4792ECFD1768A7B900441527 /* ILDashboardViewController.m in Sources */,
 				4792ED3B1769185300441527 /* Reachability.m in Sources */,
 				4792ED451769260C00441527 /* ILQuestion.m in Sources */,
 				4792ED48176928C900441527 /* ILSchedule.m in Sources */,
@@ -432,6 +425,7 @@
 				473343CE176CBAAD0027D61D /* ILNetworkDataHandler.m in Sources */,
 				473343D1176CBD2A0027D61D /* ILAppManager.m in Sources */,
 				473343D4176CBDD40027D61D /* ILDataSingleton.m in Sources */,
+				47E733861793090400F23708 /* ILUserFormViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,22 +454,6 @@
 				4792ECED1768A7B800441527 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		4792ED041768A7B900441527 /* MainStoryboard_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4792ED051768A7B900441527 /* en */,
-			);
-			name = MainStoryboard_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		4792ED071768A7B900441527 /* MainStoryboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4792ED081768A7B900441527 /* en */,
-			);
-			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		4792ED191768A7B900441527 /* InfoPlist.strings */ = {
