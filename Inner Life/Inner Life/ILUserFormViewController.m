@@ -20,7 +20,6 @@
     if (self)
     {
         // Custom initialization
-        self.title = @"User Form";
     }
     return self;
 }
@@ -40,5 +39,9 @@
 - (IBAction)submitUserData:(id)sender
 {
     [self dismissViewControllerAnimated:true completion:nil];
+}
+- (IBAction)showUserCodeHelp:(id)sender {
+}
+- (IBAction)submitUserDetails:(id)sender {
 }
 @end
