@@ -11,5 +11,6 @@
 @interface ILDashboardViewController : UIViewController
 
 - (IBAction)openFirstTimeForm:(id)sender;
+- (IBAction)answerQuestions:(id)sender;
 
 @end

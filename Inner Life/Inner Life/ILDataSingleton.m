@@ -10,4 +10,16 @@
 
 @implementation ILDataSingleton
 
+// Return an array of sections
+- (NSArray *)getQuestions
+{
+    
+}
+
+// Return a schedule object either from the cache or by accessing the web API
+- (ILSchedule *)getSchedule
+{
+    
+}
+
 @end

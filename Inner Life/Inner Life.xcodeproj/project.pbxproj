@@ -35,6 +35,8 @@
 		4792ED451769260C00441527 /* ILQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED441769260C00441527 /* ILQuestion.m */; };
 		4792ED48176928C900441527 /* ILSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED47176928C900441527 /* ILSchedule.m */; };
 		4792ED4B1769293300441527 /* ILSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED4A1769293300441527 /* ILSection.m */; };
+		47CB8500179AA9D10021E0D0 /* ILQuestionFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47CB84FE179AA9D10021E0D0 /* ILQuestionFormViewController.m */; };
+		47CB8501179AA9D10021E0D0 /* ILQuestionForm.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47CB84FF179AA9D10021E0D0 /* ILQuestionForm.xib */; };
 		47E733451792B9AC00F23708 /* ILDashboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E733441792B9AC00F23708 /* ILDashboard.xib */; };
 		47E733861793090400F23708 /* ILUserFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E733841793090400F23708 /* ILUserFormViewController.m */; };
 		47E733871793090400F23708 /* ILUserForm.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E733851793090400F23708 /* ILUserForm.xib */; };
@@ -96,6 +98,9 @@
 		4792ED47176928C900441527 /* ILSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSchedule.m; sourceTree = "<group>"; };
 		4792ED491769293300441527 /* ILSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSection.h; sourceTree = "<group>"; };
 		4792ED4A1769293300441527 /* ILSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSection.m; sourceTree = "<group>"; };
+		47CB84FD179AA9D10021E0D0 /* ILQuestionFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILQuestionFormViewController.h; sourceTree = "<group>"; };
+		47CB84FE179AA9D10021E0D0 /* ILQuestionFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuestionFormViewController.m; sourceTree = "<group>"; };
+		47CB84FF179AA9D10021E0D0 /* ILQuestionForm.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILQuestionForm.xib; sourceTree = "<group>"; };
 		47E733441792B9AC00F23708 /* ILDashboard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILDashboard.xib; sourceTree = "<group>"; };
 		47E733831793090400F23708 /* ILUserFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUserFormViewController.h; sourceTree = "<group>"; };
 		47E733841793090400F23708 /* ILUserFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUserFormViewController.m; sourceTree = "<group>"; };
@@ -254,6 +259,7 @@
 			children = (
 				47E733441792B9AC00F23708 /* ILDashboard.xib */,
 				47E733851793090400F23708 /* ILUserForm.xib */,
+				47CB84FF179AA9D10021E0D0 /* ILQuestionForm.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -265,6 +271,8 @@
 				4792ECFC1768A7B900441527 /* ILDashboardViewController.m */,
 				47E733831793090400F23708 /* ILUserFormViewController.h */,
 				47E733841793090400F23708 /* ILUserFormViewController.m */,
+				47CB84FD179AA9D10021E0D0 /* ILQuestionFormViewController.h */,
+				47CB84FE179AA9D10021E0D0 /* ILQuestionFormViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -377,6 +385,7 @@
 				4792ED361768BE0200441527 /* InnerLife-iOS-144x144.png in Resources */,
 				47E733451792B9AC00F23708 /* ILDashboard.xib in Resources */,
 				47E733871793090400F23708 /* ILUserForm.xib in Resources */,
+				47CB8501179AA9D10021E0D0 /* ILQuestionForm.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +435,7 @@
 				473343D1176CBD2A0027D61D /* ILAppManager.m in Sources */,
 				473343D4176CBDD40027D61D /* ILDataSingleton.m in Sources */,
 				47E733861793090400F23708 /* ILUserFormViewController.m in Sources */,
+				47CB8500179AA9D10021E0D0 /* ILQuestionFormViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

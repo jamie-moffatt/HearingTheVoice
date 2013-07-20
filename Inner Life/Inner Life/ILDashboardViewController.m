@@ -9,6 +9,7 @@
 #import "ILDashboardViewController.h"
 
 #import "ILUserFormViewController.h"
+#import "ILQuestionFormViewController.h"
 
 @interface ILDashboardViewController ()
 
@@ -21,7 +22,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        self.title = @"Inner Life";
+       
     }
     return self;
 }
@@ -30,6 +31,8 @@
 {
     [super viewDidLoad];
 	
+     self.title = @"Dashboard";
+    
     // TODO: if first time user open the user details form
 }
 
@@ -43,6 +46,12 @@
 {
     ILUserFormViewController *userFormView = [[ILUserFormViewController alloc] initWithNibName:@"ILUserForm" bundle:nil];
     [self presentViewController:userFormView animated:YES completion:nil];
+}
+
+- (IBAction)answerQuestions:(id)sender
+{
+    ILQuestionFormViewController *questionFormView = [[ILQuestionFormViewController alloc] initWithNibName:@"ILQuestionForm" bundle:nil];
+    [self.navigationController pushViewController:questionFormView animated:YES];
 }
 
 @end
