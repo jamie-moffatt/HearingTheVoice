@@ -29,7 +29,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
+    // TODO: if first time user open the user details form
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,7 +41,6 @@
 
 - (IBAction)openFirstTimeForm:(id)sender
 {
-    NSLog(@"Button Press");
     ILUserFormViewController *userFormView = [[ILUserFormViewController alloc] initWithNibName:@"ILUserForm" bundle:nil];
     [self presentViewController:userFormView animated:YES completion:nil];
 }

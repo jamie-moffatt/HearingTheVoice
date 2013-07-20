@@ -24,6 +24,8 @@
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     
+    // TODO: Set default values in UserDefaults database
+    
     return YES;
 }
 

@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ILUserFormViewController : UIViewController
+@interface ILUserFormViewController : UIViewController <UITextFieldDelegate>
 
-- (IBAction)showUserCodeHelp:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *txtUserCode;
 @property (weak, nonatomic) IBOutlet UITextField *txtAge;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segGender;
+
+- (IBAction)showUserCodeHelp: (id)sender;
 - (IBAction)submitUserDetails:(id)sender;
 
 @end
