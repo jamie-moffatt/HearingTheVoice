@@ -1,5 +1,5 @@
 //
-//  ILQuestionXMLParser.h
+//  ILQuestionXMLParserDelegate.h
 //  Inner Life
 //
 //  Created by Matthew Bates on 13/06/2013.
@@ -11,7 +11,7 @@
 #import "ILQuestion.h"
 #import "ILChoice.h"
 
-@interface ILQuestionXMLParser : NSObject <NSXMLParserDelegate>
+@interface ILQuestionXMLParserDelegate : NSObject <NSXMLParserDelegate>
 {
     @private
     ILSection  *_currentSection;

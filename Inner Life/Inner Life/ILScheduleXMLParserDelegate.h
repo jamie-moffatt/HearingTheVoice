@@ -1,5 +1,5 @@
 //
-//  ILScheduleXMLParser.h
+//  ILScheduleXMLParserDelegate.h
 //  Inner Life
 //
 //  Created by Matthew Bates on 13/06/2013.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ILSchedule.h"
 
-@interface ILScheduleXMLParser : NSObject <NSXMLParserDelegate>
+@interface ILScheduleXMLParserDelegate : NSObject <NSXMLParserDelegate>
 {
     @private
     NSMutableArray *_currentSession;

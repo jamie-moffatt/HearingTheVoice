@@ -7,19 +7,47 @@
 //
 
 #import "ILDataSingleton.h"
+#import "ILNetworkDataHandler.h"
 
 @implementation ILDataSingleton
 
-// Return an array of sections
-- (NSArray *)getQuestions
++ (ILDataSingleton *)instance
 {
-    
+    static ILDataSingleton *sInstance;
+    @synchronized(self)
+    {
+        if (!sInstance)
+        {
+            sInstance = [[ILDataSingleton alloc] init];
+        }
+        return sInstance;
+    }
+}
+
+// Return an array of sections
+- (NSArray *)getQuestionsInSections
+{
+    if (sections)
+    {
+        return sections;
+    }
+    else
+    {
+        return [ILNetworkDataHandler downloadAndParseQuestionsInSections];
+    }
 }
 
 // Return a schedule object either from the cache or by accessing the web API
 - (ILSchedule *)getSchedule
 {
-    
+    if (schedule)
+    {
+        return schedule;
+    }
+    else
+    {
+        return [ILNetworkDataHandler downloadAndParseSchedule];
+    }
 }
 
 @end

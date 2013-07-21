@@ -1,14 +1,14 @@
 //
-//  ILQuestionXMLParser.m
+//  ILQuestionXMLParserDelegate.m
 //  Inner Life
 //
 //  Created by Matthew Bates on 13/06/2013.
 //  Copyright (c) 2013 Matthew Bates. All rights reserved.
 //
 
-#import "ILQuestionXMLParser.h"
+#import "ILQuestionXMLParserDelegate.h"
 
-@implementation ILQuestionXMLParser
+@implementation ILQuestionXMLParserDelegate
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {

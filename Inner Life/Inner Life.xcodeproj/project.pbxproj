@@ -40,8 +40,8 @@
 		47E733451792B9AC00F23708 /* ILDashboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E733441792B9AC00F23708 /* ILDashboard.xib */; };
 		47E733861793090400F23708 /* ILUserFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E733841793090400F23708 /* ILUserFormViewController.m */; };
 		47E733871793090400F23708 /* ILUserForm.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E733851793090400F23708 /* ILUserForm.xib */; };
-		47F217E3176A1DB10098FF4A /* ILQuestionXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E2176A1DB10098FF4A /* ILQuestionXMLParser.m */; };
-		47F217E6176A1DD50098FF4A /* ILScheduleXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E5176A1DD50098FF4A /* ILScheduleXMLParser.m */; };
+		47F217E3176A1DB10098FF4A /* ILQuestionXMLParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E2176A1DB10098FF4A /* ILQuestionXMLParserDelegate.m */; };
+		47F217E6176A1DD50098FF4A /* ILScheduleXMLParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E5176A1DD50098FF4A /* ILScheduleXMLParserDelegate.m */; };
 		47F217E9176A209E0098FF4A /* ILChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E8176A209E0098FF4A /* ILChoice.m */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +64,7 @@
 		473343D0176CBD2A0027D61D /* ILAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILAppManager.m; sourceTree = "<group>"; };
 		473343D2176CBDD40027D61D /* ILDataSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILDataSingleton.h; sourceTree = "<group>"; };
 		473343D3176CBDD40027D61D /* ILDataSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILDataSingleton.m; sourceTree = "<group>"; };
+		47659DA1179BFB2A00F63185 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		4792ECE01768A7B800441527 /* Inner Life.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Inner Life.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4792ECE31768A7B800441527 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4792ECE51768A7B800441527 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -105,10 +106,10 @@
 		47E733831793090400F23708 /* ILUserFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUserFormViewController.h; sourceTree = "<group>"; };
 		47E733841793090400F23708 /* ILUserFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUserFormViewController.m; sourceTree = "<group>"; };
 		47E733851793090400F23708 /* ILUserForm.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILUserForm.xib; sourceTree = "<group>"; };
-		47F217E1176A1DB10098FF4A /* ILQuestionXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILQuestionXMLParser.h; sourceTree = "<group>"; };
-		47F217E2176A1DB10098FF4A /* ILQuestionXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuestionXMLParser.m; sourceTree = "<group>"; };
-		47F217E4176A1DD50098FF4A /* ILScheduleXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILScheduleXMLParser.h; sourceTree = "<group>"; };
-		47F217E5176A1DD50098FF4A /* ILScheduleXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILScheduleXMLParser.m; sourceTree = "<group>"; };
+		47F217E1176A1DB10098FF4A /* ILQuestionXMLParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILQuestionXMLParserDelegate.h; sourceTree = "<group>"; };
+		47F217E2176A1DB10098FF4A /* ILQuestionXMLParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuestionXMLParserDelegate.m; sourceTree = "<group>"; };
+		47F217E4176A1DD50098FF4A /* ILScheduleXMLParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILScheduleXMLParserDelegate.h; sourceTree = "<group>"; };
+		47F217E5176A1DD50098FF4A /* ILScheduleXMLParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILScheduleXMLParserDelegate.m; sourceTree = "<group>"; };
 		47F217E7176A209E0098FF4A /* ILChoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILChoice.h; sourceTree = "<group>"; };
 		47F217E8176A209E0098FF4A /* ILChoice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILChoice.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -194,6 +195,7 @@
 				4792ECF51768A7B900441527 /* Default.png */,
 				4792ECF71768A7B900441527 /* Default@2x.png */,
 				4792ECF91768A7B900441527 /* Default-568h@2x.png */,
+				47659DA1179BFB2A00F63185 /* common.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -295,10 +297,10 @@
 		4792ED421769211B00441527 /* XML */ = {
 			isa = PBXGroup;
 			children = (
-				47F217E1176A1DB10098FF4A /* ILQuestionXMLParser.h */,
-				47F217E2176A1DB10098FF4A /* ILQuestionXMLParser.m */,
-				47F217E4176A1DD50098FF4A /* ILScheduleXMLParser.h */,
-				47F217E5176A1DD50098FF4A /* ILScheduleXMLParser.m */,
+				47F217E1176A1DB10098FF4A /* ILQuestionXMLParserDelegate.h */,
+				47F217E2176A1DB10098FF4A /* ILQuestionXMLParserDelegate.m */,
+				47F217E4176A1DD50098FF4A /* ILScheduleXMLParserDelegate.h */,
+				47F217E5176A1DD50098FF4A /* ILScheduleXMLParserDelegate.m */,
 			);
 			name = XML;
 			sourceTree = "<group>";
@@ -427,8 +429,8 @@
 				4792ED451769260C00441527 /* ILQuestion.m in Sources */,
 				4792ED48176928C900441527 /* ILSchedule.m in Sources */,
 				4792ED4B1769293300441527 /* ILSection.m in Sources */,
-				47F217E3176A1DB10098FF4A /* ILQuestionXMLParser.m in Sources */,
-				47F217E6176A1DD50098FF4A /* ILScheduleXMLParser.m in Sources */,
+				47F217E3176A1DB10098FF4A /* ILQuestionXMLParserDelegate.m in Sources */,
+				47F217E6176A1DD50098FF4A /* ILScheduleXMLParserDelegate.m in Sources */,
 				47F217E9176A209E0098FF4A /* ILChoice.m in Sources */,
 				473343CB176CB7120027D61D /* ILTimeUtils.m in Sources */,
 				473343CE176CBAAD0027D61D /* ILNetworkDataHandler.m in Sources */,

@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import "ILSchedule.h"
+
 @interface ILNetworkDataHandler : NSObject
+
++ (NSArray *)downloadAndParseQuestionsInSections;
++ (ILSchedule *)downloadAndParseSchedule;
 
 @end

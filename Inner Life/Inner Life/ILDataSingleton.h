@@ -7,10 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ILQuestionXMLParser.h"
-#import "ILScheduleXMLParser.h"
+#import "ILQuestionXMLParserDelegate.h"
+#import "ILScheduleXMLParserDelegate.h"
 
 @interface ILDataSingleton : NSObject
+{
+    @private
+    NSArray *sections;
+    ILSchedule *schedule;
+}
 
 @property NSInteger currentQuestion;
 @property NSInteger currentSection;
@@ -20,8 +25,10 @@
 @property NSMutableDictionary *prevResponseValues;
 @property NSMutableArray *prevSessions;
 
++ (ILDataSingleton *)instance;
+
 // Return an array of sections
-- (NSArray *)getQuestions;
+- (NSArray *)getQuestionsInSections;
 // Return a schedule object either from the cache or by accessing the web API
 - (ILSchedule *)getSchedule;
 
