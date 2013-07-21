@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ILDataSingleton.h"
 
 @interface ILQuestionFormViewController : UITableViewController
+{
+    @private
+    ILDataSingleton *data;
+}
+
+@property NSInteger currentSession;
 
 @end

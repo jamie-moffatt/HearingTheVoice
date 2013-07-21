@@ -24,6 +24,22 @@
     return self;
 }
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self)
+    {
+        data = [ILDataSingleton instance];
+        data.currentQuestion = 0;
+        data.currentSection  = 9;
+        
+        data.prevResponseIDs = [[NSMutableDictionary alloc] init];
+        data.prevResponseStrings = [[NSMutableDictionary alloc] init];
+        data.prevResponseValues = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -39,12 +55,43 @@
 
 - (void)nextButton: (UIButton *)sender
 {
-    NSLog(@"Next Button");
+    if (data.currentQuestion == ([[data getQuestionsBySection:data.currentSection] count] -1) && data.currentSection == 3)
+    {
+        NSLog(@"FINISH");
+    }
+    
+    if (data.currentQuestion == ([[data getQuestionsBySection:data.currentSection] count] -1))
+    {
+        data.currentSection++;
+        data.currentQuestion = 0;
+    }
+    else
+    {
+        data.currentQuestion++;
+    }
+    
+    [self.tableView reloadData];
 }
 
 - (void)previousButton: (UIButton *)sender
 {
-    NSLog(@"Previous Button");
+    if (data.currentSection == 0 && data.currentQuestion == 0)
+    {
+        return;
+    }
+    
+    data.currentQuestion--;
+    if (data.currentQuestion < 0)
+    {
+        data.currentSection = (data.currentSection > 0) ? (data.currentSection - 1) : 0;
+        data.currentQuestion = [[data getQuestionsBySection:data.currentSection] count] -1;
+        
+        if (data.currentSection < 0)
+        {
+            data.currentSection = 0;
+        }
+    }
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -58,8 +105,8 @@
 {
     if (section == 1)
     {
-        // Number of answers to current question
-        return 5;
+        NSArray *choices = [self getCurrentSection].choices ;
+        return [choices count];
     }
     else
     {
@@ -67,17 +114,31 @@
     }
 }
 
+- (ILSection *)getCurrentSection
+{
+    ILSection *section = [[[ILDataSingleton instance] getQuestionsInSections] objectAtIndex:[ILDataSingleton instance].currentSection];
+    return section;
+}
+
+- (ILQuestion *)getCurrentQuestion:(ILSection *)section
+{
+    ILQuestion *question = [section.questions objectAtIndex:[ILDataSingleton instance].currentQuestion];
+    return question;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    ILSection *section = [self getCurrentSection];
+    ILQuestion *question = [self getCurrentQuestion:section];
+    
     if (indexPath.section == 0)
     {
-        // TODO: work out question height
-        return 60;
+         return MAX(([question.questionDescription sizeWithFont:[UIFont italicSystemFontOfSize:15] constrainedToSize:CGSizeMake(280, 9000) lineBreakMode:NSLineBreakByWordWrapping].height) + 14, 44);
     }
     if (indexPath.section == 1)
     {
-        // TODO: work out answer choice heights
-        return MAX(([[NSString stringWithFormat:@"Choice %d", indexPath.row] sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(280, 9000) lineBreakMode:NSLineBreakByWordWrapping].height) + 14, 44);
+        ILChoice *choice = [section.choices objectAtIndex:indexPath.row];
+        return MAX(([choice.text  sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(280, 9000) lineBreakMode:NSLineBreakByWordWrapping].height) + 14, 44);
     }
     if (indexPath.section == 2)
     {
@@ -118,18 +179,19 @@
     
     if (indexPath.section == 0)
     {
-        cell.textLabel.font = [UIFont boldSystemFontOfSize:18];
+        cell.textLabel.font = [UIFont italicSystemFontOfSize:15];
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        cell.textLabel.text = [NSString stringWithFormat:@"Question"];
+        cell.textLabel.text = [self getCurrentQuestion:[self getCurrentSection]].questionDescription;
         
     }
     else if (indexPath.section == 1)
     {
+        ILChoice *choice = [[self getCurrentSection].choices objectAtIndex:indexPath.row];
         cell.textLabel.font = [UIFont systemFontOfSize:15];
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        cell.textLabel.text = [NSString stringWithFormat:@"Choice %d", indexPath.row];
+        cell.textLabel.text = choice.text;
         
     }
     else if (indexPath.section == 2)

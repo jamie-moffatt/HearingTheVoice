@@ -29,6 +29,7 @@
 
 // Return an array of sections
 - (NSArray *)getQuestionsInSections;
+- (NSArray *)getQuestionsBySection: (NSInteger)sectionID;
 // Return a schedule object either from the cache or by accessing the web API
 - (ILSchedule *)getSchedule;
 

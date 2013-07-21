@@ -27,27 +27,28 @@
 // Return an array of sections
 - (NSArray *)getQuestionsInSections
 {
-    if (sections)
+    if (!sections)
     {
-        return sections;
+        sections = [ILNetworkDataHandler downloadAndParseQuestionsInSections];
     }
-    else
-    {
-        return [ILNetworkDataHandler downloadAndParseQuestionsInSections];
-    }
+    return sections;
+}
+
+- (NSArray *)getQuestionsBySection: (NSInteger)sectionID
+{
+    NSArray *sectionList = [self getQuestionsInSections];
+    ILSection *section = [sectionList objectAtIndex:sectionID];
+    return section.questions;
 }
 
 // Return a schedule object either from the cache or by accessing the web API
 - (ILSchedule *)getSchedule
 {
-    if (schedule)
+    if (!schedule)
     {
-        return schedule;
+        schedule = [ILNetworkDataHandler downloadAndParseSchedule];
     }
-    else
-    {
-        return [ILNetworkDataHandler downloadAndParseSchedule];
-    }
+    return schedule;
 }
 
 @end
