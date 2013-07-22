@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		472CAE27179DB48000B1179C /* ILQuestionProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 472CAE26179DB48000B1179C /* ILQuestionProgressBar.m */; };
 		473343CB176CB7120027D61D /* ILTimeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 473343CA176CB7120027D61D /* ILTimeUtils.m */; };
 		473343CE176CBAAD0027D61D /* ILNetworkDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 473343CD176CBAAD0027D61D /* ILNetworkDataHandler.m */; };
 		473343D1176CBD2A0027D61D /* ILAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 473343D0176CBD2A0027D61D /* ILAppManager.m */; };
@@ -56,6 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		472CAE25179DB48000B1179C /* ILQuestionProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILQuestionProgressBar.h; sourceTree = "<group>"; };
+		472CAE26179DB48000B1179C /* ILQuestionProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuestionProgressBar.m; sourceTree = "<group>"; };
 		473343C9176CB7120027D61D /* ILTimeUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILTimeUtils.h; sourceTree = "<group>"; };
 		473343CA176CB7120027D61D /* ILTimeUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILTimeUtils.m; sourceTree = "<group>"; };
 		473343CC176CBAAD0027D61D /* ILNetworkDataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILNetworkDataHandler.h; sourceTree = "<group>"; };
@@ -139,6 +142,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		472CAE22179DB30C00B1179C /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				472CAE25179DB48000B1179C /* ILQuestionProgressBar.h */,
+				472CAE26179DB48000B1179C /* ILQuestionProgressBar.m */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
 		4792ECD71768A7B800441527 = {
 			isa = PBXGroup;
 			children = (
@@ -259,6 +271,7 @@
 		4792ED3F17691FF000441527 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				472CAE22179DB30C00B1179C /* UI */,
 				47E733441792B9AC00F23708 /* ILDashboard.xib */,
 				47E733851793090400F23708 /* ILUserForm.xib */,
 				47CB84FF179AA9D10021E0D0 /* ILQuestionForm.xib */,
@@ -438,6 +451,7 @@
 				473343D4176CBDD40027D61D /* ILDataSingleton.m in Sources */,
 				47E733861793090400F23708 /* ILUserFormViewController.m in Sources */,
 				47CB8500179AA9D10021E0D0 /* ILQuestionFormViewController.m in Sources */,
+				472CAE27179DB48000B1179C /* ILQuestionProgressBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
