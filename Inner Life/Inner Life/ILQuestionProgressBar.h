@@ -10,8 +10,8 @@
 
 @interface ILQuestionProgressBar : UIView
 
-@property NSInteger currentSection;
-@property NSInteger currentSubSection;
-@property NSArray *sectionSpecification;
+@property (nonatomic) NSInteger currentSection;
+@property (nonatomic) NSInteger currentSubSection;
+@property (nonatomic) NSArray *sectionSpecification;
 
 @end

@@ -2,27 +2,20 @@
 //  ILQuestionFormViewController.m
 //  Inner Life
 //
-//  Created by Matthew Bates on 20/07/2013.
+//  Created by Matthew Bates on 26/07/2013.
 //  Copyright (c) 2013 Matthew Bates. All rights reserved.
 //
 
 #import "ILQuestionFormViewController.h"
+#import "common.h"
 
 @interface ILQuestionFormViewController ()
-
+{
+    NSArray *sections;
+}
 @end
 
 @implementation ILQuestionFormViewController
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self)
-    {
-        
-    }
-    return self;
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,11 +26,46 @@
         data.currentQuestion = 0;
         data.currentSection  = 9;
         
-        data.prevResponseIDs = [[NSMutableDictionary alloc] init];
-        data.prevResponseStrings = [[NSMutableDictionary alloc] init];
-        data.prevResponseValues = [[NSMutableDictionary alloc] init];
+        _currentSession = 1;
+        sections = [data getQuestionsInSectionsFilteredBySession:_currentSession];
+        
+        data.responses = [[NSMutableDictionary alloc] init];
     }
     return self;
+}
+
+- (void)loadView
+{    
+    UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+    [view setBackgroundColor:[UIColor whiteColor]];
+    
+    CGFloat width = view.frame.size.width;
+    CGFloat height = view.frame.size.height - NAVIGATION_BAR_HEIGHT;
+    
+    _questionProgressBar = [[ILQuestionProgressBar alloc] initWithFrame:CGRectMake(0, height - 44, width, 44)];
+    [_questionProgressBar setBackgroundColor:[UIColor whiteColor]];
+    
+    UIButton *previousButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [previousButton addTarget:self action:@selector(previousButton:) forControlEvents:UIControlEventTouchUpInside];
+    [previousButton setTitle:@"Previous" forState:UIControlStateNormal];
+    previousButton.frame = CGRectMake(5, height - _questionProgressBar.frame.size.height - 2 - 44, width/2 - 8, 44);
+    
+    UIButton *nextButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [nextButton addTarget:self action:@selector(nextButton:) forControlEvents:UIControlEventTouchUpInside];
+    [nextButton setTitle:@"Next" forState:UIControlStateNormal];
+    nextButton.frame = CGRectMake(previousButton.frame.origin.x + previousButton.frame.size.width + 6,
+                                  height - _questionProgressBar.frame.size.height - 2 - 44, width/2 - 8, 44);
+
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, width, previousButton.frame.origin.y -5) style:UITableViewStyleGrouped];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    
+    [view addSubview:_tableView];
+    [view addSubview:previousButton];
+    [view addSubview:nextButton];
+    [view addSubview:_questionProgressBar];
+    self.view = view;
 }
 
 - (void)viewDidLoad
@@ -45,6 +73,16 @@
     [super viewDidLoad];
     
     self.title = @"Questions";
+    
+    NSMutableArray *sectionLengthSpec = [[NSMutableArray alloc] initWithCapacity:[sections count]];
+    for (ILSection *section in sections)
+    {
+        [sectionLengthSpec addObject:[NSNumber numberWithInteger:[section.questions count]]];
+    }
+    
+    _questionProgressBar.sectionSpecification = sectionLengthSpec;
+    _questionProgressBar.currentSection = 0;
+    _questionProgressBar.currentSubSection = 0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,6 +108,8 @@
         data.currentQuestion++;
     }
     
+    _questionProgressBar.currentSubSection++;
+    
     [self.tableView reloadData];
 }
 
@@ -91,6 +131,9 @@
             data.currentSection = 0;
         }
     }
+    
+    _questionProgressBar.currentSubSection--;
+    
     [self.tableView reloadData];
 }
 
@@ -98,7 +141,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -133,7 +176,7 @@
     
     if (indexPath.section == 0)
     {
-         return MAX(([question.questionDescription sizeWithFont:[UIFont italicSystemFontOfSize:15] constrainedToSize:CGSizeMake(280, 9000) lineBreakMode:NSLineBreakByWordWrapping].height) + 14, 44);
+        return MAX(([question.questionDescription sizeWithFont:[UIFont italicSystemFontOfSize:15] constrainedToSize:CGSizeMake(280, 9000) lineBreakMode:NSLineBreakByWordWrapping].height) + 14, 44);
     }
     if (indexPath.section == 1)
     {
@@ -163,7 +206,6 @@
         cell = [tableView dequeueReusableCellWithIdentifier:TextCellIdentifier];
         
     }
-
     
     if (cell == nil)
     {
@@ -176,6 +218,8 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TextCellIdentifier];
         }
     }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if (indexPath.section == 0)
     {
@@ -192,6 +236,25 @@
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
         cell.textLabel.text = choice.text;
+        
+        ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", data.currentQuestion]];
+        
+        if (response)
+        {
+            if (response.value == choice.value)
+            {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
+            else
+            {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            
+        }
+        else
+        {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
         
     }
     else if (indexPath.section == 2)
@@ -216,13 +279,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    ILChoice *choice = [[self getCurrentSection].choices objectAtIndex:indexPath.row];
+    [data.responses setObject:choice forKey:[NSString stringWithFormat:@"%d", data.currentQuestion]];
+    [self.tableView reloadData];
 }
 
 @end

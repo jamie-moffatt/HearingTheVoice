@@ -25,11 +25,15 @@
 @property NSMutableDictionary *prevResponseValues;
 @property NSMutableArray *prevSessions;
 
+@property NSMutableDictionary *responses;
+
 + (ILDataSingleton *)instance;
 
 // Return an array of sections
 - (NSArray *)getQuestionsInSections;
+- (NSArray *)getQuestionsInSectionsFilteredBySession: (NSInteger)sessionID;
 - (NSArray *)getQuestionsBySection: (NSInteger)sectionID;
+- (NSArray *)getFlatQuestionArrayBySession: (NSInteger)sessionID;
 // Return a schedule object either from the cache or by accessing the web API
 - (ILSchedule *)getSchedule;
 

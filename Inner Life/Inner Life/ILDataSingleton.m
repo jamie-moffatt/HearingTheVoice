@@ -34,11 +34,39 @@
     return sections;
 }
 
+- (NSArray *)getQuestionsInSectionsFilteredBySession: (NSInteger)sessionID
+{
+    NSMutableArray *filteredSectionList = [[NSMutableArray alloc] init];
+    NSArray *session = [[self getSchedule].sessions objectAtIndex:sessionID-1];
+    
+    for (int i = 0; i < [session count]; i++)
+    {
+        NSInteger sectionID = [[session objectAtIndex:i] integerValue];
+        [filteredSectionList addObject:[[self getQuestionsInSections] objectAtIndex:sectionID-1 ]];
+    }
+    
+    return [filteredSectionList copy];
+}
+
 - (NSArray *)getQuestionsBySection: (NSInteger)sectionID
 {
     NSArray *sectionList = [self getQuestionsInSections];
-    ILSection *section = [sectionList objectAtIndex:sectionID];
+    ILSection *section = [sectionList objectAtIndex:sectionID-1];
     return section.questions;
+}
+
+- (NSArray *)getFlatQuestionArrayBySession: (NSInteger)sessionID
+{
+    NSArray *session = [[self getSchedule].sessions objectAtIndex:sessionID];
+    NSLog(@"Session %d:\n\n", sessionID);
+    NSLog(@"%@", session);
+    NSMutableArray *questions = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [session count]; i++)
+    {
+        NSInteger sectionID = [[session objectAtIndex:i] integerValue];
+        [questions addObjectsFromArray:[self getQuestionsBySection:sectionID]];
+    }
+    return [questions copy];
 }
 
 // Return a schedule object either from the cache or by accessing the web API

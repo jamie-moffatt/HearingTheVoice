@@ -15,24 +15,56 @@
     self = [super initWithFrame:frame];
     if (self)
     {
+        NSMutableArray *sections = [[NSMutableArray alloc] initWithCapacity:10];
+        for (int i = 0; i < 10; i++) [sections addObject:[NSNumber numberWithInt:27]];
         
+        _sectionSpecification = [sections copy];
+        _currentSection = 0;
+        _currentSubSection = 0;
     }
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self)
+    {
+        NSMutableArray *sections = [[NSMutableArray alloc] initWithCapacity:10];
+        for (int i = 0; i < 10; i++) [sections addObject:[NSNumber numberWithInt:27]];
+        
+        _sectionSpecification = [sections copy];
+        _currentSection = 0;
+        _currentSubSection = 0;
+    }
+    return self;
+}
+
+
+ - (void)setSectionSpecification:(NSArray *)sectionSpecification
+{
+    _sectionSpecification = sectionSpecification;
+    [self setNeedsDisplay];
+}
+
+- (void)setCurrentSection:(NSInteger)currentSection
+{
+    _currentSection = currentSection;
+    [self setNeedsDisplay];
+}
+
+- (void)setCurrentSubSection:(NSInteger)currentSubSection
+{
+    _currentSubSection = currentSubSection;
+    [self setNeedsDisplay];
+}
+
 - (void)drawRect:(CGRect)rect
 {
-    NSMutableArray *sections = [[NSMutableArray alloc] initWithCapacity:10];
-    for (int i = 0; i < 10; i++) [sections addObject:[NSNumber numberWithInt:27]];
-    
-    _sectionSpecification = [sections copy];
-    _currentSection = 0;
-    
+    CGFloat x = rect.origin.x;
+    CGFloat y = rect.origin.y;
     CGFloat width = rect.size.width;
     CGFloat height = rect.size.height;
-    
-    CGFloat centerX = width / 2;
-    CGFloat centerY = height / 2;
     
     int numOfSections = [_sectionSpecification count];
     CGFloat sizeOfSegments = width / 10;
@@ -61,19 +93,21 @@
     
     if (numOfSections % 2)
     {
-        for (int i = 14 - numOfSections/2; i <= 14 + numOfSections/2; i++)
+        for (int i = 14 - numOfSections/2, j = 0; i <= 14 + numOfSections/2; i++, j++)
         {
             UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(i*sizeOfSegments-4.5, 30, 9, 9)];
-            [[UIColor colorWithRed: 1 green: 0 blue: 1 alpha: 1] setFill];
+            if (j < _currentSubSection) [[UIColor colorWithRed: 1 green: 0 blue: 1 alpha: 1] setFill];
+            else [[UIColor colorWithWhite:0.5 alpha:1] setFill];
             [ovalPath fill];
         }
     }
     else
     {
-        for (int i = 14 - numOfSections/2; i < 14 + numOfSections/2; i++)
+        for (int i = 14 - numOfSections/2, j = 0; i < 14 + numOfSections/2; i++, j++)
         {
-            UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(i*sizeOfSegments-4.5+sizeOfSegments/2, 30, 20, 20)];
-            [[UIColor colorWithRed: 1 green: 0 blue: 1 alpha: 1] setFill];
+            UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(i*sizeOfSegments-4.5+sizeOfSegments/2, 30, 9, 9)];
+            if (j < _currentSubSection) [[UIColor colorWithRed: 1 green: 0 blue: 1 alpha: 1] setFill];
+            else [[UIColor colorWithWhite:0.5 alpha:1] setFill];
             [ovalPath fill];
         }
     }

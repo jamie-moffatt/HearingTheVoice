@@ -50,7 +50,7 @@
 
 - (IBAction)answerQuestions:(id)sender
 {
-    ILQuestionFormViewController *questionFormView = [[ILQuestionFormViewController alloc] initWithNibName:@"ILQuestionForm" bundle:nil];
+    ILQuestionFormViewController *questionFormView = [[ILQuestionFormViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:questionFormView animated:YES];
 }
 
