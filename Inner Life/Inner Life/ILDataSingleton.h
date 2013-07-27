@@ -20,11 +20,6 @@
 @property NSInteger currentQuestion;
 @property NSInteger currentSection;
 
-@property NSMutableDictionary *prevResponseIDs;
-@property NSMutableDictionary *prevResponseStrings;
-@property NSMutableDictionary *prevResponseValues;
-@property NSMutableArray *prevSessions;
-
 @property NSMutableDictionary *responses;
 
 + (ILDataSingleton *)instance;

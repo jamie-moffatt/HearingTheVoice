@@ -24,9 +24,10 @@
     {
         data = [ILDataSingleton instance];
         data.currentQuestion = 0;
-        data.currentSection  = 9;
+        data.currentSection = 0;
         
-        _currentSession = 1;
+        // TODO: Replace with code based on date registered
+        _currentSession = 29;
         sections = [data getQuestionsInSectionsFilteredBySession:_currentSession];
         
         data.responses = [[NSMutableDictionary alloc] init];
@@ -93,46 +94,60 @@
 
 - (void)nextButton: (UIButton *)sender
 {
-    if (data.currentQuestion == ([[data getQuestionsBySection:data.currentSection] count] -1) && data.currentSection == 3)
+    NSInteger numberOfSectionsInCurrentSession = [sections count];
+    ILSection *sectionObj = [sections objectAtIndex:data.currentSection];
+    NSInteger numberOfQuestionsInCurrentSection = [[data getQuestionsBySection:(sectionObj.sectionID)] count];
+    
+    
+    if (data.currentQuestion == (numberOfQuestionsInCurrentSection - 1) && data.currentSection == (numberOfSectionsInCurrentSession - 1))
     {
         NSLog(@"FINISH");
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
     }
     
-    if (data.currentQuestion == ([[data getQuestionsBySection:data.currentSection] count] -1))
+    if (data.currentQuestion == (numberOfQuestionsInCurrentSection - 1))
     {
         data.currentSection++;
+        _questionProgressBar.currentSection++;
         data.currentQuestion = 0;
+        _questionProgressBar.currentSubSection = 0;
     }
     else
     {
         data.currentQuestion++;
+        _questionProgressBar.currentSubSection++;
     }
     
-    _questionProgressBar.currentSubSection++;
+    NSLog(@"Section Index: %d", data.currentSection);
+    NSLog(@"Question Index: %d", data.currentQuestion);
     
     [self.tableView reloadData];
 }
 
 - (void)previousButton: (UIButton *)sender
-{
+{   
     if (data.currentSection == 0 && data.currentQuestion == 0)
     {
         return;
     }
     
-    data.currentQuestion--;
-    if (data.currentQuestion < 0)
+    if (data.currentQuestion == 0)
     {
-        data.currentSection = (data.currentSection > 0) ? (data.currentSection - 1) : 0;
-        data.currentQuestion = [[data getQuestionsBySection:data.currentSection] count] -1;
+        ILSection *sectionObj = [sections objectAtIndex:(data.currentSection - 1)];
+        NSInteger numberOfQuestionsInPreviousSection = [[data getQuestionsBySection:(sectionObj.sectionID)] count];
         
-        if (data.currentSection < 0)
-        {
-            data.currentSection = 0;
-        }
+        data.currentSection--;
+        data.currentQuestion = numberOfQuestionsInPreviousSection - 1;
+        
+        _questionProgressBar.currentSection--;
+        _questionProgressBar.currentSubSection = numberOfQuestionsInPreviousSection - 1;
     }
-    
-    _questionProgressBar.currentSubSection--;
+    else
+    {
+        data.currentQuestion--;
+        _questionProgressBar.currentSubSection--;
+    }
     
     [self.tableView reloadData];
 }
@@ -159,13 +174,13 @@
 
 - (ILSection *)getCurrentSection
 {
-    ILSection *section = [[[ILDataSingleton instance] getQuestionsInSections] objectAtIndex:[ILDataSingleton instance].currentSection];
+    ILSection *section = [sections objectAtIndex:data.currentSection];
     return section;
 }
 
 - (ILQuestion *)getCurrentQuestion:(ILSection *)section
 {
-    ILQuestion *question = [section.questions objectAtIndex:[ILDataSingleton instance].currentQuestion];
+    ILQuestion *question = [section.questions objectAtIndex:data.currentQuestion];
     return question;
 }
 
@@ -237,7 +252,7 @@
         cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
         cell.textLabel.text = choice.text;
         
-        ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", data.currentQuestion]];
+        ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", [self getCurrentQuestion:[self getCurrentSection]].questionID]];
         
         if (response)
         {
@@ -280,7 +295,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ILChoice *choice = [[self getCurrentSection].choices objectAtIndex:indexPath.row];
-    [data.responses setObject:choice forKey:[NSString stringWithFormat:@"%d", data.currentQuestion]];
+    [data.responses setObject:choice forKey:[NSString stringWithFormat:@"%d", [self getCurrentQuestion:[self getCurrentSection]].questionID]];
     [self.tableView reloadData];
 }
 
