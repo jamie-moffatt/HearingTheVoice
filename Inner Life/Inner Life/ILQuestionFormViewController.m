@@ -8,6 +8,8 @@
 
 #import "ILQuestionFormViewController.h"
 #import "common.h"
+#import "ILUser.h"
+#import "ILAppManager.h"
 
 @interface ILQuestionFormViewController ()
 {
@@ -27,10 +29,16 @@
         data.currentSection = 0;
         
         // TODO: Replace with code based on date registered
-        _currentSession = 29;
+        _currentSession = 1;
         sections = [data getQuestionsInSectionsFilteredBySession:_currentSession];
         
         data.responses = [[NSMutableDictionary alloc] init];
+        
+        NSArray *xs = [data getFlatQuestionArrayBySession:_currentSession];
+        for (ILQuestion *q in xs)
+        {
+            [data.responses setObject:[ILChoice NA] forKey:[NSString stringWithFormat:@"%d", q.questionID]];
+        }
     }
     return self;
 }
@@ -98,11 +106,55 @@
     ILSection *sectionObj = [sections objectAtIndex:data.currentSection];
     NSInteger numberOfQuestionsInCurrentSection = [[data getQuestionsBySection:(sectionObj.sectionID)] count];
     
+#pragma mark Submission Code
     
     if (data.currentQuestion == (numberOfQuestionsInCurrentSection - 1) && data.currentSection == (numberOfSectionsInCurrentSession - 1))
     {
         NSLog(@"FINISH");
-        [self.navigationController popViewControllerAnimated:YES];
+        
+        // Construct Response XML
+        NSMutableString *responseXML = [[NSMutableString alloc] init];
+        
+        ILUser *user = [ILAppManager getUser];
+        NSDate *now = [NSDate date];
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        [df setLocale: [[NSLocale alloc] initWithLocaleIdentifier:@"en_GB"]];
+        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString *date = [df stringFromDate:now];
+        
+        [responseXML appendFormat:@"<submission userID=\"%d\" sessionID=\"%d\" notificationTime=\"%@\" submissionTime=\"%@\">", user.userID, _currentSession, date, date];
+        for (NSString *key in data.responses)
+        {
+            NSString *questionID = key;
+            ILChoice *chosenChoiceObject = [data.responses objectForKey:key];
+            if (chosenChoiceObject)
+            {
+                [responseXML appendFormat:@"<response questionID=\"%@\" response=\"%@\" />", questionID, chosenChoiceObject.value];
+            }
+            else
+            {
+                [responseXML appendFormat:@"<response questionID=\"%@\" response=\"N/A\" />", questionID];
+            }
+        }
+        [responseXML appendString:@"</submission>"];
+        
+        NSLog(@"Submitting ResponseXML: %@", responseXML);
+        
+        NSURL *responseAPI_URL = [NSURL URLWithString:RESPONSE_API_ENDPOINT];
+        NSMutableURLRequest *URL_Request = [NSMutableURLRequest requestWithURL:responseAPI_URL];
+        [URL_Request setHTTPMethod:@"POST"];
+        [URL_Request setValue:@"text/xml" forHTTPHeaderField:@"Content-Type"];
+        [URL_Request setHTTPBody:[responseXML dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [NSURLConnection sendAsynchronousRequest:URL_Request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *body, NSError *error)
+         {
+             if (body)
+             {
+                 NSString *s = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
+                 NSLog(@"Web API Response:\n%@", s);
+                 [self.navigationController popViewControllerAnimated:YES];
+             }
+         }];
         return;
     }
     
@@ -152,6 +204,13 @@
     [self.tableView reloadData];
 }
 
+- (void)changeSlider: (UISlider *)sender
+{
+    ILQuestion *q = [self getCurrentQuestion:[self getCurrentSection]];
+    ILChoice *c = [[ILChoice alloc] initWithText:@"From UISlider" andValue:[NSString stringWithFormat:@"%d", (int)sender.value]];
+    [data.responses setObject:c forKey:[NSString stringWithFormat:@"%d", q.questionID]];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -163,8 +222,18 @@
 {
     if (section == 1)
     {
-        NSArray *choices = [self getCurrentSection].choices ;
-        return [choices count];
+        ILQuestion *q = [self getCurrentQuestion:[self getCurrentSection]];
+        if (q.type == RADIO)
+        {
+            NSArray *choices = [self getCurrentSection].choices ;
+            return [choices count];
+        }
+        else if (q.type == YESNO)
+        {
+            return 2;
+        }
+        else return 1;
+
     }
     else
     {
@@ -210,9 +279,11 @@
     static NSString *TextCellIdentifier = @"TextCell";
     static NSString *ButtonCellIdentifier = @"ButtonCell";
     
+    ILQuestion *q = [self getCurrentQuestion:[self getCurrentSection]];
+    
     UITableViewCell *cell;
     
-    if (indexPath.section == 2)
+    if (q.type == NUMSCALE)
     {
         cell = [tableView dequeueReusableCellWithIdentifier:ButtonCellIdentifier];
     }
@@ -224,7 +295,7 @@
     
     if (cell == nil)
     {
-        if (indexPath.section == 2)
+        if (q.type == NUMSCALE)
         {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ButtonCellIdentifier];
         }
@@ -241,36 +312,64 @@
         cell.textLabel.font = [UIFont italicSystemFontOfSize:15];
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        cell.textLabel.text = [self getCurrentQuestion:[self getCurrentSection]].questionDescription;
+        cell.textLabel.text = q.questionDescription;
         
     }
     else if (indexPath.section == 1)
     {
-        ILChoice *choice = [[self getCurrentSection].choices objectAtIndex:indexPath.row];
-        cell.textLabel.font = [UIFont systemFontOfSize:15];
-        cell.textLabel.numberOfLines = 0;
-        cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        cell.textLabel.text = choice.text;
-        
-        ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", [self getCurrentQuestion:[self getCurrentSection]].questionID]];
-        
-        if (response)
+        if (q.type == NUMSCALE)
         {
-            if (response.value == choice.value)
+            cell.textLabel.text = @"";
+
+            CGFloat w = cell.frame.size.width;
+            CGFloat h = cell.frame.size.height;
+            
+            _slider = [[UISlider alloc] initWithFrame:CGRectMake(0+15, 0, w-30, h)];
+            
+            ILChoice *minChoice = [[self getCurrentSection].choices objectAtIndex:0];
+            ILChoice *maxChoice = [[self getCurrentSection].choices objectAtIndex:1];
+            
+            NSInteger minValue = [minChoice.value integerValue];
+            NSInteger maxValue = [maxChoice.value integerValue];
+            
+            _slider.minimumValue = minValue;
+            _slider.maximumValue = maxValue;
+            
+            [_slider addTarget:self action:@selector(changeSlider:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:_slider];
+        }
+        else if (q.type == YESNO)
+        {
+            
+        }
+        else
+        {
+            ILChoice *choice = [[self getCurrentSection].choices objectAtIndex:indexPath.row];
+            cell.textLabel.font = [UIFont systemFontOfSize:15];
+            cell.textLabel.numberOfLines = 0;
+            cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            cell.textLabel.text = choice.text;
+            
+            ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", [self getCurrentQuestion:[self getCurrentSection]].questionID]];
+            
+            if (response)
             {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                if (response.value == choice.value)
+                {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                }
+                else
+                {
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                }
+                
             }
             else
             {
                 cell.accessoryType = UITableViewCellAccessoryNone;
             }
-            
+
         }
-        else
-        {
-            cell.accessoryType = UITableViewCellAccessoryNone;
-        }
-        
     }
     else if (indexPath.section == 2)
     {
@@ -294,8 +393,34 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ILChoice *choice = [[self getCurrentSection].choices objectAtIndex:indexPath.row];
-    [data.responses setObject:choice forKey:[NSString stringWithFormat:@"%d", [self getCurrentQuestion:[self getCurrentSection]].questionID]];
+    if (indexPath.section == 1)
+    {
+        ILQuestion *q = [self getCurrentQuestion:[self getCurrentSection]];
+        
+        if (q.type == NUMSCALE)
+        {
+            
+        }
+        else if (q.type == YESNO)
+        {
+            ILChoice *choice;
+            
+            if (indexPath.row == 0)
+            {
+                choice = [[ILChoice alloc] initWithText:@"YES" andValue:@"1"];
+            }
+            else
+            {
+                choice = [[ILChoice alloc] initWithText:@"NO" andValue:@"0"];
+            }
+            [data.responses setObject:choice forKey:[NSString stringWithFormat:@"%d", q.questionID]];
+        }
+        else
+        {
+            ILChoice *choice = [[self getCurrentSection].choices objectAtIndex:indexPath.row];
+            [data.responses setObject:choice forKey:[NSString stringWithFormat:@"%d", q.questionID]];
+        }
+    }
     [self.tableView reloadData];
 }
 

@@ -22,6 +22,7 @@
 - (void)nextButton:(id)sender;
 
 @property NSInteger currentSession;
+@property UISlider *slider;
 
 @end
 

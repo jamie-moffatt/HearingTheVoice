@@ -29,4 +29,9 @@
     [coder encodeObject:self->_gender forKey:@"userGender"];
 }
 
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"(%d, \"%@\", %d, %@)", _userID, _userCode, _age, _gender];
+}
+
 @end

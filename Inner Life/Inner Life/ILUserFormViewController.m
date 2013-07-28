@@ -7,6 +7,9 @@
 //
 
 #import "ILUserFormViewController.h"
+#import "common.h"
+#import "ILUser.h"
+#import "ILAppManager.h"
 
 @interface ILUserFormViewController ()
 
@@ -69,10 +72,35 @@
     
     NSString *userXML = [NSString stringWithFormat:@"<user code=\"%@\" age=\"%@\" gender=\"%@\" />", userCode, userAge, userGender];
     
-    NSLog(@"%@", userXML);
+    NSLog(@"Submitting UserXML: %@", userXML);
     
     // TODO: Send user XML to the backend (check for acknowledgement and save new userID)
+    NSURL *userAPI_URL = [NSURL URLWithString:USER_API_ENDPOINT];
+    NSMutableURLRequest *URL_Request = [NSMutableURLRequest requestWithURL:userAPI_URL];
+    [URL_Request setHTTPMethod:@"POST"];
+    [URL_Request setValue:@"text/xml" forHTTPHeaderField:@"Content-Type"];
+    [URL_Request setHTTPBody:[userXML dataUsingEncoding:NSUTF8StringEncoding]];
     
-    [self dismissViewControllerAnimated:true completion:nil];
+    [NSURLConnection sendAsynchronousRequest:URL_Request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
+     {
+         if (data)
+         {
+             NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+             NSInteger userID = [dataStr integerValue];
+             
+             NSLog(@"New User Accepted with ID: %d", userID);
+             
+             ILUser *newUser = [[ILUser alloc] init];
+             newUser.userID = userID;
+             newUser.userCode = userCode;
+             newUser.age = [userAge integerValue];
+             newUser.gender = userGender;
+             
+             [ILAppManager setUser:newUser];
+             NSLog(@"Set New User: %@", newUser);
+             
+             [self dismissViewControllerAnimated:true completion:nil];
+         }
+     }];
 }
 @end

@@ -17,15 +17,15 @@
 
 + (ILQuestionType) typeFromString: (NSString*)string
 {
-    if ([string isEqualToString:@"radio"])
+    if ([string isEqualToString:@"RADIO"])
     {
         return RADIO;
     }
-    else if ([string isEqualToString:@"yesno"])
+    else if ([string isEqualToString:@"YESNO"])
     {
         return YESNO;
     }
-    else if ([string isEqualToString:@"numscale"])
+    else if ([string isEqualToString:@"NUMSCALE"])
     {
         return NUMSCALE;
     }

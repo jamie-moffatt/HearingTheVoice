@@ -15,5 +15,6 @@
 @property NSString *value;
 
 - (id)initWithText: (NSString*)text andValue: (NSString*)value;
++ (const ILChoice *)NA;
 
 @end

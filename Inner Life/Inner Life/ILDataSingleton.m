@@ -42,7 +42,7 @@
     for (int i = 0; i < [session count]; i++)
     {
         NSInteger sectionID = [[session objectAtIndex:i] integerValue];
-        [filteredSectionList addObject:[[self getQuestionsInSections] objectAtIndex:sectionID-1 ]];
+        [filteredSectionList addObject:[[self getQuestionsInSections] objectAtIndex:(sectionID - 1)]];
     }
     
     return [filteredSectionList copy];
@@ -57,7 +57,7 @@
 
 - (NSArray *)getFlatQuestionArrayBySession: (NSInteger)sessionID
 {
-    NSArray *session = [[self getSchedule].sessions objectAtIndex:sessionID];
+    NSArray *session = [[self getSchedule].sessions objectAtIndex:(sessionID - 1)];
     NSLog(@"Session %d:\n\n", sessionID);
     NSLog(@"%@", session);
     NSMutableArray *questions = [[NSMutableArray alloc] init];

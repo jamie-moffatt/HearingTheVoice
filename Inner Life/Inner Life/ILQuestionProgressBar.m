@@ -71,9 +71,9 @@
         for (int i = 5 - numOfSections/2, j = 0; i <= 5 + numOfSections/2; i++, j++)
         {
             UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(i*sizeOfSegments-10, 3, 20, 20)];
-            if (j < _currentSection) [[UIColor colorWithRed: 1 green: 0 blue: 1 alpha: 1] setFill];
-            else if (j == _currentSection) [[UIColor colorWithRed: 0 green: 1 blue: 0 alpha: 1] setFill];
-            else [[UIColor colorWithWhite:0.5 alpha:1] setFill];
+            if (j < _currentSection) [[UIColor colorWithWhite:0.5 alpha: 1] setFill];
+            else if (j == _currentSection) [[UIColor colorWithWhite:0.2 alpha: 1] setFill];
+            else [[UIColor colorWithWhite:0.85 alpha:1] setFill];
             [ovalPath fill];
         }
     }
@@ -82,9 +82,9 @@
         for (int i = 5 - numOfSections/2, j = 0; i < 5 + numOfSections/2; i++, j++)
         {
             UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(i*sizeOfSegments-10+sizeOfSegments/2, 5, 20, 20)];
-            if (j < _currentSection) [[UIColor colorWithRed: 1 green: 0 blue: 1 alpha: 1] setFill];
-            else if (j == _currentSection) [[UIColor colorWithRed: 0 green: 1 blue: 0 alpha: 1] setFill];
-            else [[UIColor colorWithWhite:0.5 alpha:1] setFill];
+            if (j < _currentSection) [[UIColor colorWithWhite:0.5 alpha: 1] setFill];
+            else if (j == _currentSection) [[UIColor colorWithWhite:0.2 alpha: 1] setFill];
+            else [[UIColor colorWithWhite:0.85 alpha:1] setFill];
             [ovalPath fill];
         }
     }
@@ -97,9 +97,9 @@
         for (int i = 14 - numOfSections/2, j = 0; i <= 14 + numOfSections/2; i++, j++)
         {
             UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(i*sizeOfSegments-4.5, 30, 9, 9)];
-            if (j < _currentSubSection) [[UIColor colorWithRed: 1 green: 0 blue: 1 alpha: 1] setFill];
-            else if (j == _currentSubSection) [[UIColor colorWithRed: 0 green: 1 blue: 0 alpha: 1] setFill];
-            else [[UIColor colorWithWhite:0.5 alpha:1] setFill];
+            if (j < _currentSubSection) [[UIColor colorWithWhite:0.5 alpha: 1] setFill];
+            else if (j == _currentSubSection) [[UIColor colorWithWhite:0.2 alpha: 1] setFill];
+            else [[UIColor colorWithWhite:0.85 alpha:1] setFill];
             [ovalPath fill];
         }
     }
@@ -108,9 +108,9 @@
         for (int i = 14 - numOfSections/2, j = 0; i < 14 + numOfSections/2; i++, j++)
         {
             UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(i*sizeOfSegments-4.5+sizeOfSegments/2, 30, 9, 9)];
-            if (j < _currentSubSection) [[UIColor colorWithRed: 1 green: 0 blue: 1 alpha: 1] setFill];
-            else if (j == _currentSubSection) [[UIColor colorWithRed: 0 green: 1 blue: 0 alpha: 1] setFill];
-            else [[UIColor colorWithWhite:0.5 alpha:1] setFill];
+            if (j < _currentSubSection) [[UIColor colorWithWhite:0.5 alpha: 1] setFill];
+            else if (j == _currentSubSection) [[UIColor colorWithWhite:0.2 alpha: 1] setFill];
+            else [[UIColor colorWithWhite:0.85 alpha:1] setFill];
             [ovalPath fill];
         }
     }

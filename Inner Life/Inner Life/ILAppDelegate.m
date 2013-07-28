@@ -9,6 +9,7 @@
 #import "ILAppDelegate.h"
 
 #import "ILDashboardViewController.h"
+#import "ILAppManager.h"
 
 @implementation ILAppDelegate
 
@@ -24,7 +25,8 @@
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     
-    // TODO: Set default values in UserDefaults database
+    [ILAppManager setDefaults];
+    [ILAppManager setFirstRun:NO];
     
     return YES;
 }
