@@ -209,6 +209,20 @@
     ILQuestion *q = [self getCurrentQuestion:[self getCurrentSection]];
     ILChoice *c = [[ILChoice alloc] initWithText:@"From UISlider" andValue:[NSString stringWithFormat:@"%d", (int)sender.value]];
     [data.responses setObject:c forKey:[NSString stringWithFormat:@"%d", q.questionID]];
+    
+    [self.tableView reloadData];
+}
+
+- (ILSection *)getCurrentSection
+{
+    ILSection *section = [sections objectAtIndex:data.currentSection];
+    return section;
+}
+
+- (ILQuestion *)getCurrentQuestion:(ILSection *)section
+{
+    ILQuestion *question = [section.questions objectAtIndex:data.currentQuestion];
+    return question;
 }
 
 #pragma mark - Table view data source
@@ -228,29 +242,13 @@
             NSArray *choices = [self getCurrentSection].choices ;
             return [choices count];
         }
-        else if (q.type == YESNO)
-        {
-            return 2;
-        }
-        else return 1;
+        else return 2;
 
     }
     else
     {
         return 1;
     }
-}
-
-- (ILSection *)getCurrentSection
-{
-    ILSection *section = [sections objectAtIndex:data.currentSection];
-    return section;
-}
-
-- (ILQuestion *)getCurrentQuestion:(ILSection *)section
-{
-    ILQuestion *question = [section.questions objectAtIndex:data.currentQuestion];
-    return question;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -260,16 +258,28 @@
     
     if (indexPath.section == 0)
     {
-        return MAX(([question.questionDescription sizeWithFont:[UIFont italicSystemFontOfSize:15] constrainedToSize:CGSizeMake(280, 9000) lineBreakMode:NSLineBreakByWordWrapping].height) + 14, 44);
+        NSString *questionHeader;
+        
+        if (section.sectionDescription.length == 0)
+        {
+            questionHeader = question.questionDescription;
+        }
+        else
+        {
+            questionHeader = [NSString stringWithFormat:@"%@\n\n%@", section.sectionDescription, question.questionDescription];
+        }
+        
+        return MAX(([questionHeader sizeWithFont:[UIFont italicSystemFontOfSize:15] constrainedToSize:CGSizeMake(280, 9000) lineBreakMode:NSLineBreakByWordWrapping].height) + 14, 44);
     }
     if (indexPath.section == 1)
     {
+        if (question.type == NUMSCALE)
+        {
+            if (indexPath.row == 0) return 44;
+            if (indexPath.row == 1) return 22;
+        }
         ILChoice *choice = [section.choices objectAtIndex:indexPath.row];
         return MAX(([choice.text  sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(280, 9000) lineBreakMode:NSLineBreakByWordWrapping].height) + 14, 44);
-    }
-    if (indexPath.section == 2)
-    {
-        return 50;
     }
     else return 44;
 }
@@ -279,6 +289,7 @@
     static NSString *TextCellIdentifier = @"TextCell";
     static NSString *ButtonCellIdentifier = @"ButtonCell";
     
+    ILSection *s = [self getCurrentSection];
     ILQuestion *q = [self getCurrentQuestion:[self getCurrentSection]];
     
     UITableViewCell *cell;
@@ -312,35 +323,114 @@
         cell.textLabel.font = [UIFont italicSystemFontOfSize:15];
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        cell.textLabel.text = q.questionDescription;
+        if (s.sectionDescription.length == 0)
+        {
+            cell.textLabel.text = q.questionDescription;
+        }
+        else
+        {
+            cell.textLabel.text = [NSString stringWithFormat:@"%@\n\n%@", s.sectionDescription, q.questionDescription];
+        }
         
     }
     else if (indexPath.section == 1)
     {
         if (q.type == NUMSCALE)
         {
-            cell.textLabel.text = @"";
+            if (indexPath.row == 0)
+            {
+                if ([cell viewWithTag:64])
+                {
+                    UISlider *_slider = (UISlider *)[cell viewWithTag:64];
+                    ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", q.questionID]];
+                    
+                    if (response)
+                    {
+                        _slider.value = [response.value integerValue];
+                        
+                    }
+                    else
+                    {
+                        _slider.value = _slider.minimumValue;
+                    }
+                    
+                }
+                else
+                {
+                    CGFloat w = cell.frame.size.width;
+                    CGFloat h = cell.frame.size.height;
+                    
+                    UISlider *_slider = [[UISlider alloc] initWithFrame:CGRectMake(0+15, 0, w-30, h)];
+                    
+                    ILChoice *minChoice = [[self getCurrentSection].choices objectAtIndex:0];
+                    ILChoice *maxChoice = [[self getCurrentSection].choices objectAtIndex:1];
+                    
+                    NSInteger minValue = [minChoice.value integerValue];
+                    NSInteger maxValue = [maxChoice.value integerValue];
+                    
+                    _slider.minimumValue = minValue;
+                    _slider.maximumValue = maxValue;
+                    _slider.continuous = NO;
+                    
+                    [_slider addTarget:self action:@selector(changeSlider:) forControlEvents:UIControlEventValueChanged];
+                    _slider.tag = 64;
+                    [cell addSubview:_slider];
+                }
+            }
+            else if (indexPath.row == 1)
+            {
+                cell.textLabel.font = [UIFont systemFontOfSize:15];
 
-            CGFloat w = cell.frame.size.width;
-            CGFloat h = cell.frame.size.height;
-            
-            _slider = [[UISlider alloc] initWithFrame:CGRectMake(0+15, 0, w-30, h)];
-            
-            ILChoice *minChoice = [[self getCurrentSection].choices objectAtIndex:0];
-            ILChoice *maxChoice = [[self getCurrentSection].choices objectAtIndex:1];
-            
-            NSInteger minValue = [minChoice.value integerValue];
-            NSInteger maxValue = [maxChoice.value integerValue];
-            
-            _slider.minimumValue = minValue;
-            _slider.maximumValue = maxValue;
-            
-            [_slider addTarget:self action:@selector(changeSlider:) forControlEvents:UIControlEventTouchUpInside];
-            [cell addSubview:_slider];
+                ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", q.questionID]];
+                if ([response.value isEqualToString:@"N/A"])
+                {
+                    cell.textLabel.text = @"1";
+                }
+                else
+                {
+                    cell.textLabel.text = response.value;
+                }
+                cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            }
         }
         else if (q.type == YESNO)
         {
+            cell.textLabel.font = [UIFont systemFontOfSize:15];
+            cell.textLabel.numberOfLines = 0;
+            cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
             
+            if (indexPath.row == 0)
+            {
+                cell.textLabel.text = @"Yes";
+            }
+            else if (indexPath.row == 1)
+            {
+                cell.textLabel.text = @"No";
+            }
+            
+            ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", q.questionID]];
+            
+            if (response)
+            {
+                if ([response.value isEqualToString:@"1"] && indexPath.row == 0)
+                {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                }                
+                else if ([response.value isEqualToString:@"0"] && indexPath.row == 1)
+                {
+                    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                }
+                else
+                {
+                    cell.accessoryType = UITableViewCellAccessoryNone;
+                }
+                
+            }
+            else
+            {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+
         }
         else
         {
@@ -350,7 +440,7 @@
             cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell.textLabel.text = choice.text;
             
-            ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", [self getCurrentQuestion:[self getCurrentSection]].questionID]];
+            ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", q.questionID]];
             
             if (response)
             {
@@ -370,20 +460,6 @@
             }
 
         }
-    }
-    else if (indexPath.section == 2)
-    {
-        UIButton* prevButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [prevButton addTarget:self action:@selector(previousButton:) forControlEvents:UIControlEventTouchDown];
-        [prevButton setTitle:@"Previous" forState:UIControlStateNormal];
-        prevButton.frame = CGRectMake(13, 4, cell.frame.size.width/2.0 - 15, 44.0);
-        [cell addSubview:prevButton];
-        
-        UIButton* nextButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [nextButton addTarget:self action:@selector(nextButton:) forControlEvents:UIControlEventTouchDown];
-        [nextButton setTitle:@"Next" forState:UIControlStateNormal];
-        nextButton.frame = CGRectMake(cell.frame.size.width/2.0 + 2, 4, cell.frame.size.width/2.0 - 14, 44.0);
-        [cell addSubview:nextButton];
     }
     
     return cell;
