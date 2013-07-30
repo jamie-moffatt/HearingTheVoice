@@ -69,7 +69,7 @@
 +(BOOL)userIsRegistered
 {
     ILUser *user = [self getUser];
-    return user.userID == -1;
+    return !(user.userID == -1);
 }
 
 +(NSDate *)getStartDate

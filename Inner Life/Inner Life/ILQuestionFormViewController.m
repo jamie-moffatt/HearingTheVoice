@@ -29,7 +29,7 @@
         data.currentSection = 0;
         
         // TODO: Replace with code based on date registered
-        _currentSession = 29;
+        _currentSession = 3;
         sections = [data getQuestionsInSectionsFilteredBySession:_currentSession];
         
         data.responses = [[NSMutableDictionary alloc] init];
@@ -137,6 +137,11 @@
             }
         }
         [responseXML appendString:@"</submission>"];
+        
+        // TODO: Write to file
+        NSMutableDictionary *completed = [NSMutableDictionary dictionaryWithDictionary:[ILAppManager getSessionsCompleted]];
+        [completed setObject:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%d", _currentSession]];
+        [ILAppManager setSessionsCompleted:completed];
         
         NSLog(@"Submitting ResponseXML: %@", responseXML);
         

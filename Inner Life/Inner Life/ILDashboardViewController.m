@@ -11,6 +11,8 @@
 #import "ILUserFormViewController.h"
 #import "ILQuestionFormViewController.h"
 
+#import "ILAppManager.h"
+
 @interface ILDashboardViewController ()
 
 @end
@@ -33,7 +35,20 @@
 	
      self.title = @"Dashboard";
     
-    // TODO: if first time user open the user details form
+    [ILAppManager setDefaults];
+    if ([ILAppManager isFirstRun])
+    {
+        [ILAppManager setFirstRun:NO];
+    }
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    if (![ILAppManager userIsRegistered])
+    {
+        ILUserFormViewController *userFormView = [[ILUserFormViewController alloc] initWithNibName:@"ILUserForm" bundle:nil];
+        [self presentViewController:userFormView animated:YES completion:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning
