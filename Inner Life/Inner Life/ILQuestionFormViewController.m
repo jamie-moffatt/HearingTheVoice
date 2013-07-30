@@ -29,7 +29,7 @@
         data.currentSection = 0;
         
         // TODO: Replace with code based on date registered
-        _currentSession = 1;
+        _currentSession = 29;
         sections = [data getQuestionsInSectionsFilteredBySession:_currentSession];
         
         data.responses = [[NSMutableDictionary alloc] init];
@@ -239,7 +239,7 @@
         ILQuestion *q = [self getCurrentQuestion:[self getCurrentSection]];
         if (q.type == RADIO)
         {
-            NSArray *choices = [self getCurrentSection].choices ;
+            NSArray *choices = [self getCurrentSection].choices;
             return [choices count];
         }
         else return 2;
@@ -277,6 +277,10 @@
         {
             if (indexPath.row == 0) return 44;
             if (indexPath.row == 1) return 22;
+        }
+        if (question.type == YESNO)
+        {
+            return 44;
         }
         ILChoice *choice = [section.choices objectAtIndex:indexPath.row];
         return MAX(([choice.text  sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(280, 9000) lineBreakMode:NSLineBreakByWordWrapping].height) + 14, 44);
