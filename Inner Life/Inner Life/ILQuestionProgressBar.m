@@ -15,12 +15,7 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        NSMutableArray *sections = [[NSMutableArray alloc] initWithCapacity:10];
-        for (int i = 0; i < 10; i++) [sections addObject:[NSNumber numberWithInt:27]];
-        
-        _sectionSpecification = [sections copy];
-        _currentSection = 0;
-        _currentSubSection = 0;
+        [self commonInit];
     }
     return self;
 }
@@ -30,16 +25,24 @@
     self = [super initWithCoder:aDecoder];
     if (self)
     {
-        NSMutableArray *sections = [[NSMutableArray alloc] initWithCapacity:10];
-        for (int i = 0; i < 10; i++) [sections addObject:[NSNumber numberWithInt:27]];
-        
-        _sectionSpecification = [sections copy];
-        _currentSection = 0;
-        _currentSubSection = 0;
+       [self commonInit];
     }
     return self;
 }
 
+- (void)commonInit
+{
+    NSMutableArray *sections = [[NSMutableArray alloc] initWithCapacity:10];
+    for (int i = 0; i < 10; i++) [sections addObject:[NSNumber numberWithInt:27]];
+    
+    _sectionSpecification = [sections copy];
+    _currentSection = 0;
+    _currentSubSection = 0;
+    
+    current = [UIImage imageNamed:@"section_current.png"];
+    complete = [UIImage imageNamed:@"section_complete.png"];
+    incomplete = [UIImage imageNamed:@"section_incomplete.png"];
+}
 
  - (void)setSectionSpecification:(NSArray *)sectionSpecification
 {
@@ -70,22 +73,18 @@
     {
         for (int i = 5 - numOfSections/2, j = 0; i <= 5 + numOfSections/2; i++, j++)
         {
-            UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(i*sizeOfSegments-10, 3, 20, 20)];
-            if (j < _currentSection) [[UIColor colorWithWhite:0.5 alpha: 1] setFill];
-            else if (j == _currentSection) [[UIColor colorWithWhite:0.2 alpha: 1] setFill];
-            else [[UIColor colorWithWhite:0.85 alpha:1] setFill];
-            [ovalPath fill];
+            if (j < _currentSection) [complete drawInRect:CGRectMake(i*sizeOfSegments-10, 3, 20, 20)];
+            else if (j == _currentSection) [current drawInRect:CGRectMake(i*sizeOfSegments-10, 3, 20, 20)];
+            else [incomplete drawInRect:CGRectMake(i*sizeOfSegments-10, 3, 20, 20)];
         }
     }
     else
     {
         for (int i = 5 - numOfSections/2, j = 0; i < 5 + numOfSections/2; i++, j++)
         {
-            UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(i*sizeOfSegments-10+sizeOfSegments/2, 5, 20, 20)];
-            if (j < _currentSection) [[UIColor colorWithWhite:0.5 alpha: 1] setFill];
-            else if (j == _currentSection) [[UIColor colorWithWhite:0.2 alpha: 1] setFill];
-            else [[UIColor colorWithWhite:0.85 alpha:1] setFill];
-            [ovalPath fill];
+            if (j < _currentSection) [complete drawInRect:CGRectMake(i*sizeOfSegments-10+sizeOfSegments/2, 5, 20, 20)];
+            else if (j == _currentSection) [current drawInRect:CGRectMake(i*sizeOfSegments-10+sizeOfSegments/2, 5, 20, 20)];
+            else [incomplete drawInRect:CGRectMake(i*sizeOfSegments-10+sizeOfSegments/2, 5, 20, 20)];
         }
     }
     
