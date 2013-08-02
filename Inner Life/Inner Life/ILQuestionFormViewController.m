@@ -138,10 +138,25 @@
         }
         [responseXML appendString:@"</submission>"];
         
-        // TODO: Write to file
-        NSMutableDictionary *completed = [NSMutableDictionary dictionaryWithDictionary:[ILAppManager getSessionsCompleted]];
-        [completed setObject:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%d", _currentSession]];
-        [ILAppManager setSessionsCompleted:completed];
+        // TODO: Add error checking
+        
+        NSFileManager* fm = [[NSFileManager alloc] init];
+        NSURL* docsurl = [fm URLForDirectory:NSDocumentDirectory
+                                    inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil];
+        NSURL* myfolder = [docsurl URLByAppendingPathComponent:@"ILSubmissions"];
+        BOOL ok = [fm createDirectoryAtURL:myfolder
+               withIntermediateDirectories:YES attributes:nil error:nil];
+        
+        NSError* error = nil;
+        BOOL writeSuccess = [responseXML writeToURL:[myfolder URLByAppendingPathComponent:[NSString stringWithFormat:@"submission%d.xml", _currentSession]] atomically:YES encoding:NSUTF8StringEncoding error:&error];
+        
+        if (writeSuccess)
+        {        
+            NSMutableDictionary *completed = [NSMutableDictionary dictionaryWithDictionary:[ILAppManager getSessionsCompleted]];
+            [completed setObject:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%d", _currentSession]];
+            [ILAppManager setSessionsCompleted:completed];
+
+        }
         
         NSLog(@"Submitting ResponseXML: %@", responseXML);
         
