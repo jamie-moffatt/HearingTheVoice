@@ -157,6 +157,17 @@
              {
                  NSString *s = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
                  NSLog(@"Web API Response:\n%@", s);
+                 
+                 int scode = [((NSHTTPURLResponse *)response) statusCode];
+                 
+                 // HTTP (201 Created).
+                 if (scode == 201)
+                 {
+                     NSMutableDictionary *submitted = [NSMutableDictionary dictionaryWithDictionary:[ILAppManager getSessionsSubmitted]];
+                     [submitted setObject:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%d", _currentSession]];
+                     [ILAppManager setSessionsSubmitted:submitted];
+                 }
+                 
                  [self.navigationController popViewControllerAnimated:YES];
              }
          }];
