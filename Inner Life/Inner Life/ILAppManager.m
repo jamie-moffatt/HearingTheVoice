@@ -28,6 +28,9 @@
       [NSDate date], UD_STARTING_DATE_KEY,
       emptyDictionary, UD_SESSIONS_COMPLETE,
       emptyDictionary, UD_SESSIONS_SUBMITTED,
+      [NSNumber numberWithInteger:9], UD_AM_NOTIFICATION_TIME,
+      [NSNumber numberWithInteger:15], UD_PM_NOTIFICATION_TIME,
+      [NSNumber numberWithInteger:0], UD_AVERAGE_RESPONSE_TIME,
       nil]];
 }
 
@@ -127,6 +130,116 @@
 +(BOOL)isLastTraitSessionSubmitted
 {
     return ([[self getSessionsSubmitted] objectForKey:@"31"] != nil);
+}
+
++(NSInteger)getAMNotificationTime
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:UD_AM_NOTIFICATION_TIME];
+}
+
++(void)setAMNotificationTime:(NSInteger)time
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:time forKey:UD_AM_NOTIFICATION_TIME];
+}
+
++(NSInteger)getPMNotificationTime
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:UD_PM_NOTIFICATION_TIME];
+}
+
++(void)setPMNotificationTime:(NSInteger)time
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:time forKey:UD_PM_NOTIFICATION_TIME];
+}
+
++ (void)updateAverageResponseTime :(NSDate *)notificationTime :(NSDate *)completionTime
+{
+    NSTimeInterval newResponseTime = [completionTime timeIntervalSinceDate:notificationTime];
+    
+    int numberOfCompletions = 0;
+    NSDictionary *completionDictionary = [ILAppManager getSessionsCompleted];
+    
+    for (NSString *key in completionDictionary)
+    {
+        if ([completionDictionary objectForKey:key]) numberOfCompletions++;
+    }
+    
+    int weightedAvgResponseTime = [ILAppManager getAverageResponseTime] * (numberOfCompletions - 1);
+    int newAvgResponseTime = (weightedAvgResponseTime + (int)newResponseTime) / numberOfCompletions;
+    
+    [[NSUserDefaults standardUserDefaults] setInteger:newAvgResponseTime forKey:UD_AVERAGE_RESPONSE_TIME];
+}
+
++ (NSInteger)getAverageResponseTime
+{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:UD_AVERAGE_RESPONSE_TIME];
+}
+
++ (NSString *)getFormattedAverageResponseTime
+{
+    int averageResponseTime = [ILAppManager getAverageResponseTime];
+    
+    int seconds = averageResponseTime % 60;
+    int minutes = (averageResponseTime % (60 * 60)) / 60;
+    int hours = averageResponseTime / (60 * 60);
+    
+    NSMutableString *s = [[NSMutableString alloc] init];
+    
+    if (averageResponseTime > (60 * 60))
+    {
+        [s appendFormat:@"%d Hour%@ ", hours, hours > 1 ? @"s" : @""];
+    }
+    if (averageResponseTime > 60)
+    {
+        [s appendFormat:@"%d Minute%@ ", minutes, minutes > 1 ? @"s" : @""];
+    }
+    [s appendFormat:@"%d Second%@ ", seconds, seconds > 1 ? @"s" : @""];
+    
+    return [s copy];
+}
+
++(void)setupNotifications
+{
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    
+    NSDate *startDate = [ILAppManager getStartDate];
+    
+    NSDateComponents* dc = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:startDate];
+    dc.day = dc.day+1;
+    NSDate* dayAfterRegistration = [[NSCalendar currentCalendar] dateFromComponents:dc];
+    
+    NSInteger amTime = [ILAppManager getAMNotificationTime];
+    NSInteger pmTime = [ILAppManager getPMNotificationTime];
+    
+    for (int i = 0; i < 14; i++)
+    {
+        NSDateComponents* dc = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:dayAfterRegistration];
+        dc.day = dc.day + i;
+        
+        dc.hour = amTime;
+        NSDate *amNotificationTime = [[NSCalendar currentCalendar] dateFromComponents:dc];
+        
+        dc.hour = pmTime;
+        NSDate *pmNotificationTime = [[NSCalendar currentCalendar] dateFromComponents:dc];
+        
+        UILocalNotification *amNotification = [[UILocalNotification alloc] init];
+        amNotification.fireDate = amNotificationTime;
+        amNotification.timeZone = [NSTimeZone defaultTimeZone];
+        amNotification.alertBody = [NSString stringWithFormat:@"Questions Available. (AM)"];
+        amNotification.alertAction = @"View Details";
+        amNotification.soundName = UILocalNotificationDefaultSoundName;
+        amNotification.applicationIconBadgeNumber = 2*i + 1;
+        [[UIApplication sharedApplication] scheduleLocalNotification:amNotification];
+        
+        UILocalNotification *pmNotification = [[UILocalNotification alloc] init];
+        pmNotification.fireDate = pmNotificationTime;
+        pmNotification.timeZone = [NSTimeZone defaultTimeZone];
+        pmNotification.alertBody = [NSString stringWithFormat:@"Questions Available. (PM)"];
+        pmNotification.alertAction = @"View Details";
+        pmNotification.soundName = UILocalNotificationDefaultSoundName;
+        pmNotification.applicationIconBadgeNumber = 2*i + 2;
+        [[UIApplication sharedApplication] scheduleLocalNotification:pmNotification];
+    }
 }
 
 @end

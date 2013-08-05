@@ -16,6 +16,9 @@
 #define UD_STARTING_DATE_KEY @"starting_date"
 #define UD_SESSIONS_COMPLETE @"sessions_complete"
 #define UD_SESSIONS_SUBMITTED @"sessions_submitted"
+#define UD_AM_NOTIFICATION_TIME @"am_notification_time"
+#define UD_PM_NOTIFICATION_TIME @"pm_notification_time"
+#define UD_AVERAGE_RESPONSE_TIME @"average_response_time"
 
 + (void)setDefaults;
 + (NSString *)userDefaultsToString;
@@ -44,5 +47,17 @@
 
 + (BOOL)isLastTraitSessionComplete;
 + (BOOL)isLastTraitSessionSubmitted;
+
++ (NSInteger)getAMNotificationTime;
++ (void)setAMNotificationTime :(NSInteger)time;
+
++ (NSInteger)getPMNotificationTime;
++ (void)setPMNotificationTime :(NSInteger)time;
+
++ (void)updateAverageResponseTime :(NSDate *)notificationTime :(NSDate *)completionTime;
++ (NSInteger )getAverageResponseTime;
++ (NSString *)getFormattedAverageResponseTime;
+
++ (void)setupNotifications;
 
 @end

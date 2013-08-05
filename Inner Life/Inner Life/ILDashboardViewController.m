@@ -39,6 +39,7 @@
     if ([ILAppManager isFirstRun])
     {
         [ILAppManager setFirstRun:NO];
+        [ILAppManager setStartDate:[NSDate date]];
     }
 }
 
@@ -67,6 +68,11 @@
 {
     ILQuestionFormViewController *questionFormView = [[ILQuestionFormViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:questionFormView animated:YES];
+}
+
+- (IBAction)testNotification:(id)sender
+{
+    [ILAppManager setupNotifications];
 }
 
 @end

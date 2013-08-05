@@ -12,5 +12,6 @@
 
 - (IBAction)openFirstTimeForm:(id)sender;
 - (IBAction)answerQuestions:(id)sender;
+- (IBAction)testNotification:(id)sender;
 
 @end

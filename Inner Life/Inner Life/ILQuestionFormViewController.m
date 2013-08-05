@@ -144,7 +144,7 @@
         NSURL* docsurl = [fm URLForDirectory:NSDocumentDirectory
                                     inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil];
         NSURL* myfolder = [docsurl URLByAppendingPathComponent:@"ILSubmissions"];
-        BOOL ok = [fm createDirectoryAtURL:myfolder
+        [fm createDirectoryAtURL:myfolder
                withIntermediateDirectories:YES attributes:nil error:nil];
         
         NSError* error = nil;
