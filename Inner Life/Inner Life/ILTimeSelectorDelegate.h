@@ -10,6 +10,6 @@
 
 @protocol ILTimeSelectorDelegate <NSObject>
 
-- (void)timeWasChanged :(NSInteger)amStartTime :(NSInteger)pmStartTime;
+- (void)timeDidChange :(NSInteger)amStartTime :(NSInteger)pmStartTime;
 
 @end

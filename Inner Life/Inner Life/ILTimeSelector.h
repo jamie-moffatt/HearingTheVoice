@@ -15,9 +15,7 @@
 
 @interface ILTimeSelector : UIView
 {
-	NSInteger amStartTime;
-	NSInteger pmStartTime;
-    
+    @private
 	// {a, b, c}
     CGPoint amBoundingTriangle[3];
     CGPoint pmBoundingTriangle[3];
@@ -33,5 +31,8 @@
 }
 
 @property id<ILTimeSelectorDelegate> delegate;
+
+@property NSInteger amStartTime;
+@property NSInteger pmStartTime;
 
 @end

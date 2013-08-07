@@ -18,6 +18,16 @@ CGPoint subtract(CGPoint u, CGPoint v)
     return CGPointMake(u.x - v.x, u.y - v.y);
 }
 
+CGFloat toRadians(CGFloat degrees)
+{
+    return degrees * M_PI / 180;
+}
+
+CGFloat toDegrees(CGFloat radians)
+{
+    return radians * 180 / M_PI;
+}
+
 @implementation ILTimeSelector
 
 - (id)initWithFrame:(CGRect)frame
@@ -44,14 +54,37 @@ CGPoint subtract(CGPoint u, CGPoint v)
 {
     // default range for AM notifications is 09:00 - 12:00
 	// default range for PM notifications is 15:00 - 18:00
-    amStartTime = 9;
-    pmStartTime = 16;
+    _amStartTime = 9;
+    _pmStartTime = 15;
     
     touching = NO;
     
     hit = NO_COLLISION;
 }
 
+- (void)decrementAMTime
+{
+    if (_amStartTime > 0) _amStartTime--;
+    [self setNeedsDisplay];
+}
+
+- (void)incrementAMTime
+{
+    if (_amStartTime < 9) _amStartTime++;
+    [self setNeedsDisplay];
+}
+
+- (void)decrementPMTime
+{
+    if (_pmStartTime > 12) _pmStartTime--;
+    [self setNeedsDisplay];
+}
+
+- (void)incrementPMTime
+{
+    if (_pmStartTime < 21) _pmStartTime++;
+    [self setNeedsDisplay];
+}
 
 - (void)drawRect:(CGRect)rect
 {
@@ -94,8 +127,8 @@ CGPoint subtract(CGPoint u, CGPoint v)
     [pmBackgroundPath fill];
     
     // AM Selector Fill
-    NSInteger amStartDegree = ((270 + (amStartTime * 15)) % 360);
-    NSInteger amEndDegree = ((270 + ((amStartTime + 3) * 15)) % 360);
+    NSInteger amStartDegree = ((270 + (_amStartTime * 15)) % 360);
+    NSInteger amEndDegree = ((270 + ((_amStartTime + 3) * 15)) % 360);
     
     UIBezierPath* amSelectorPath = [UIBezierPath bezierPath];
     [amSelectorPath addArcWithCenter: CGPointMake(cx, cy) radius: r
@@ -110,14 +143,14 @@ CGPoint subtract(CGPoint u, CGPoint v)
     [amSelectorPath fill];
     
     amBoundingTriangle[0] = CGPointMake(0, 0);
-    amBoundingTriangle[2] = CGPointMake(r * sin(amStartTime * 15 * M_PI / 180),
-                                        r * cos(amStartTime * 15 * M_PI / 180));
-    amBoundingTriangle[1] = CGPointMake(r * sin((amStartTime + 3) * 15 * M_PI / 180),
-                                        r * cos((amStartTime + 3) * 15 * M_PI / 180));
+    amBoundingTriangle[2] = CGPointMake(r * sin(_amStartTime * 15 * M_PI / 180),
+                                        r * cos(_amStartTime * 15 * M_PI / 180));
+    amBoundingTriangle[1] = CGPointMake(r * sin((_amStartTime + 3) * 15 * M_PI / 180),
+                                        r * cos((_amStartTime + 3) * 15 * M_PI / 180));
     
     // PM Selector Fill
-    NSInteger pmStartDegree = ((270 + (pmStartTime * 15)) % 360);
-    NSInteger pmEndDegree = ((270 + ((pmStartTime + 3) * 15)) % 360);
+    NSInteger pmStartDegree = ((270 + (_pmStartTime * 15)) % 360);
+    NSInteger pmEndDegree = ((270 + ((_pmStartTime + 3) * 15)) % 360);
     
     UIBezierPath* pmSelectorPath = [UIBezierPath bezierPath];
     [pmSelectorPath addArcWithCenter: CGPointMake(cx, cy) radius: r
@@ -131,10 +164,10 @@ CGPoint subtract(CGPoint u, CGPoint v)
     [pmSelectorPath fill];
     
     pmBoundingTriangle[0] = CGPointMake(0, 0);
-    pmBoundingTriangle[2] = CGPointMake(r * sin(pmStartTime * 15 * M_PI / 180),
-                                        r * cos(pmStartTime * 15 * M_PI / 180));
-    pmBoundingTriangle[1] = CGPointMake(r * sin((pmStartTime + 3) * 15 * M_PI / 180),
-                                        r * cos((pmStartTime + 3) * 15 * M_PI / 180));
+    pmBoundingTriangle[2] = CGPointMake(r * sin(_pmStartTime * 15 * M_PI / 180),
+                                        r * cos(_pmStartTime * 15 * M_PI / 180));
+    pmBoundingTriangle[1] = CGPointMake(r * sin((_pmStartTime + 3) * 15 * M_PI / 180),
+                                        r * cos((_pmStartTime + 3) * 15 * M_PI / 180));
     
     // Border Stroke
     UIBezierPath* borderStrokePath = [UIBezierPath bezierPathWithOvalInRect:square];
@@ -242,11 +275,49 @@ CGPoint subtract(CGPoint u, CGPoint v)
     [self setNeedsDisplay];
 }
 
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    currentTouchPoint = [(UITouch*)[touches anyObject] locationInView:self];
+    
+    CGFloat currentX = currentTouchPoint.x;
+    CGFloat currentY = currentTouchPoint.y;
+    
+    CGFloat u = currentX - cx;
+    CGFloat v = currentY - cy;
+    
+    BOOL isLeft = currentX < cx;
+    
+    touching = YES;
+    
+    if (hit == AM_TRIANGLE_COLLISION)
+    {
+        theta = acos(-v / sqrt(u*u + v*v));
+        if (!isLeft)
+        {
+            if (toDegrees(theta) > _amStartTime * 15) [self incrementAMTime];
+            if (toDegrees(theta) < _amStartTime * 15) [self decrementAMTime];
+        }
+        [self setNeedsDisplay];
+    }
+    
+    if (hit == PM_TRIANGLE_COLLISION)
+    {
+        theta = acos(-v / sqrt(u*u + v*v));
+        if (isLeft)
+        {
+            theta = 2 * M_PI - theta;
+            if (toDegrees(theta) > _pmStartTime * 15) [self incrementPMTime];
+            if (toDegrees(theta) < _pmStartTime * 15) [self decrementPMTime];
+        }
+        [self setNeedsDisplay];
+    }
+}
+
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     touching = NO;
     hit = NO_COLLISION;
-    if (_delegate) [_delegate timeWasChanged:amStartTime :pmStartTime];
+    if (_delegate) [_delegate timeDidChange:_amStartTime :_pmStartTime];
     [self setNeedsDisplay];
 }
 
