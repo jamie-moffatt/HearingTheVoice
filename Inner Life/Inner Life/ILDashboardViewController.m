@@ -10,8 +10,10 @@
 
 #import "ILUserFormViewController.h"
 #import "ILQuestionFormViewController.h"
+#import "ILSettingsViewController.h"
 
 #import "ILAppManager.h"
+#import "ILTimeUtils.h"
 
 @interface ILDashboardViewController ()
 
@@ -33,13 +35,16 @@
 {
     [super viewDidLoad];
 	
-     self.title = @"Dashboard";
+    self.title = @"Dashboard";
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:self action:@selector(settingsButton:)];
     
     [ILAppManager setDefaults];
     if ([ILAppManager isFirstRun])
     {
         [ILAppManager setFirstRun:NO];
         [ILAppManager setStartDate:[NSDate date]];
+        [ILAppManager setupNotifications];
     }
 }
 
@@ -66,13 +71,21 @@
 
 - (IBAction)answerQuestions:(id)sender
 {
+    NSInteger session = [ILTimeUtils getSessionByRegistrationDate:[ILAppManager getStartDate]];
     ILQuestionFormViewController *questionFormView = [[ILQuestionFormViewController alloc] initWithNibName:nil bundle:nil];
+    questionFormView.currentSession = session;
     [self.navigationController pushViewController:questionFormView animated:YES];
 }
 
 - (IBAction)testNotification:(id)sender
 {
     [ILAppManager setupNotifications];
+}
+
+- (void)settingsButton:(UIButton *)sender
+{
+    ILSettingsViewController *settingsView = [[ILSettingsViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:settingsView animated:YES];
 }
 
 @end

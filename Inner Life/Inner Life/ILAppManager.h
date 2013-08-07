@@ -59,5 +59,6 @@
 + (NSString *)getFormattedAverageResponseTime;
 
 + (void)setupNotifications;
++ (void)changeNotifications :(NSInteger)newAMTime :(NSInteger)newPMTime;
 
 @end

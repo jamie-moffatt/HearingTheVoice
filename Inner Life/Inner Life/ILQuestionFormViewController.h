@@ -12,7 +12,7 @@
 
 @interface ILQuestionFormViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 {
-@private ILDataSingleton *data;
+    @private ILDataSingleton *data;
 }
 
 @property UITableView *tableView;

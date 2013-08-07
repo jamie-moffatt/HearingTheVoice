@@ -10,7 +10,7 @@
 
 @implementation ILTimeUtils
 
-+ (NSInteger)getSessionByRegistrationDate:(NSDate*)date
++ (NSInteger)getSessionByRegistrationDate: (NSDate *)date
 {
     if (ABS([date timeIntervalSinceNow]) < 60*60*24) return -1;
     
@@ -21,4 +21,12 @@
     NSTimeInterval timeOnSchedule = [[NSDate date] timeIntervalSinceDate:dayAfterRegistration];
     return ((NSInteger)timeOnSchedule / (60*60*12)) + 1;
 }
+
++ (NSDate *)dayAfter :(NSDate *)date
+{
+    NSDateComponents* dc = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:date];
+    dc.day = dc.day+1;
+    return [[NSCalendar currentCalendar] dateFromComponents:dc];
+}
+
 @end

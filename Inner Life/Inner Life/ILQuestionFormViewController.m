@@ -28,8 +28,6 @@
         data.currentQuestion = 0;
         data.currentSection = 0;
         
-        // TODO: Replace with code based on date registered
-        _currentSession = 3;
         sections = [data getQuestionsInSectionsFilteredBySession:_currentSession];
         
         data.responses = [[NSMutableDictionary alloc] init];

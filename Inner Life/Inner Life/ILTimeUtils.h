@@ -11,5 +11,6 @@
 @interface ILTimeUtils : NSObject
 
 + (NSInteger)getSessionByRegistrationDate:(NSDate*)date;
++ (NSDate *)dayAfter :(NSDate *)date;
 
 @end

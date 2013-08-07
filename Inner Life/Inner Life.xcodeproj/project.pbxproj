@@ -48,6 +48,10 @@
 		47F217E3176A1DB10098FF4A /* ILQuestionXMLParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E2176A1DB10098FF4A /* ILQuestionXMLParserDelegate.m */; };
 		47F217E6176A1DD50098FF4A /* ILScheduleXMLParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E5176A1DD50098FF4A /* ILScheduleXMLParserDelegate.m */; };
 		47F217E9176A209E0098FF4A /* ILChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E8176A209E0098FF4A /* ILChoice.m */; };
+		47FB34D017B25AAB00E989C9 /* ILSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FB34CF17B25AAB00E989C9 /* ILSettingsViewController.m */; };
+		47FB34D217B26A1700E989C9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47FB34D117B26A1700E989C9 /* QuartzCore.framework */; };
+		47FB34D817B27B8E00E989C9 /* DURoundedBorderLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FB34D717B27B8E00E989C9 /* DURoundedBorderLabel.m */; };
+		47FB34D917B27C2500E989C9 /* DURoundedBorderLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FB34D717B27B8E00E989C9 /* DURoundedBorderLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +130,11 @@
 		47F217E5176A1DD50098FF4A /* ILScheduleXMLParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILScheduleXMLParserDelegate.m; sourceTree = "<group>"; };
 		47F217E7176A209E0098FF4A /* ILChoice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILChoice.h; sourceTree = "<group>"; };
 		47F217E8176A209E0098FF4A /* ILChoice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILChoice.m; sourceTree = "<group>"; };
+		47FB34CE17B25AAB00E989C9 /* ILSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSettingsViewController.h; sourceTree = "<group>"; };
+		47FB34CF17B25AAB00E989C9 /* ILSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSettingsViewController.m; sourceTree = "<group>"; };
+		47FB34D117B26A1700E989C9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		47FB34D617B27B8E00E989C9 /* DURoundedBorderLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DURoundedBorderLabel.h; sourceTree = "<group>"; };
+		47FB34D717B27B8E00E989C9 /* DURoundedBorderLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DURoundedBorderLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +142,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47FB34D217B26A1700E989C9 /* QuartzCore.framework in Frameworks */,
 				4792ED3D17691ABF00441527 /* SystemConfiguration.framework in Frameworks */,
 				4792ECE41768A7B800441527 /* UIKit.framework in Frameworks */,
 				4792ECE61768A7B800441527 /* Foundation.framework in Frameworks */,
@@ -156,6 +166,8 @@
 		472CAE22179DB30C00B1179C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				47FB34D617B27B8E00E989C9 /* DURoundedBorderLabel.h */,
+				47FB34D717B27B8E00E989C9 /* DURoundedBorderLabel.m */,
 				472CAE25179DB48000B1179C /* ILQuestionProgressBar.h */,
 				472CAE26179DB48000B1179C /* ILQuestionProgressBar.m */,
 				4711150017B136B5001BF1C6 /* ILTimeSelector.h */,
@@ -187,6 +199,7 @@
 		4792ECE21768A7B800441527 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				47FB34D117B26A1700E989C9 /* QuartzCore.framework */,
 				4792ED3C17691ABF00441527 /* SystemConfiguration.framework */,
 				4792ECE31768A7B800441527 /* UIKit.framework */,
 				4792ECE51768A7B800441527 /* Foundation.framework */,
@@ -306,6 +319,8 @@
 				47E733841793090400F23708 /* ILUserFormViewController.m */,
 				471D071717A27D1E00CC5784 /* ILQuestionFormViewController.h */,
 				471D071817A27D1E00CC5784 /* ILQuestionFormViewController.m */,
+				47FB34CE17B25AAB00E989C9 /* ILSettingsViewController.h */,
+				47FB34CF17B25AAB00E989C9 /* ILSettingsViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -455,6 +470,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47FB34D917B27C2500E989C9 /* DURoundedBorderLabel.m in Sources */,
 				4792ECF01768A7B900441527 /* main.m in Sources */,
 				4792ECF41768A7B900441527 /* ILAppDelegate.m in Sources */,
 				4792ECFD1768A7B900441527 /* ILDashboardViewController.m in Sources */,
@@ -474,6 +490,7 @@
 				471D071917A27D1E00CC5784 /* ILQuestionFormViewController.m in Sources */,
 				470B1BFC17A5346E009F67A0 /* ILUser.m in Sources */,
 				4711150217B136B5001BF1C6 /* ILTimeSelector.m in Sources */,
+				47FB34D017B25AAB00E989C9 /* ILSettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,6 +499,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4792ED1E1768A7B900441527 /* Inner_LifeTests.m in Sources */,
+				47FB34D817B27B8E00E989C9 /* DURoundedBorderLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

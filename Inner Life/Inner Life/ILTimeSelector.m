@@ -317,8 +317,8 @@ CGFloat toDegrees(CGFloat radians)
 {
     touching = NO;
     hit = NO_COLLISION;
-    if (_delegate) [_delegate timeDidChange:_amStartTime :_pmStartTime];
     [self setNeedsDisplay];
+    if (_delegate) [_delegate timeDidChange:_amStartTime :_pmStartTime];
 }
 
 +(BOOL)point :(CGPoint)p inTriangle :(CGPoint)a :(CGPoint)b :(CGPoint)c

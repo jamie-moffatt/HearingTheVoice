@@ -7,6 +7,7 @@
 //
 
 #import "ILAppManager.h"
+#import "ILTimeUtils.h"
 
 @implementation ILAppManager
 
@@ -198,7 +199,7 @@
     return [s copy];
 }
 
-+(void)setupNotifications
++ (void)setupNotifications
 {
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
@@ -229,6 +230,11 @@
         amNotification.alertAction = @"View Details";
         amNotification.soundName = UILocalNotificationDefaultSoundName;
         amNotification.applicationIconBadgeNumber = 2*i + 1;
+        amNotification.userInfo = [NSDictionary
+                                   dictionaryWithObjectsAndKeys:
+                                   [NSNumber numberWithBool:NO], @"IS_PM",
+                                   [NSNumber numberWithInteger:2*i + 1], @"SESSION_ID",
+                                   nil];
         [[UIApplication sharedApplication] scheduleLocalNotification:amNotification];
         
         UILocalNotification *pmNotification = [[UILocalNotification alloc] init];
@@ -238,7 +244,64 @@
         pmNotification.alertAction = @"View Details";
         pmNotification.soundName = UILocalNotificationDefaultSoundName;
         pmNotification.applicationIconBadgeNumber = 2*i + 2;
+        pmNotification.userInfo = [NSDictionary
+                                   dictionaryWithObjectsAndKeys:
+                                   [NSNumber numberWithBool:YES], @"IS_PM",
+                                   [NSNumber numberWithInteger:2*i + 2], @"SESSION_ID",
+                                   nil];
         [[UIApplication sharedApplication] scheduleLocalNotification:pmNotification];
+    }
+}
+
++ (void)changeNotifications :(NSInteger)newAMTime :(NSInteger)newPMTime
+{
+    NSArray *oldNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    NSMutableArray *newNotifications = [[NSMutableArray alloc] init];
+    
+    NSDate *tommorrow = [ILTimeUtils dayAfter:[NSDate date]];
+    
+    for (UILocalNotification *n in oldNotifications)
+    {
+        if ([n.fireDate compare:tommorrow] == NSOrderedDescending)
+        {
+            NSDateComponents* dc = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:n.fireDate];
+            NSDictionary *noteData = n.userInfo;
+            
+            BOOL isPM = [(NSNumber *) [noteData valueForKey:@"IS_PM"] boolValue];
+            
+            if (isPM) dc.hour = newPMTime;
+            else dc.hour = newAMTime;
+            
+            NSDate *newNotificationTime = [[NSCalendar currentCalendar] dateFromComponents:dc];
+            
+            UILocalNotification *newNotification = [[UILocalNotification alloc] init];
+            newNotification.fireDate = newNotificationTime;
+            newNotification.timeZone = [NSTimeZone defaultTimeZone];
+            
+            if (isPM) newNotification.alertBody = [NSString stringWithFormat:@"Questions Available. (PM)"];
+            else newNotification.alertBody = [NSString stringWithFormat:@"Questions Available. (AM)"];
+            
+            newNotification.alertAction = @"View Details";
+            newNotification.soundName = UILocalNotificationDefaultSoundName;
+            
+            NSNumber *sessionID = [noteData valueForKey:@"SESSION_ID"];
+            
+            newNotification.applicationIconBadgeNumber = [sessionID integerValue];
+            newNotification.userInfo = [n.userInfo copy];
+            
+            [newNotifications addObject:newNotification];
+        }
+        else
+        {
+            [newNotifications addObject:n];
+        }
+    }
+    
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    
+    for (UILocalNotification *n in newNotifications)
+    {
+        [[UIApplication sharedApplication] scheduleLocalNotification:n];
     }
 }
 
