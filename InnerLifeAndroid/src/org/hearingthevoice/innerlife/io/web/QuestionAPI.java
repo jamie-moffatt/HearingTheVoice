@@ -35,7 +35,7 @@ import android.util.Log;
 
 public class QuestionAPI
 {
-	public static final String INNER_LIFE_BASE_URL = "https://www.dur.ac.uk/matthew.bates/HearingTheVoice/";
+	public static final String INNER_LIFE_BASE_URL = "http://www.matthewbates.net/HearingTheVoice/InnerLife/";
 
 	public static InputStream getHTTPResponseStream(String url, String httpMethod, byte[] postData) throws IOException
 	{

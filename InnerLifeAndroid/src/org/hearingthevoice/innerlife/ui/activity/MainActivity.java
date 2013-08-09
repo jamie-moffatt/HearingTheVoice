@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.hearingthevoice.innerlife.AppManager;
@@ -81,7 +82,7 @@ public class MainActivity extends Activity
 		txtSliderValue = (TextView) findViewById(R.id.txt_slider_value);
 
 		String notificationTimeStored = AppManager.getNotificationTime(context);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
 		notificationTime = Calendar.getInstance();
 
 		if (notificationTimeStored != null)

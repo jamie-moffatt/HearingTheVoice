@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.hearingthevoice.innerlife.model.Section;
@@ -183,7 +184,7 @@ public class AppManager extends Application
 	{
 		Calendar today = Calendar.getInstance();
 
-		String time = new SimpleDateFormat("yyyy-MM-dd").format(today.getTime());
+		String time = new SimpleDateFormat("yyyy-MM-dd", Locale.UK).format(today.getTime());
 
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		return preferences.getInt(time, 0);
@@ -309,7 +310,7 @@ public class AppManager extends Application
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		Editor editor = preferences.edit();
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
 
 		Calendar nT = Calendar.getInstance();
 		try

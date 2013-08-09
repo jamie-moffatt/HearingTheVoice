@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map.Entry;
 
 import org.hearingthevoice.innerlife.AppManager;
@@ -94,7 +95,7 @@ public class SummaryActivity extends Activity
 			sessionID++; // session IDs not zero indexed in database
 
 			String notificationTimeStored = AppManager.getNotificationTime(context);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
 			Calendar notificationTime = Calendar.getInstance();
 
 			try
@@ -108,12 +109,12 @@ public class SummaryActivity extends Activity
 			}
 
 			Calendar submissionTime = Calendar.getInstance();
-			String extension = new SimpleDateFormat("yyyyMMddHHmmss").format(submissionTime
+			String extension = new SimpleDateFormat("yyyyMMddHHmmss", Locale.UK).format(submissionTime
 					.getTime());
 
 			if(sessionID < 29)
 				AppManager.recordSampleComplete(context,
-					new SimpleDateFormat("yyyy-MM-dd").format(submissionTime.getTime()));
+					new SimpleDateFormat("yyyy-MM-dd", Locale.UK).format(submissionTime.getTime()));
 
 			filename = extension + " responses";
 			FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
@@ -126,7 +127,7 @@ public class SummaryActivity extends Activity
 			str.append("userID=\"" + AppManager.getUserID(context) + "\" ");
 			str.append("sessionID=\"" + sessionID + "\" ");
 
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
 
 			String _notificationTime = format.format(notificationTime.getTime());
 			String _submissionTime = format.format(submissionTime.getTime());

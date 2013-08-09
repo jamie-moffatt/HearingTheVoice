@@ -2,6 +2,7 @@ package org.hearingthevoice.innerlife.services;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.R;
@@ -56,7 +57,7 @@ public class AlarmReceiver extends BroadcastReceiver
 
 			AppManager.setGotNotification(context, true);
 			Calendar now = Calendar.getInstance();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
 			String notificationTime = sdf.format(now.getTime());
 			AppManager.setNotificationTime(context, notificationTime);
 
