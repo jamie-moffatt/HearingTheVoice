@@ -19,6 +19,9 @@
 #define UD_AM_NOTIFICATION_TIME @"am_notification_time"
 #define UD_PM_NOTIFICATION_TIME @"pm_notification_time"
 #define UD_AVERAGE_RESPONSE_TIME @"average_response_time"
+#define UD_PERMISSIONS_ARE_VALID @"permissions_are_valid"
+#define UD_PERMISSION_TO_STUDY_DATA @"permission_to_study_data"
+#define UD_PERMISSIONS_HAVE_SYNCED @"permissions_have_synced"
 
 + (void)setDefaults;
 + (NSString *)userDefaultsToString;
@@ -60,5 +63,14 @@
 
 + (void)setupNotifications;
 + (void)changeNotifications :(NSInteger)newAMTime :(NSInteger)newPMTime;
+
++ (BOOL)dataPermissionsAreValid;
++ (void)setDataPermissionsValid :(BOOL)permissionsAreValid;
+
++ (BOOL)permissionToStudyData;
++ (void)setPermissionToStudyData :(BOOL)permissionToSudyData;
+
++ (BOOL)permissionsHaveSynchronized;
++ (void)setPermissionsHaveSynchronized :(BOOL)dataHasSynced;
 
 @end

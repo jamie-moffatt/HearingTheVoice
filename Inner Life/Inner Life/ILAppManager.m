@@ -32,6 +32,9 @@
       [NSNumber numberWithInteger:9], UD_AM_NOTIFICATION_TIME,
       [NSNumber numberWithInteger:15], UD_PM_NOTIFICATION_TIME,
       [NSNumber numberWithInteger:0], UD_AVERAGE_RESPONSE_TIME,
+      [NSNumber numberWithBool:NO], UD_PERMISSIONS_ARE_VALID,
+      [NSNumber numberWithBool:NO], UD_PERMISSION_TO_STUDY_DATA,
+      [NSNumber numberWithBool:NO], UD_PERMISSIONS_HAVE_SYNCED,
       nil]];
 }
 
@@ -303,6 +306,36 @@
     {
         [[UIApplication sharedApplication] scheduleLocalNotification:n];
     }
+}
+
++(BOOL)dataPermissionsAreValid
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:UD_PERMISSIONS_ARE_VALID];
+}
+
++(void)setDataPermissionsValid:(BOOL)permissionsAreValid
+{
+    [[NSUserDefaults standardUserDefaults] setBool:permissionsAreValid forKey:UD_PERMISSIONS_ARE_VALID];
+}
+
++(BOOL)permissionToStudyData
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:UD_PERMISSION_TO_STUDY_DATA];
+}
+
++(void)setPermissionToStudyData:(BOOL)permissionToSudyData
+{
+    [[NSUserDefaults standardUserDefaults] setBool:permissionToSudyData forKey:UD_PERMISSION_TO_STUDY_DATA];
+}
+
++(BOOL)permissionsHaveSynchronized
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:UD_PERMISSIONS_HAVE_SYNCED];
+}
+
++(void)setPermissionsHaveSynchronized:(BOOL)dataHasSynced
+{
+    [[NSUserDefaults standardUserDefaults] setBool:dataHasSynced forKey:UD_PERMISSIONS_HAVE_SYNCED];
 }
 
 @end
