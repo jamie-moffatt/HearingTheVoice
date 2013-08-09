@@ -78,7 +78,7 @@
 
 +(NSDate *)getStartDate
 {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:UD_STARTING_DATE_KEY];
+    return (NSDate *)[[NSUserDefaults standardUserDefaults] objectForKey:UD_STARTING_DATE_KEY];
 }
 
 +(void)setStartDate:(NSDate *)date

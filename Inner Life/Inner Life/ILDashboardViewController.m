@@ -40,12 +40,17 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:self action:@selector(settingsButton:)];
     
     [ILAppManager setDefaults];
+    
     if ([ILAppManager isFirstRun])
     {
         [ILAppManager setFirstRun:NO];
         [ILAppManager setStartDate:[NSDate date]];
         [ILAppManager setupNotifications];
     }
+    
+    NSDate *startDate = [ILAppManager getStartDate];
+    NSInteger recommendedSession = [ILTimeUtils getSessionByRegistrationDate:startDate];
+    _sessionLabel.text = [NSString stringWithFormat:@"%d", recommendedSession];
 }
 
 -(void)viewDidAppear:(BOOL)animated

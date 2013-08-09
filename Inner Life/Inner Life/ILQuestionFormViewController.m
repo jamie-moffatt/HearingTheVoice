@@ -28,21 +28,22 @@
         data.currentQuestion = 0;
         data.currentSection = 0;
         
-        sections = [data getQuestionsInSectionsFilteredBySession:_currentSession];
-        
-        data.responses = [[NSMutableDictionary alloc] init];
-        
-        NSArray *xs = [data getFlatQuestionArrayBySession:_currentSession];
-        for (ILQuestion *q in xs)
-        {
-            [data.responses setObject:[ILChoice NA] forKey:[NSString stringWithFormat:@"%d", q.questionID]];
-        }
     }
     return self;
 }
 
 - (void)loadView
-{    
+{
+    sections = [data getQuestionsInSectionsFilteredBySession:_currentSession];
+    
+    data.responses = [[NSMutableDictionary alloc] init];
+    
+    NSArray *xs = [data getFlatQuestionArrayBySession:_currentSession];
+    for (ILQuestion *q in xs)
+    {
+        [data.responses setObject:[ILChoice NA] forKey:[NSString stringWithFormat:@"%d", q.questionID]];
+    }
+    
     UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
     [view setBackgroundColor:[UIColor whiteColor]];
     
