@@ -18,6 +18,7 @@
 #define UD_SESSIONS_SUBMITTED @"sessions_submitted"
 #define UD_AM_NOTIFICATION_TIME @"am_notification_time"
 #define UD_PM_NOTIFICATION_TIME @"pm_notification_time"
+#define UD_NOTIFICATION_MAP @"notification_map"
 #define UD_AVERAGE_RESPONSE_TIME @"average_response_time"
 #define UD_PERMISSIONS_ARE_VALID @"permissions_are_valid"
 #define UD_PERMISSION_TO_STUDY_DATA @"permission_to_study_data"
@@ -56,6 +57,9 @@
 
 + (NSInteger)getPMNotificationTime;
 + (void)setPMNotificationTime :(NSInteger)time;
+
++ (NSDictionary *)getNotificationMap;
++ (void)setNotificationMap:(NSDictionary *)dictionary;
 
 + (void)updateAverageResponseTime :(NSDate *)notificationTime :(NSDate *)completionTime;
 + (NSInteger )getAverageResponseTime;

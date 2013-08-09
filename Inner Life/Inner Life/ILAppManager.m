@@ -31,6 +31,7 @@
       emptyDictionary, UD_SESSIONS_SUBMITTED,
       [NSNumber numberWithInteger:9], UD_AM_NOTIFICATION_TIME,
       [NSNumber numberWithInteger:15], UD_PM_NOTIFICATION_TIME,
+      emptyDictionary, UD_NOTIFICATION_MAP,
       [NSNumber numberWithInteger:0], UD_AVERAGE_RESPONSE_TIME,
       [NSNumber numberWithBool:NO], UD_PERMISSIONS_ARE_VALID,
       [NSNumber numberWithBool:NO], UD_PERMISSION_TO_STUDY_DATA,
@@ -156,6 +157,16 @@
     [[NSUserDefaults standardUserDefaults] setInteger:time forKey:UD_PM_NOTIFICATION_TIME];
 }
 
++(NSDictionary *)getNotificationMap
+{
+    return [[NSUserDefaults standardUserDefaults] dictionaryForKey:UD_NOTIFICATION_MAP];
+}
+
++(void)setNotificationMap:(NSDictionary *)dictionary
+{
+    [[NSUserDefaults standardUserDefaults] setObject:dictionary forKey:UD_NOTIFICATION_MAP];
+}
+
 + (void)updateAverageResponseTime :(NSDate *)notificationTime :(NSDate *)completionTime
 {
     NSTimeInterval newResponseTime = [completionTime timeIntervalSinceDate:notificationTime];
@@ -215,6 +226,8 @@
     NSInteger amTime = [ILAppManager getAMNotificationTime];
     NSInteger pmTime = [ILAppManager getPMNotificationTime];
     
+    NSMutableDictionary *notificationMap = [[NSMutableDictionary alloc] init];
+    
     for (int i = 0; i < 14; i++)
     {
         NSDateComponents* dc = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:dayAfterRegistration];
@@ -240,6 +253,8 @@
                                    nil];
         [[UIApplication sharedApplication] scheduleLocalNotification:amNotification];
         
+        [notificationMap setObject:amNotificationTime forKey:[NSString stringWithFormat:@"%d", 2*i + 1]];
+        
         UILocalNotification *pmNotification = [[UILocalNotification alloc] init];
         pmNotification.fireDate = pmNotificationTime;
         pmNotification.timeZone = [NSTimeZone defaultTimeZone];
@@ -253,7 +268,11 @@
                                    [NSNumber numberWithInteger:2*i + 2], @"SESSION_ID",
                                    nil];
         [[UIApplication sharedApplication] scheduleLocalNotification:pmNotification];
+        
+        [notificationMap setObject:pmNotificationTime forKey:[NSString stringWithFormat:@"%d", 2*i + 2]];
     }
+    
+    [ILAppManager setNotificationMap:notificationMap];
 }
 
 + (void)changeNotifications :(NSInteger)newAMTime :(NSInteger)newPMTime
@@ -262,6 +281,8 @@
     NSMutableArray *newNotifications = [[NSMutableArray alloc] init];
     
     NSDate *tommorrow = [ILTimeUtils dayAfter:[NSDate date]];
+    
+    NSMutableDictionary *notificationMap = [[NSMutableDictionary alloc] init];
     
     for (UILocalNotification *n in oldNotifications)
     {
@@ -305,7 +326,11 @@
     for (UILocalNotification *n in newNotifications)
     {
         [[UIApplication sharedApplication] scheduleLocalNotification:n];
+        
+        [notificationMap setObject: n.fireDate forKey: [NSString stringWithFormat:@"%@", [n.userInfo valueForKey:@"SESSION_ID"]]];
     }
+    
+    [ILAppManager setNotificationMap:notificationMap];
 }
 
 +(BOOL)dataPermissionsAreValid
