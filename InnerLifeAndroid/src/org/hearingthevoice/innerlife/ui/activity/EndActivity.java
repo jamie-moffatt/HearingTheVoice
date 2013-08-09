@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.R;
+import org.hearingthevoice.innerlife.io.web.QuestionAPI;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -98,7 +99,7 @@ public class EndActivity extends Activity
 		{
 			try
 			{
-				URL url = new URL("https://www.dur.ac.uk/matthew.bates/HearingTheVoice/user-permissions.php");
+				URL url = new URL(QuestionAPI.INNER_LIFE_BASE_URL + "user-permissions.php");
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
 				conn.setReadTimeout(10000 /* milliseconds */);

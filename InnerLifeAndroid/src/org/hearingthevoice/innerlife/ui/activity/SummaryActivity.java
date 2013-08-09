@@ -55,8 +55,8 @@ public class SummaryActivity extends Activity
 
 		manager = AppManager.getInstance();
 		Log.d("MANAGER", "" + (manager == null));
-		
-		List<Section>  session = manager.getSection();
+
+		List<Section> session = manager.getSection();
 		List<Question> questions = new ArrayList<Question>();
 
 		for (Section section : session)
@@ -64,8 +64,8 @@ public class SummaryActivity extends Activity
 				questions.add(q);
 
 		questionListView = (ListView) findViewById(R.id.questionListView);
-		questionListView.setAdapter(new QuestionListAdapter(context,
-				R.layout.question_list_row_layout, questions, manager.getResponseStrings()));
+		questionListView.setAdapter(new QuestionListAdapter(context, R.layout.question_list_row_layout, questions,
+				manager.getResponseStrings()));
 
 		btnConfirm = (Button) findViewById(R.id.btnConfirmSubmission);
 
@@ -74,8 +74,8 @@ public class SummaryActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				submissionProgressDialog = ProgressDialog.show(v.getContext(),
-						"Submitting Questions", "Submitting your responses. Please wait...", true);
+				submissionProgressDialog = ProgressDialog.show(v.getContext(), "Submitting Questions",
+						"Submitting your responses. Please wait...", true);
 
 				confirmSubmission();
 			}
@@ -87,11 +87,12 @@ public class SummaryActivity extends Activity
 		try
 		{
 			int samples = AppManager.getPossibleSamplesSoFar(context);
-			int sessionID = (samples == 0) ? 28 : samples - 1; // if first sample, load trait questions
+			int sessionID = (samples == 0) ? 28 : samples - 1; // if first sample, load trait
+																// questions
 			if (samples == 14) sessionID = 29; // if half way through samples, load trait questions
-			if (samples  > 14) sessionID = samples - 1;
+			if (samples > 14) sessionID = samples - 1;
 			if (samples == 28) sessionID = 30; // if end of samples, load trait questions
-			
+
 			sessionID++; // session IDs not zero indexed in database
 
 			String notificationTimeStored = AppManager.getNotificationTime(context);
@@ -100,8 +101,7 @@ public class SummaryActivity extends Activity
 
 			try
 			{
-				if (notificationTimeStored != null)
-					notificationTime.setTime(sdf.parse(notificationTimeStored));
+				if (notificationTimeStored != null) notificationTime.setTime(sdf.parse(notificationTimeStored));
 			}
 			catch (ParseException ex)
 			{
@@ -109,12 +109,11 @@ public class SummaryActivity extends Activity
 			}
 
 			Calendar submissionTime = Calendar.getInstance();
-			String extension = new SimpleDateFormat("yyyyMMddHHmmss", Locale.UK).format(submissionTime
-					.getTime());
+			String extension = new SimpleDateFormat("yyyyMMddHHmmss", Locale.UK).format(submissionTime.getTime());
 
-			if(sessionID < 29)
+			if (sessionID < 29)
 				AppManager.recordSampleComplete(context,
-					new SimpleDateFormat("yyyy-MM-dd", Locale.UK).format(submissionTime.getTime()));
+						new SimpleDateFormat("yyyy-MM-dd", Locale.UK).format(submissionTime.getTime()));
 
 			filename = extension + " responses";
 			FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
@@ -151,8 +150,10 @@ public class SummaryActivity extends Activity
 
 			AppManager.updateAverageResponseTime(context, _notificationTime, _submissionTime);
 
-			if (QuestionAPI.networkIsConnected(activity)) (new SubmitTask())
-					.execute(str.toString());
+			if (QuestionAPI.networkIsConnected(activity))
+			{
+				(new SubmitTask()).execute(str.toString());
+			}
 			else
 			{
 				if (submissionProgressDialog != null && submissionProgressDialog.isShowing())
@@ -160,13 +161,13 @@ public class SummaryActivity extends Activity
 					submissionProgressDialog.dismiss();
 				}
 				Toast.makeText(activity, "No Connection. Saving responses.", Toast.LENGTH_LONG).show();
-				finish();
 
 				int sample = AppManager.getPossibleSamplesSoFar(context);
 
 				if (sample == 28)
 				{
 					AppManager.setStopNotifications(context, true);
+					finish();
 					Intent i = new Intent(context, EndActivity.class);
 					startActivity(i);
 				}
@@ -205,25 +206,35 @@ public class SummaryActivity extends Activity
 				Toast.makeText(activity, "Responses submitted.", Toast.LENGTH_LONG).show();
 				Log.d("RESPONSES", "deleting file");
 				context.deleteFile(filename);
-				
+
 				AppManager.setGotNotification(context, false);
 				AppManager.setNotificationTime(context, null);
-				
+
 				if (submissionProgressDialog != null && submissionProgressDialog.isShowing())
 				{
 					submissionProgressDialog.dismiss();
 				}
-				
+
 				manager.clearSample();
-				
-				finish();
-				Intent i = new Intent(context, DashboardActivity.class);
-				startActivity(i);
+
+				int sample = AppManager.getPossibleSamplesSoFar(context);
+
+				if (sample == 28)
+				{
+					AppManager.setStopNotifications(context, true);
+					finish();
+					Intent i = new Intent(context, EndActivity.class);
+					startActivity(i);
+				}
+				else
+				{
+					Intent i = new Intent(context, DashboardActivity.class);
+					startActivity(i);
+				}
 			}
 			else
 			{
-				Toast.makeText(activity, "Network Problem. Responses were not submitted.",
-						Toast.LENGTH_LONG).show();
+				Toast.makeText(activity, "Network Problem. Responses were not submitted.", Toast.LENGTH_LONG).show();
 
 				if (submissionProgressDialog != null && submissionProgressDialog.isShowing())
 				{
