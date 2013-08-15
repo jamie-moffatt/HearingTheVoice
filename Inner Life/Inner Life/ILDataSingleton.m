@@ -29,9 +29,50 @@
 {
     if (!sections)
     {
-        sections = [ILNetworkDataHandler downloadAndParseQuestionsInSections];
+        if ([ILDataSingleton questionsAreCached])
+        {
+            sections = [ILDataSingleton questionsFromCache];
+        }
+        else
+        {
+            sections = [ILNetworkDataHandler downloadAndParseQuestionsInSections];
+        }
     }
     return sections;
+}
+
++ (BOOL)questionsAreCached
+{
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSString* appSupportDirStr = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];;
+    return [fm fileExistsAtPath:[appSupportDirStr stringByAppendingPathComponent:@"questions.xml"]];
+}
+
++ (NSArray *)questionsFromCache
+{
+    NSFileManager* fm = [[NSFileManager alloc] init];
+    NSURL* appSupportDirURL = [fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil];
+    NSData* cachedData = [[NSData alloc] initWithContentsOfURL:[appSupportDirURL URLByAppendingPathComponent:@"questions.xml"]];
+    
+    NSMutableArray *sectionList = [[NSMutableArray alloc] init];
+    
+    ILQuestionXMLParserDelegate *xmlParserDelegate = [[ILQuestionXMLParserDelegate alloc] init];
+    xmlParserDelegate.sectionList = sectionList;
+    
+    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:cachedData];
+    [xmlParser setDelegate:xmlParserDelegate];
+    
+    if ([xmlParser parse])
+    {
+        NSLog(@"Questions parsed successfully from cache.");
+    }
+    else
+    {
+        NSLog(@"An ERROR occurred whilst parsing Question XML from cache.");
+    }
+    
+    return [sectionList copy];
+
 }
 
 - (NSArray *)getQuestionsInSectionsFilteredBySession: (NSInteger)sessionID
@@ -74,8 +115,49 @@
 {
     if (!schedule)
     {
-        schedule = [ILNetworkDataHandler downloadAndParseSchedule];
+        if ([ILDataSingleton scheduleIsCached])
+        {
+            schedule = [ILDataSingleton scheduleFromCache];
+        }
+        else
+        {
+            schedule = [ILNetworkDataHandler downloadAndParseSchedule];
+        }
     }
+    return schedule;
+}
+
++ (BOOL)scheduleIsCached
+{
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSString* appSupportDirStr = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];;
+    return [fm fileExistsAtPath:[appSupportDirStr stringByAppendingPathComponent:@"schedule.xml"]];
+
+}
+
++ (ILSchedule *)scheduleFromCache
+{
+    ILSchedule *schedule = [[ILSchedule alloc] init];
+    
+    ILScheduleXMLParserDelegate *xmlParserDelegate = [[ILScheduleXMLParserDelegate alloc] init];
+    xmlParserDelegate.schedule = schedule;
+    
+    NSFileManager* fm = [[NSFileManager alloc] init];
+    NSURL* appSupportDirURL = [fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil];
+    NSData* cachedData = [[NSData alloc] initWithContentsOfURL:[appSupportDirURL URLByAppendingPathComponent:@"schedule.xml"]];
+    
+    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:cachedData];
+    [xmlParser setDelegate:xmlParserDelegate];
+    
+    if ([xmlParser parse])
+    {
+        NSLog(@"Schedule parsed successfully from cache.");
+    }
+    else
+    {
+        NSLog(@"An ERROR occurred whilst parsing Schedule XML from cache.");
+    }
+
     return schedule;
 }
 

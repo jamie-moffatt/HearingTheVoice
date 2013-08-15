@@ -121,7 +121,7 @@
         [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         NSString *date = [df stringFromDate:now];
         
-        [responseXML appendFormat:@"<submission userID=\"%d\" sessionID=\"%d\" notificationTime=\"%@\" submissionTime=\"%@\">", user.userID, _currentSession, date, date];
+        [responseXML appendFormat:@"<submission userID=\"%d\" sessionID=\"%d\" notificationTime=\"%@\" submissionTime=\"%@\">", user.userID, _currentSession, [[ILAppManager getNotificationMap] objectForKey:[NSString stringWithFormat:@"%d",_currentSession]], date];
         for (NSString *key in data.responses)
         {
             NSString *questionID = key;
