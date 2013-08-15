@@ -68,28 +68,8 @@ public class DashboardActivity extends Activity
 		progressDialog = ProgressDialog.show(context, "Downloading Questions",
 				"Currently downloading questions. Please wait...", true);
 
-		String[] files = context.fileList();
-		boolean questionsCached = false;
-		boolean scheduleCached = false;
-
-		for (String file : files)
-		{
-			if (file.contains("questions"))
-			{
-				questionsCached = true;
-				break;
-			}
-		}
-
-		// determine whether the schedule is cached in the file system
-		for (String file : files)
-		{
-			if (file.contains("schedule"))
-			{
-				scheduleCached = true;
-				break;
-			}
-		}
+		boolean questionsCached = areQuestionsCached();
+		boolean scheduleCached  = isScheduleCached();
 
 		if (scheduleCached && questionsCached)
 		{
@@ -104,7 +84,7 @@ public class DashboardActivity extends Activity
 			}
 		}
 
-		if (!scheduleCached) (new ScheduleDownloadTask()).execute();
+		if (!scheduleCached ) (new ScheduleDownloadTask()).execute();
 		if (!questionsCached) (new QuestionDownloadTask()).execute();
 
 		int samplesCompletedToday = AppManager.getSamplesCompleteToday(context);
@@ -141,6 +121,7 @@ public class DashboardActivity extends Activity
 			public void onClick(View v)
 			{
 				Intent i = new Intent(v.getContext(), MainActivity.class);
+				i.putExtra("sessionID", AppManager.getPossibleSamplesSoFar(context));
 				startActivity(i);
 				finish();
 			}
@@ -209,6 +190,38 @@ public class DashboardActivity extends Activity
 			startActivity(intent);
 			finish();
 		}
+	}
+
+	private boolean areQuestionsCached()
+	{
+		String[] files = context.fileList();
+		boolean questionsCached = false;
+		
+		for (String file : files)
+		{
+			if (file.contains("questions"))
+			{
+				questionsCached = true;
+				break;
+			}
+		}
+		return questionsCached;
+	}
+	
+	private boolean isScheduleCached()
+	{
+		String[] files = context.fileList();
+		boolean scheduleCached = false;
+		
+		for (String file : files)
+		{
+			if (file.contains("schedule"))
+			{
+				scheduleCached = true;
+				break;
+			}
+		}
+		return scheduleCached;
 	}
 
 	@Override

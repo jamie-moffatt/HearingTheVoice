@@ -209,7 +209,9 @@ public class FirstRunFormActivity extends Activity
 			AppManager.setUserID(context, userID);
 			AppManager.setFirstRun(context, false);
 			AppManager.setNotificationTime(context, new SimpleDateFormat("yyyy-MM-dd").format((Calendar.getInstance()).getTime()));
+			
 			Intent i = new Intent(context, MainActivity.class);
+			i.putExtra("sessionID", 28);
 			startActivity(i);
 			finish();
 		}

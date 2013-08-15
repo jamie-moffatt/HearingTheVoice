@@ -121,7 +121,11 @@ public class MainActivity extends Activity
 
 			Log.d("SCHEDULE", "read from file");
 			schedule = QuestionAPI.retrieveCachedSchedule(context);
+			
+			Bundle e = getIntent().getExtras();
+			session = e.getInt("sessionID");
 
+			/*
 			int samples = AppManager.getPossibleSamplesSoFar(context);
 			session = (samples == 0) ? 28 : samples - 1; // if first sample, load trait questions
 			if (samples == 14) session = 29; // if half way through samples, load trait questions
@@ -131,6 +135,7 @@ public class MainActivity extends Activity
 			// TODO this may have been causing last sessions to not be loaded due to trait questions
 			// adding extra sessions.
 			// if (session > schedule.numberOfSessions() - 1) session %= schedule.numberOfSessions();
+			*/
 
 			sections = schedule.filterBySession(sections, session);
 

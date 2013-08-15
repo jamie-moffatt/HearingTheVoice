@@ -43,6 +43,7 @@ public class SummaryActivity extends Activity
 	private Button btnConfirm;
 
 	private ProgressDialog submissionProgressDialog;
+	private int sessionID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -52,6 +53,9 @@ public class SummaryActivity extends Activity
 
 		context = this;
 		activity = this;
+		
+		Bundle e = getIntent().getExtras();
+		sessionID = e.getInt("sessionID");
 
 		manager = AppManager.getInstance();
 		Log.d("MANAGER", "" + (manager == null));
@@ -86,14 +90,13 @@ public class SummaryActivity extends Activity
 	{
 		try
 		{
-			int samples = AppManager.getPossibleSamplesSoFar(context);
-			int sessionID = (samples == 0) ? 28 : samples - 1; // if first sample, load trait
-																// questions
-			if (samples == 14) sessionID = 29; // if half way through samples, load trait questions
-			if (samples > 14) sessionID = samples - 1;
-			if (samples == 28) sessionID = 30; // if end of samples, load trait questions
-
-			sessionID++; // session IDs not zero indexed in database
+//			int samples = AppManager.getPossibleSamplesSoFar(context);
+//			int sessionID = (samples == 0) ? 28 : samples - 1; // if first sample, load trait questions
+//			if (samples == 14) sessionID = 29; // if half way through samples, load trait questions
+//			if (samples  > 14) sessionID = samples - 1;
+//			if (samples == 28) sessionID = 30; // if end of samples, load trait questions
+//
+//			sessionID++; // session IDs not zero indexed in database
 
 			String notificationTimeStored = AppManager.getNotificationTime(context);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
@@ -111,7 +114,7 @@ public class SummaryActivity extends Activity
 			Calendar submissionTime = Calendar.getInstance();
 			String extension = new SimpleDateFormat("yyyyMMddHHmmss", Locale.UK).format(submissionTime.getTime());
 
-			if (sessionID < 29)
+			if (sessionID < 28)
 				AppManager.recordSampleComplete(context,
 						new SimpleDateFormat("yyyy-MM-dd", Locale.UK).format(submissionTime.getTime()));
 
@@ -124,7 +127,7 @@ public class SummaryActivity extends Activity
 
 			str.append("<submission ");
 			str.append("userID=\"" + AppManager.getUserID(context) + "\" ");
-			str.append("sessionID=\"" + sessionID + "\" ");
+			str.append("sessionID=\"" + (sessionID + 1) + "\" ");
 
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
 
@@ -162,14 +165,26 @@ public class SummaryActivity extends Activity
 				}
 				Toast.makeText(activity, "No Connection. Saving responses.", Toast.LENGTH_LONG).show();
 
-				int sample = AppManager.getPossibleSamplesSoFar(context);
-
-				if (sample == 28)
+				if (sessionID == 30)
 				{
 					AppManager.setStopNotifications(context, true);
 					finish();
 					Intent i = new Intent(context, EndActivity.class);
 					startActivity(i);
+				}
+				else if (sessionID == 13)
+				{
+					Intent i = new Intent(context, MainActivity.class);
+					i.putExtra("sessionID", 29);
+					startActivity(i);
+					finish();
+				}
+				else if (sessionID == 27)
+				{
+					Intent i = new Intent(context, MainActivity.class);
+					i.putExtra("sessionID", 30);
+					startActivity(i);
+					finish();
 				}
 			}
 		}
