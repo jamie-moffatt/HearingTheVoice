@@ -400,7 +400,6 @@
                 else
                 {
                     CGFloat w = cell.frame.size.width;
-                    CGFloat h = cell.frame.size.height;
                     
                     UISlider *_slider = [[UISlider alloc] initWithFrame:CGRectMake(15, 25, w - 30, 27)];
                     

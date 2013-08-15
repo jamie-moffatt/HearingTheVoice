@@ -202,13 +202,13 @@
     
     if (averageResponseTime > (60 * 60))
     {
-        [s appendFormat:@"%d Hour%@ ", hours, hours > 1 ? @"s" : @""];
+        [s appendFormat:@"%d Hour%@ ", hours, hours > 1 || hours == 0 ? @"s" : @""];
     }
     if (averageResponseTime > 60)
     {
-        [s appendFormat:@"%d Minute%@ ", minutes, minutes > 1 ? @"s" : @""];
+        [s appendFormat:@"%d Minute%@ ", minutes, minutes > 1 || minutes == 0 ? @"s" : @""];
     }
-    [s appendFormat:@"%d Second%@ ", seconds, seconds > 1 ? @"s" : @""];
+    [s appendFormat:@"%d Second%@ ", seconds, seconds > 1 || seconds == 0 ? @"s" : @""];
     
     return [s copy];
 }

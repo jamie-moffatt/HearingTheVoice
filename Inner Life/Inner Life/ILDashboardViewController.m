@@ -11,6 +11,7 @@
 #import "ILUserFormViewController.h"
 #import "ILQuestionFormViewController.h"
 #import "ILSettingsViewController.h"
+#import "ILEndViewController.h"
 
 #import "ILAppManager.h"
 #import "ILTimeUtils.h"
@@ -70,7 +71,7 @@
 
 - (IBAction)openFirstTimeForm:(id)sender
 {
-    ILUserFormViewController *userFormView = [[ILUserFormViewController alloc] initWithNibName:@"ILUserForm" bundle:nil];
+    ILEndViewController *userFormView = [[ILEndViewController alloc] initWithNibName:@"ILEndView" bundle:nil];
     [self presentViewController:userFormView animated:YES completion:nil];
 }
 

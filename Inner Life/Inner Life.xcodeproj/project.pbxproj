@@ -39,6 +39,8 @@
 		4792ED451769260C00441527 /* ILQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED441769260C00441527 /* ILQuestion.m */; };
 		4792ED48176928C900441527 /* ILSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED47176928C900441527 /* ILSchedule.m */; };
 		4792ED4B1769293300441527 /* ILSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED4A1769293300441527 /* ILSection.m */; };
+		47D1E15D17BD2BBF00833F1A /* ILEndViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D1E15C17BD2BBF00833F1A /* ILEndViewController.m */; };
+		47D7200417BD227E00F9FB14 /* ILEndView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47D7200217BD227E00F9FB14 /* ILEndView.xib */; };
 		47E733451792B9AC00F23708 /* ILDashboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E733441792B9AC00F23708 /* ILDashboard.xib */; };
 		47E733861793090400F23708 /* ILUserFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E733841793090400F23708 /* ILUserFormViewController.m */; };
 		47E733871793090400F23708 /* ILUserForm.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E733851793090400F23708 /* ILUserForm.xib */; };
@@ -117,6 +119,9 @@
 		4792ED47176928C900441527 /* ILSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSchedule.m; sourceTree = "<group>"; };
 		4792ED491769293300441527 /* ILSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSection.h; sourceTree = "<group>"; };
 		4792ED4A1769293300441527 /* ILSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSection.m; sourceTree = "<group>"; };
+		47D1E15B17BD2BBF00833F1A /* ILEndViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILEndViewController.h; sourceTree = "<group>"; };
+		47D1E15C17BD2BBF00833F1A /* ILEndViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILEndViewController.m; sourceTree = "<group>"; };
+		47D7200217BD227E00F9FB14 /* ILEndView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILEndView.xib; sourceTree = "<group>"; };
 		47E733441792B9AC00F23708 /* ILDashboard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILDashboard.xib; sourceTree = "<group>"; };
 		47E733831793090400F23708 /* ILUserFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUserFormViewController.h; sourceTree = "<group>"; };
 		47E733841793090400F23708 /* ILUserFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUserFormViewController.m; sourceTree = "<group>"; };
@@ -306,6 +311,7 @@
 				472CAE22179DB30C00B1179C /* UI */,
 				47E733441792B9AC00F23708 /* ILDashboard.xib */,
 				47E733851793090400F23708 /* ILUserForm.xib */,
+				47D7200217BD227E00F9FB14 /* ILEndView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -321,6 +327,8 @@
 				471D071817A27D1E00CC5784 /* ILQuestionFormViewController.m */,
 				47FB34CE17B25AAB00E989C9 /* ILSettingsViewController.h */,
 				47FB34CF17B25AAB00E989C9 /* ILSettingsViewController.m */,
+				47D1E15B17BD2BBF00833F1A /* ILEndViewController.h */,
+				47D1E15C17BD2BBF00833F1A /* ILEndViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -436,6 +444,7 @@
 				47F0794617A7F3B1003B922C /* section_complete.png in Resources */,
 				47F0794717A7F3B1003B922C /* section_current.png in Resources */,
 				47F0794817A7F3B1003B922C /* section_incomplete.png in Resources */,
+				47D7200417BD227E00F9FB14 /* ILEndView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +500,7 @@
 				470B1BFC17A5346E009F67A0 /* ILUser.m in Sources */,
 				4711150217B136B5001BF1C6 /* ILTimeSelector.m in Sources */,
 				47FB34D017B25AAB00E989C9 /* ILSettingsViewController.m in Sources */,
+				47D1E15D17BD2BBF00833F1A /* ILEndViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
