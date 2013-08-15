@@ -305,7 +305,7 @@
     {
         if (question.type == NUMSCALE)
         {
-            if (indexPath.row == 0) return 44;
+            if (indexPath.row == 0) return 55;
             if (indexPath.row == 1) return 22;
         }
         if (question.type == YESNO)
@@ -376,6 +376,9 @@
                 if ([cell viewWithTag:64])
                 {
                     UISlider *_slider = (UISlider *)[cell viewWithTag:64];
+                    UILabel *minTextLabel = (UILabel *)[cell viewWithTag:1];
+                    UILabel *maxTextLabel = (UILabel *)[cell viewWithTag:2];
+                    
                     ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", q.questionID]];
                     
                     if (response)
@@ -388,13 +391,18 @@
                         _slider.value = _slider.minimumValue;
                     }
                     
+                    ILChoice *minChoice = [[self getCurrentSection].choices objectAtIndex:0];
+                    ILChoice *maxChoice = [[self getCurrentSection].choices objectAtIndex:1];
+                    minTextLabel.text = minChoice.text;
+                    maxTextLabel.text = maxChoice.text;
+                    
                 }
                 else
                 {
                     CGFloat w = cell.frame.size.width;
                     CGFloat h = cell.frame.size.height;
                     
-                    UISlider *_slider = [[UISlider alloc] initWithFrame:CGRectMake(0+15, 0, w-30, h)];
+                    UISlider *_slider = [[UISlider alloc] initWithFrame:CGRectMake(15, 25, w - 30, 27)];
                     
                     ILChoice *minChoice = [[self getCurrentSection].choices objectAtIndex:0];
                     ILChoice *maxChoice = [[self getCurrentSection].choices objectAtIndex:1];
@@ -409,6 +417,28 @@
                     [_slider addTarget:self action:@selector(changeSlider:) forControlEvents:UIControlEventValueChanged];
                     _slider.tag = 64;
                     [cell addSubview:_slider];
+                    
+                    NSString* minText = minChoice.text;
+                    NSString* maxText = maxChoice.text;
+                    
+                    UILabel* minTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, w/2-15, 21)];
+                    minTextLabel.textAlignment = NSTextAlignmentLeft;
+                    minTextLabel.font = [UIFont boldSystemFontOfSize:13];
+                    minTextLabel.text = minText;
+                    minTextLabel.textColor = [UIColor darkGrayColor];
+                    minTextLabel.backgroundColor = [UIColor clearColor];
+                    minTextLabel.tag = 1;
+                    
+                    UILabel* maxTextLabel = [[UILabel alloc] initWithFrame:CGRectMake(w/2, 5, w/2-20, 21)];
+                    maxTextLabel.textAlignment = NSTextAlignmentRight;
+                    maxTextLabel.font = [UIFont boldSystemFontOfSize:13];
+                    maxTextLabel.text = maxText;
+                    maxTextLabel.textColor = [UIColor darkGrayColor];
+                    maxTextLabel.backgroundColor = [UIColor clearColor];
+                    maxTextLabel.tag = 2;
+                    
+                    [cell addSubview:minTextLabel];
+                    [cell addSubview:maxTextLabel];
                 }
             }
             else if (indexPath.row == 1)
