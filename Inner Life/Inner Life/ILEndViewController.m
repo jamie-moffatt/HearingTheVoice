@@ -55,27 +55,29 @@
     [ILAppManager setPermissionToStudyData:allowDataUse];
     [ILAppManager setDataPermissionsValid:YES];
     
+    UIAlertView *yesAlert =
+    [[UIAlertView alloc]
+     initWithTitle:@"Submitting Your Request"
+     message:@"Notifying the database with new permissions."
+     delegate:nil
+     cancelButtonTitle:@"OK"
+     otherButtonTitles:nil];
+    
+    UIAlertView *noAlert =
+    [[UIAlertView alloc]
+     initWithTitle:@"Submitting Your Request"
+     message:@"Removing your data from the study."
+     delegate:nil
+     cancelButtonTitle:@"OK"
+     otherButtonTitles:nil];
+    
     if (allowDataUse)
     {
-        UIAlertView *alert =
-        [[UIAlertView alloc]
-         initWithTitle:@"Submitting Your Request"
-         message:@"Notifying the database with new permissions."
-         delegate:nil
-         cancelButtonTitle:@"OK"
-         otherButtonTitles:nil];
-        [alert show];
+        [yesAlert show];
     }
     else
     {
-        UIAlertView *alert =
-        [[UIAlertView alloc]
-         initWithTitle:@"Submitting Your Request"
-         message:@"Removing your data from the study."
-         delegate:nil
-         cancelButtonTitle:@"OK"
-         otherButtonTitles:nil];
-        [alert show];
+        [noAlert show];
     }
     
     NSURL *permissionsAPI_URL = [NSURL URLWithString:PERMISSIONS_API_ENDPOINT];
@@ -88,6 +90,9 @@
     
     [NSURLConnection sendAsynchronousRequest:URL_Request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
      {
+         [yesAlert dismissWithClickedButtonIndex:0 animated:NO];
+         [noAlert dismissWithClickedButtonIndex:0 animated:NO];
+         
          if (data)
          {
              NSString *s = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
