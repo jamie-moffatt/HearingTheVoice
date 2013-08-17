@@ -32,10 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST")
 		
 		$userID = mysqli_real_escape_string($mysqli, $xml['userID']);
 		$sessionID = mysqli_real_escape_string($mysqli, $xml['sessionID']);
-		$sessionID = $sessionID + 1; // hot fix for Ben's current version of the app
+		$sessionID = $sessionID;
 		$notificationTime = mysqli_real_escape_string($mysqli, $xml['notificationTime']);
 		$submissionTime = mysqli_real_escape_string($mysqli, $xml['submissionTime']);
 		
+        $response_submitted = false;
+        
 		foreach ($xml->response as $responseXML)
 		{
 			$questionID = mysqli_real_escape_string($mysqli, $responseXML['questionID']);
@@ -43,13 +45,20 @@ if ($_SERVER['REQUEST_METHOD'] === "POST")
 			
 			if ($stmt->execute())
 			{
-				printf("%d Row inserted.\n", $stmt->affected_rows);
+				$response_submitted = true;
 			}
 			else
 			{
+                header('HTTP/1.1 400 Bad Request', true, 400);
 				print("Error inserting data into MySQL: " . $mysqli->error . "\n");
+                break;
 			}
 		}
+        
+        if ($response_submitted)
+        {
+            header('HTTP/1.1 201 Created', true, 201);
+        }
 		
 		$stmt->close();
 		$mysqli->close();
