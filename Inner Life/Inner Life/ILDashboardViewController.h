@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ILSessionProgressBar.h"
 
 @interface ILDashboardViewController : UIViewController
 
@@ -15,6 +16,7 @@
 - (IBAction)testNotification:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *sessionLabel;
+@property (weak, nonatomic) IBOutlet ILSessionProgressBar *sessionProgressBar;
 
 
 @end

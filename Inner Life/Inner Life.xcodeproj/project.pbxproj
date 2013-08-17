@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		470B1BFC17A5346E009F67A0 /* ILUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 470B1BFB17A5346E009F67A0 /* ILUser.m */; };
 		4711150217B136B5001BF1C6 /* ILTimeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 4711150117B136B5001BF1C6 /* ILTimeSelector.m */; };
+		471270BF17BEBB25009CBB51 /* ILSessionProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 471270BE17BEBB25009CBB51 /* ILSessionProgressBar.m */; };
 		471D071917A27D1E00CC5784 /* ILQuestionFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 471D071817A27D1E00CC5784 /* ILQuestionFormViewController.m */; };
 		472CAE27179DB48000B1179C /* ILQuestionProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 472CAE26179DB48000B1179C /* ILQuestionProgressBar.m */; };
 		473343CB176CB7120027D61D /* ILTimeUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 473343CA176CB7120027D61D /* ILTimeUtils.m */; };
@@ -71,6 +72,8 @@
 		470B1BFB17A5346E009F67A0 /* ILUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUser.m; sourceTree = "<group>"; };
 		4711150017B136B5001BF1C6 /* ILTimeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILTimeSelector.h; sourceTree = "<group>"; };
 		4711150117B136B5001BF1C6 /* ILTimeSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILTimeSelector.m; sourceTree = "<group>"; };
+		471270BD17BEBB25009CBB51 /* ILSessionProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSessionProgressBar.h; sourceTree = "<group>"; };
+		471270BE17BEBB25009CBB51 /* ILSessionProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSessionProgressBar.m; sourceTree = "<group>"; };
 		471D071717A27D1E00CC5784 /* ILQuestionFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILQuestionFormViewController.h; sourceTree = "<group>"; };
 		471D071817A27D1E00CC5784 /* ILQuestionFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuestionFormViewController.m; sourceTree = "<group>"; };
 		472CAE25179DB48000B1179C /* ILQuestionProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILQuestionProgressBar.h; sourceTree = "<group>"; };
@@ -178,6 +181,8 @@
 				4711150017B136B5001BF1C6 /* ILTimeSelector.h */,
 				4711150117B136B5001BF1C6 /* ILTimeSelector.m */,
 				4750EC1017B1913F00470763 /* ILTimeSelectorDelegate.h */,
+				471270BD17BEBB25009CBB51 /* ILSessionProgressBar.h */,
+				471270BE17BEBB25009CBB51 /* ILSessionProgressBar.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -501,6 +506,7 @@
 				4711150217B136B5001BF1C6 /* ILTimeSelector.m in Sources */,
 				47FB34D017B25AAB00E989C9 /* ILSettingsViewController.m in Sources */,
 				47D1E15D17BD2BBF00833F1A /* ILEndViewController.m in Sources */,
+				471270BF17BEBB25009CBB51 /* ILSessionProgressBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

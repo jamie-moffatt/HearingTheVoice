@@ -49,9 +49,9 @@
         [ILAppManager setupNotifications];
     }
     
-    NSDate *startDate = [ILAppManager getStartDate];
-    NSInteger recommendedSession = [ILTimeUtils getSessionByRegistrationDate:startDate];
-    _sessionLabel.text = [NSString stringWithFormat:@"%d", recommendedSession];
+    [ILAppManager setStartDate:[NSDate dateWithTimeInterval:-5*24*60*60 sinceDate:[NSDate date]]];
+    
+    NSLog(@"%@", [ILAppManager userDefaultsToString]);
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -61,6 +61,31 @@
         ILUserFormViewController *userFormView = [[ILUserFormViewController alloc] initWithNibName:@"ILUserForm" bundle:nil];
         [self presentViewController:userFormView animated:YES completion:nil];
     }
+    NSDate *startDate = [ILAppManager getStartDate];
+    NSInteger recommendedSession = [ILTimeUtils getSessionByRegistrationDate:startDate];
+    _sessionLabel.text = [NSString stringWithFormat:@"%d", recommendedSession];
+    
+    NSMutableArray *xs = [[NSMutableArray alloc] initWithCapacity:28];
+    for (int i = 0; i < 28; i++)
+    {
+        NSNumber* sessionIsComplete = [[ILAppManager getSessionsCompleted] objectForKey:[NSString stringWithFormat:@"%d", i+1]];
+        if (i + 1 <= recommendedSession)
+        {
+            if ([sessionIsComplete boolValue])
+            {
+                [xs addObject:[NSNumber numberWithInt:1]];
+            }
+            else
+            {
+                [xs addObject:[NSNumber numberWithInt:2]];
+            }
+        }
+        else
+        {
+            [xs addObject:[NSNumber numberWithInt:0]];
+        }
+    }
+    [_sessionProgressBar setSegmentMap:xs];
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,6 +103,7 @@
 - (IBAction)answerQuestions:(id)sender
 {
     NSInteger session = [ILTimeUtils getSessionByRegistrationDate:[ILAppManager getStartDate]];
+    if (session == -1) return;
     ILQuestionFormViewController *questionFormView = [[ILQuestionFormViewController alloc] initWithNibName:nil bundle:nil];
     questionFormView.currentSession = session;
     [self.navigationController pushViewController:questionFormView animated:YES];
