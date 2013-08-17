@@ -34,6 +34,7 @@
 
 - (void)loadView
 {
+    // TODO check valid session
     sections = [data getQuestionsInSectionsFilteredBySession:_currentSession];
     
     data.responses = [[NSMutableDictionary alloc] init];
@@ -154,7 +155,6 @@
             NSMutableDictionary *completed = [NSMutableDictionary dictionaryWithDictionary:[ILAppManager getSessionsCompleted]];
             [completed setObject:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%d", _currentSession]];
             [ILAppManager setSessionsCompleted:completed];
-
         }
         
         NSLog(@"Submitting ResponseXML: %@", responseXML);
@@ -172,10 +172,10 @@
                  NSString *s = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
                  NSLog(@"Web API Response:\n%@", s);
                  
-                 int scode = [((NSHTTPURLResponse *)response) statusCode];
+                 int http_status_code = [((NSHTTPURLResponse *)response) statusCode];
                  
                  // HTTP (201 Created).
-                 if (scode == 201)
+                 if (http_status_code == 201)
                  {
                      NSMutableDictionary *submitted = [NSMutableDictionary dictionaryWithDictionary:[ILAppManager getSessionsSubmitted]];
                      [submitted setObject:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%d", _currentSession]];
