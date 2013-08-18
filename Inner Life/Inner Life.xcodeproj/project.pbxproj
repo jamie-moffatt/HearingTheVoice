@@ -22,9 +22,6 @@
 		4792ECEE1768A7B800441527 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4792ECEC1768A7B800441527 /* InfoPlist.strings */; };
 		4792ECF01768A7B900441527 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ECEF1768A7B900441527 /* main.m */; };
 		4792ECF41768A7B900441527 /* ILAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ECF31768A7B900441527 /* ILAppDelegate.m */; };
-		4792ECF61768A7B900441527 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4792ECF51768A7B900441527 /* Default.png */; };
-		4792ECF81768A7B900441527 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4792ECF71768A7B900441527 /* Default@2x.png */; };
-		4792ECFA1768A7B900441527 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4792ECF91768A7B900441527 /* Default-568h@2x.png */; };
 		4792ECFD1768A7B900441527 /* ILDashboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ECFC1768A7B900441527 /* ILDashboardViewController.m */; };
 		4792ED111768A7B900441527 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ED101768A7B900441527 /* SenTestingKit.framework */; };
 		4792ED121768A7B900441527 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ECE31768A7B800441527 /* UIKit.framework */; };
@@ -40,6 +37,9 @@
 		4792ED451769260C00441527 /* ILQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED441769260C00441527 /* ILQuestion.m */; };
 		4792ED48176928C900441527 /* ILSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED47176928C900441527 /* ILSchedule.m */; };
 		4792ED4B1769293300441527 /* ILSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED4A1769293300441527 /* ILSection.m */; };
+		47C9154717C151C30087C10E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 47C9154417C151C30087C10E /* Default-568h@2x.png */; };
+		47C9154817C151C30087C10E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 47C9154517C151C30087C10E /* Default.png */; };
+		47C9154917C151C30087C10E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 47C9154617C151C30087C10E /* Default@2x.png */; };
 		47D1E15D17BD2BBF00833F1A /* ILEndViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D1E15C17BD2BBF00833F1A /* ILEndViewController.m */; };
 		47D7200417BD227E00F9FB14 /* ILEndView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47D7200217BD227E00F9FB14 /* ILEndView.xib */; };
 		47E733451792B9AC00F23708 /* ILDashboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E733441792B9AC00F23708 /* ILDashboard.xib */; };
@@ -98,9 +98,6 @@
 		4792ECF11768A7B900441527 /* Inner Life-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Inner Life-Prefix.pch"; sourceTree = "<group>"; };
 		4792ECF21768A7B900441527 /* ILAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILAppDelegate.h; sourceTree = "<group>"; };
 		4792ECF31768A7B900441527 /* ILAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ILAppDelegate.m; sourceTree = "<group>"; };
-		4792ECF51768A7B900441527 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		4792ECF71768A7B900441527 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		4792ECF91768A7B900441527 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		4792ECFB1768A7B900441527 /* ILDashboardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILDashboardViewController.h; sourceTree = "<group>"; };
 		4792ECFC1768A7B900441527 /* ILDashboardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ILDashboardViewController.m; sourceTree = "<group>"; };
 		4792ED0F1768A7B900441527 /* Inner LifeTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Inner LifeTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,6 +119,9 @@
 		4792ED47176928C900441527 /* ILSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSchedule.m; sourceTree = "<group>"; };
 		4792ED491769293300441527 /* ILSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSection.h; sourceTree = "<group>"; };
 		4792ED4A1769293300441527 /* ILSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSection.m; sourceTree = "<group>"; };
+		47C9154417C151C30087C10E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		47C9154517C151C30087C10E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		47C9154617C151C30087C10E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		47D1E15B17BD2BBF00833F1A /* ILEndViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILEndViewController.h; sourceTree = "<group>"; };
 		47D1E15C17BD2BBF00833F1A /* ILEndViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILEndViewController.m; sourceTree = "<group>"; };
 		47D7200217BD227E00F9FB14 /* ILEndView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILEndView.xib; sourceTree = "<group>"; };
@@ -235,15 +235,15 @@
 		4792ECEA1768A7B800441527 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				47C9154417C151C30087C10E /* Default-568h@2x.png */,
+				47C9154517C151C30087C10E /* Default.png */,
+				47C9154617C151C30087C10E /* Default@2x.png */,
 				4792ED381769183500441527 /* Reachability */,
 				4792ED371768FE5600441527 /* Images */,
 				4792ECEB1768A7B800441527 /* Inner Life-Info.plist */,
 				4792ECEC1768A7B800441527 /* InfoPlist.strings */,
 				4792ECEF1768A7B900441527 /* main.m */,
 				4792ECF11768A7B900441527 /* Inner Life-Prefix.pch */,
-				4792ECF51768A7B900441527 /* Default.png */,
-				4792ECF71768A7B900441527 /* Default@2x.png */,
-				4792ECF91768A7B900441527 /* Default-568h@2x.png */,
 				47659DA1179BFB2A00F63185 /* common.h */,
 			);
 			name = "Supporting Files";
@@ -437,9 +437,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4792ECEE1768A7B800441527 /* InfoPlist.strings in Resources */,
-				4792ECF61768A7B900441527 /* Default.png in Resources */,
-				4792ECF81768A7B900441527 /* Default@2x.png in Resources */,
-				4792ECFA1768A7B900441527 /* Default-568h@2x.png in Resources */,
 				4792ED301768BD8600441527 /* InnerLife-iOS-57x57.png in Resources */,
 				4792ED321768BDA300441527 /* InnerLife-iOS-114x114.png in Resources */,
 				4792ED341768BDFB00441527 /* InnerLife-iOS-72x72.png in Resources */,
@@ -450,6 +447,9 @@
 				47F0794717A7F3B1003B922C /* section_current.png in Resources */,
 				47F0794817A7F3B1003B922C /* section_incomplete.png in Resources */,
 				47D7200417BD227E00F9FB14 /* ILEndView.xib in Resources */,
+				47C9154717C151C30087C10E /* Default-568h@2x.png in Resources */,
+				47C9154817C151C30087C10E /* Default.png in Resources */,
+				47C9154917C151C30087C10E /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
