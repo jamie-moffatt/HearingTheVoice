@@ -10,6 +10,7 @@
 #import "common.h"
 #import "ILUser.h"
 #import "ILAppManager.h"
+#import "ILQuestionFormViewController.h"
 
 @interface ILUserFormViewController ()
 
@@ -68,13 +69,11 @@
     NSString *userGender = [_segGender titleForSegmentAtIndex:_segGender.selectedSegmentIndex];
     userGender = [userGender uppercaseString];
     // TODO: Validate user input
-    // TODO: Save user to device
     
     NSString *userXML = [NSString stringWithFormat:@"<user code=\"%@\" age=\"%@\" gender=\"%@\" />", userCode, userAge, userGender];
     
     NSLog(@"Submitting UserXML: %@", userXML);
     
-    // TODO: Send user XML to the backend (check for acknowledgement and save new userID)
     NSURL *userAPI_URL = [NSURL URLWithString:USER_API_ENDPOINT];
     NSMutableURLRequest *URL_Request = [NSMutableURLRequest requestWithURL:userAPI_URL];
     [URL_Request setHTTPMethod:@"POST"];
@@ -99,6 +98,8 @@
              [ILAppManager setUser:newUser];
              NSLog(@"Set New User: %@", newUser);
              
+             _dashboardDelegate.needsJump = YES;
+             _dashboardDelegate.sessionToJumpTo = TRAIT_START_ID;
              [self dismissViewControllerAnimated:true completion:nil];
          }
      }];

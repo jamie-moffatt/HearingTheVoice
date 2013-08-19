@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ILSessionProgressBar.h"
+#import "ILNotificationClockView.h"
 
 @interface ILDashboardViewController : UIViewController
 
@@ -17,6 +18,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *sessionLabel;
 @property (weak, nonatomic) IBOutlet ILSessionProgressBar *sessionProgressBar;
+@property (weak, nonatomic) IBOutlet ILNotificationClockView *clock;
 
+@property BOOL needsJump;
+@property NSInteger sessionToJumpTo;
 
 @end

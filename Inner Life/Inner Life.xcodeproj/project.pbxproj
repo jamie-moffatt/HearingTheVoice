@@ -40,8 +40,11 @@
 		47C9154717C151C30087C10E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 47C9154417C151C30087C10E /* Default-568h@2x.png */; };
 		47C9154817C151C30087C10E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 47C9154517C151C30087C10E /* Default.png */; };
 		47C9154917C151C30087C10E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 47C9154617C151C30087C10E /* Default@2x.png */; };
+		47C9154C17C1584C0087C10E /* ILNotificationClockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C9154B17C1584C0087C10E /* ILNotificationClockView.m */; };
 		47D1E15D17BD2BBF00833F1A /* ILEndViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D1E15C17BD2BBF00833F1A /* ILEndViewController.m */; };
 		47D7200417BD227E00F9FB14 /* ILEndView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47D7200217BD227E00F9FB14 /* ILEndView.xib */; };
+		47E5603E17C2564D00FB4E9A /* ClockHand.png in Resources */ = {isa = PBXBuildFile; fileRef = 47E5603C17C2564D00FB4E9A /* ClockHand.png */; };
+		47E5603F17C2564D00FB4E9A /* ClockHand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 47E5603D17C2564D00FB4E9A /* ClockHand@2x.png */; };
 		47E733451792B9AC00F23708 /* ILDashboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E733441792B9AC00F23708 /* ILDashboard.xib */; };
 		47E733861793090400F23708 /* ILUserFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E733841793090400F23708 /* ILUserFormViewController.m */; };
 		47E733871793090400F23708 /* ILUserForm.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E733851793090400F23708 /* ILUserForm.xib */; };
@@ -122,9 +125,13 @@
 		47C9154417C151C30087C10E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		47C9154517C151C30087C10E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		47C9154617C151C30087C10E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		47C9154A17C1584C0087C10E /* ILNotificationClockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILNotificationClockView.h; sourceTree = "<group>"; };
+		47C9154B17C1584C0087C10E /* ILNotificationClockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILNotificationClockView.m; sourceTree = "<group>"; };
 		47D1E15B17BD2BBF00833F1A /* ILEndViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILEndViewController.h; sourceTree = "<group>"; };
 		47D1E15C17BD2BBF00833F1A /* ILEndViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILEndViewController.m; sourceTree = "<group>"; };
 		47D7200217BD227E00F9FB14 /* ILEndView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILEndView.xib; sourceTree = "<group>"; };
+		47E5603C17C2564D00FB4E9A /* ClockHand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ClockHand.png; sourceTree = "<group>"; };
+		47E5603D17C2564D00FB4E9A /* ClockHand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ClockHand@2x.png"; sourceTree = "<group>"; };
 		47E733441792B9AC00F23708 /* ILDashboard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILDashboard.xib; sourceTree = "<group>"; };
 		47E733831793090400F23708 /* ILUserFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUserFormViewController.h; sourceTree = "<group>"; };
 		47E733841793090400F23708 /* ILUserFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUserFormViewController.m; sourceTree = "<group>"; };
@@ -183,6 +190,8 @@
 				4750EC1017B1913F00470763 /* ILTimeSelectorDelegate.h */,
 				471270BD17BEBB25009CBB51 /* ILSessionProgressBar.h */,
 				471270BE17BEBB25009CBB51 /* ILSessionProgressBar.m */,
+				47C9154A17C1584C0087C10E /* ILNotificationClockView.h */,
+				47C9154B17C1584C0087C10E /* ILNotificationClockView.m */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -271,6 +280,8 @@
 		4792ED371768FE5600441527 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				47E5603C17C2564D00FB4E9A /* ClockHand.png */,
+				47E5603D17C2564D00FB4E9A /* ClockHand@2x.png */,
 				47F0794317A7F3B1003B922C /* section_complete.png */,
 				47F0794417A7F3B1003B922C /* section_current.png */,
 				47F0794517A7F3B1003B922C /* section_incomplete.png */,
@@ -450,6 +461,8 @@
 				47C9154717C151C30087C10E /* Default-568h@2x.png in Resources */,
 				47C9154817C151C30087C10E /* Default.png in Resources */,
 				47C9154917C151C30087C10E /* Default@2x.png in Resources */,
+				47E5603E17C2564D00FB4E9A /* ClockHand.png in Resources */,
+				47E5603F17C2564D00FB4E9A /* ClockHand@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -507,6 +520,7 @@
 				47FB34D017B25AAB00E989C9 /* ILSettingsViewController.m in Sources */,
 				47D1E15D17BD2BBF00833F1A /* ILEndViewController.m in Sources */,
 				471270BF17BEBB25009CBB51 /* ILSessionProgressBar.m in Sources */,
+				47C9154C17C1584C0087C10E /* ILNotificationClockView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

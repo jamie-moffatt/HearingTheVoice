@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ILDashboardViewController.h"
 
 @interface ILUserFormViewController : UIViewController <UITextFieldDelegate>
 
@@ -16,5 +17,7 @@
 
 - (IBAction)showUserCodeHelp: (id)sender;
 - (IBAction)submitUserDetails:(id)sender;
+
+@property ILDashboardViewController* dashboardDelegate;
 
 @end

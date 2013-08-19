@@ -49,16 +49,30 @@
         [ILAppManager setupNotifications];
     }
     
-    [ILAppManager setStartDate:[NSDate dateWithTimeInterval:-5*24*60*60 sinceDate:[NSDate date]]];
-    
     NSLog(@"%@", [ILAppManager userDefaultsToString]);
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (_needsJump)
+    {
+        _needsJump = NO;
+        ILQuestionFormViewController *questionFormView = [[ILQuestionFormViewController alloc] initWithNibName:nil bundle:nil];
+        questionFormView.currentSession = _sessionToJumpTo;
+        [self.navigationController pushViewController:questionFormView animated:YES];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     if (![ILAppManager userIsRegistered])
     {
         ILUserFormViewController *userFormView = [[ILUserFormViewController alloc] initWithNibName:@"ILUserForm" bundle:nil];
+        userFormView.dashboardDelegate = self;
         [self presentViewController:userFormView animated:YES completion:nil];
     }
     NSDate *startDate = [ILAppManager getStartDate];
