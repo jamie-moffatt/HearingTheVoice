@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:background="#9CA4BF" >
+        android:background="#9CA4BF"
+        tools:ignore="UselessParent" >
 
         <ScrollView
             android:layout_width="match_parent"
@@ -17,14 +18,14 @@
             <LinearLayout
                 android:id="@+id/linearLayoutEnd"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="7dp"
-                    android:text="Thank you for using Inner Life."
+                    android:text="@string/thank_you_for_using_inner_life_"
                     android:textColor="#FFFFFF"
                     android:textSize="25sp" />
 
@@ -36,7 +37,7 @@
                     android:drawablePadding="2dp"
                     android:gravity="center_vertical"
                     android:padding="7dp"
-                    android:text="You have now complete all 28 samples."
+                    android:text="@string/you_have_now_completed_all_28_samples_"
                     android:textColor="#FFFFFF" />
 
                 <TextView
@@ -48,7 +49,7 @@
                     android:drawablePadding="2dp"
                     android:gravity="center_vertical"
                     android:padding="7dp"
-                    android:text="Your average response time was --."
+                    android:text="@string/your_average_response_time_was_"
                     android:textColor="#FFFFFF" />
 
                 <TextView
@@ -58,7 +59,7 @@
                     android:layout_marginTop="5dp"
                     android:gravity="center_vertical"
                     android:padding="8dp"
-                    android:text="Thank you for your responses: you have now reached the end of the study.\nAll the data you provided will be stored anonymously and confidentially.\n\nIf you are happy for us to use your data in our research, select YES.\nIf you would prefer that we didn't, select NO."
+                    android:text="@string/thank_you_message"
                     android:textColor="#FFFFFF" />
 
                 <LinearLayout
@@ -75,7 +76,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_weight="1"
                         android:onClick="acceptDataSubmission"
-                        android:text="Yes" />
+                        android:text="@string/yes" />
 
                     <Button
                         android:id="@+id/btnCloseApp"
@@ -86,7 +87,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_weight="1"
                         android:onClick="declineDataSubmission"
-                        android:text="No" />
+                        android:text="@string/no" />
 
                 </LinearLayout>
             </LinearLayout>

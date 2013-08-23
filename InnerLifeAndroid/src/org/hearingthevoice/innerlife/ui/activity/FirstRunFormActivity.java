@@ -11,6 +11,7 @@ import java.util.Scanner;
 import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.R;
 import org.hearingthevoice.innerlife.io.web.QuestionAPI;
+import org.hearingthevoice.innerlife.model.Section;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -208,10 +209,10 @@ public class FirstRunFormActivity extends Activity
 
 			AppManager.setUserID(context, userID);
 			AppManager.setFirstRun(context, false);
-			AppManager.setNotificationTime(context, new SimpleDateFormat("yyyy-MM-dd").format((Calendar.getInstance()).getTime()));
+			AppManager.setNotificationTime(context, new SimpleDateFormat("yyyy-MM-dd", Locale.UK).format((Calendar.getInstance()).getTime()));
 			
 			Intent i = new Intent(context, MainActivity.class);
-			i.putExtra("sessionID", 28);
+			i.putExtra("sessionID", Section.START_TRAIT_SESSION_ID);
 			startActivity(i);
 			finish();
 		}

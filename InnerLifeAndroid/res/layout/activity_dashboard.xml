@@ -71,7 +71,7 @@
                     android:drawablePadding="2dp"
                     android:gravity="center_vertical"
                     android:padding="7dp"
-                    android:text="There are new questions available."
+                    android:text="Wait for the next notification."
                     android:textColor="#FFFFFF" />
 
                 <Button

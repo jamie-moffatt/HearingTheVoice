@@ -50,7 +50,7 @@ public class MainActivity extends Activity
 
 	private int section;
 	private int question;
-	private int session = 0;
+	private int sessionID = 0;
 
 	private RadioGroup rblResponses;
 	private LinearLayout sliderContainer;
@@ -73,6 +73,8 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		context = this;
+		
+		Log.d("MainActivity:77", "Opening question form with session " + getIntent().getExtras().getInt("sessionID"));
 		
 		txtQuestionHead = (TextView) findViewById(R.id.txt_question_header);
 		txtQuestionBody = (TextView) findViewById(R.id.txt_question_body);
@@ -123,21 +125,9 @@ public class MainActivity extends Activity
 			schedule = QuestionAPI.retrieveCachedSchedule(context);
 			
 			Bundle e = getIntent().getExtras();
-			session = e.getInt("sessionID");
+			sessionID = e.getInt("sessionID");
 
-			/*
-			int samples = AppManager.getPossibleSamplesSoFar(context);
-			session = (samples == 0) ? 28 : samples - 1; // if first sample, load trait questions
-			if (samples == 14) session = 29; // if half way through samples, load trait questions
-			if (samples  > 14) session = samples - 1;
-			if (samples == 28) session = 30; // if end of samples, load trait questions
-
-			// TODO this may have been causing last sessions to not be loaded due to trait questions
-			// adding extra sessions.
-			// if (session > schedule.numberOfSessions() - 1) session %= schedule.numberOfSessions();
-			*/
-
-			sections = schedule.filterBySession(sections, session);
+			sections = schedule.filterBySession(sections, sessionID);
 
 			manager = AppManager.getInstance();
 			manager.setSection(sections);
@@ -270,7 +260,7 @@ public class MainActivity extends Activity
 		manager.setResponseValues(responseValues);
 		
 		Intent i = new Intent(context, SummaryActivity.class);
-		i.putExtra("sessionID", session);
+		i.putExtra("sessionID", sessionID);
 		startActivity(i);
 		finish();
 	}

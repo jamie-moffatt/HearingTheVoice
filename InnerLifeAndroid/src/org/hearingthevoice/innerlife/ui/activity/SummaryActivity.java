@@ -53,19 +53,22 @@ public class SummaryActivity extends Activity
 
 		context = this;
 		activity = this;
-		
+
 		Bundle e = getIntent().getExtras();
 		sessionID = e.getInt("sessionID");
 
 		manager = AppManager.getInstance();
-		Log.d("MANAGER", "" + (manager == null));
 
 		List<Section> session = manager.getSection();
 		List<Question> questions = new ArrayList<Question>();
 
 		for (Section section : session)
+		{
 			for (Question q : section.getQuestions())
+			{
 				questions.add(q);
+			}
+		}
 
 		questionListView = (ListView) findViewById(R.id.questionListView);
 		questionListView.setAdapter(new QuestionListAdapter(context, R.layout.question_list_row_layout, questions,
@@ -90,14 +93,6 @@ public class SummaryActivity extends Activity
 	{
 		try
 		{
-//			int samples = AppManager.getPossibleSamplesSoFar(context);
-//			int sessionID = (samples == 0) ? 28 : samples - 1; // if first sample, load trait questions
-//			if (samples == 14) sessionID = 29; // if half way through samples, load trait questions
-//			if (samples  > 14) sessionID = samples - 1;
-//			if (samples == 28) sessionID = 30; // if end of samples, load trait questions
-//
-//			sessionID++; // session IDs not zero indexed in database
-
 			String notificationTimeStored = AppManager.getNotificationTime(context);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
 			Calendar notificationTime = Calendar.getInstance();
@@ -114,7 +109,7 @@ public class SummaryActivity extends Activity
 			Calendar submissionTime = Calendar.getInstance();
 			String extension = new SimpleDateFormat("yyyyMMddHHmmss", Locale.UK).format(submissionTime.getTime());
 
-			if (sessionID < 28)
+			if (sessionID < Section.START_TRAIT_SESSION_ID)
 				AppManager.recordSampleComplete(context,
 						new SimpleDateFormat("yyyy-MM-dd", Locale.UK).format(submissionTime.getTime()));
 
@@ -127,7 +122,7 @@ public class SummaryActivity extends Activity
 
 			str.append("<submission ");
 			str.append("userID=\"" + AppManager.getUserID(context) + "\" ");
-			str.append("sessionID=\"" + (sessionID + 1) + "\" ");
+			str.append("sessionID=\"" + (sessionID) + "\" ");
 
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
 
@@ -164,33 +159,56 @@ public class SummaryActivity extends Activity
 					submissionProgressDialog.dismiss();
 				}
 				Toast.makeText(activity, "No Connection. Saving responses.", Toast.LENGTH_LONG).show();
-
-				if (sessionID == 30)
-				{
-					AppManager.setStopNotifications(context, true);
-					finish();
-					Intent i = new Intent(context, EndActivity.class);
-					startActivity(i);
-				}
-				else if (sessionID == 13)
-				{
-					Intent i = new Intent(context, MainActivity.class);
-					i.putExtra("sessionID", 29);
-					startActivity(i);
-					finish();
-				}
-				else if (sessionID == 27)
-				{
-					Intent i = new Intent(context, MainActivity.class);
-					i.putExtra("sessionID", 30);
-					startActivity(i);
-					finish();
-				}
+				commonEndBehaviour();
 			}
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * This runs regardless of whether the submission is successful or not
+	 */
+	private void commonEndBehaviour()
+	{
+		if (submissionProgressDialog != null && submissionProgressDialog.isShowing())
+		{
+			submissionProgressDialog.dismiss();
+		}
+
+		AppManager.setGotNotification(context, false);
+		AppManager.setNotificationTime(context, null);
+
+		manager.clearSample();
+
+		if (sessionID == 14)
+		{
+			Intent i = new Intent(context, MainActivity.class);
+			i.putExtra("sessionID", Section.MIDDLE_TRAIT_SESSION_ID);
+			startActivity(i);
+			finish();
+		}
+		else if (sessionID == 28)
+		{
+			Intent i = new Intent(context, MainActivity.class);
+			i.putExtra("sessionID", Section.END_TRAIT_SESSION_ID);
+			startActivity(i);
+			finish();
+		}
+		else if (sessionID == Section.END_TRAIT_SESSION_ID)
+		{
+			AppManager.setStopNotifications(context, true);
+			Intent i = new Intent(context, EndActivity.class);
+			startActivity(i);
+			finish();
+		}
+		else
+		{
+			Intent i = new Intent(context, DashboardActivity.class);
+			startActivity(i);
+			finish();
 		}
 	}
 
@@ -206,9 +224,9 @@ public class SummaryActivity extends Activity
 				return true;
 
 			}
-			catch (IOException e1)
+			catch (IOException ex)
 			{
-				e1.printStackTrace();
+				ex.printStackTrace();
 				return false;
 			}
 		}
@@ -219,33 +237,7 @@ public class SummaryActivity extends Activity
 			if (postedSuccessfully)
 			{
 				Toast.makeText(activity, "Responses submitted.", Toast.LENGTH_LONG).show();
-				Log.d("RESPONSES", "deleting file");
-				context.deleteFile(filename);
-
-				AppManager.setGotNotification(context, false);
-				AppManager.setNotificationTime(context, null);
-
-				if (submissionProgressDialog != null && submissionProgressDialog.isShowing())
-				{
-					submissionProgressDialog.dismiss();
-				}
-
-				manager.clearSample();
-
-				int sample = AppManager.getPossibleSamplesSoFar(context);
-
-				if (sample == 28)
-				{
-					AppManager.setStopNotifications(context, true);
-					finish();
-					Intent i = new Intent(context, EndActivity.class);
-					startActivity(i);
-				}
-				else
-				{
-					Intent i = new Intent(context, DashboardActivity.class);
-					startActivity(i);
-				}
+				commonEndBehaviour();
 			}
 			else
 			{

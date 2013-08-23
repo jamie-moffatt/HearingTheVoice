@@ -50,8 +50,8 @@ public class DashboardActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard);
-
 		context = this;
+
 		btnAnswerTestQuestions = (Button) findViewById(R.id.btnAnswerTestQuestions);
 		btnTestNotification = (Button) findViewById(R.id.btnTestNotification);
 		txtSamplesToday = (TextView) findViewById(R.id.txtSamplesToday);
@@ -59,9 +59,7 @@ public class DashboardActivity extends Activity
 		txtResponseTime = (TextView) findViewById(R.id.txtResponseTime);
 		txtQuestionsAvailable = (TextView) findViewById(R.id.txtQuestionsAvailable);
 
-		txtQuestionsAvailable.setText("Downloading Questions.");
-		txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_download,
-				0, 0, 0);
+		txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_download, 0, 0, 0);
 
 		btnAnswerTestQuestions.setEnabled(false);
 
@@ -69,40 +67,39 @@ public class DashboardActivity extends Activity
 				"Currently downloading questions. Please wait...", true);
 
 		boolean questionsCached = areQuestionsCached();
-		boolean scheduleCached  = isScheduleCached();
+		boolean scheduleCached = isScheduleCached();
 
 		if (scheduleCached && questionsCached)
 		{
 			if (progressDialog != null) progressDialog.dismiss();
-			if (AppManager.getSamplesCompleteToday(context) < 2
-					&& AppManager.getGotNotification(context))
+			if (AppManager.getSamplesCompleteToday(context) < 2 && AppManager.getGotNotification(context))
 			{
 				txtQuestionsAvailable.setText("New Questions Available.");
-				txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
-						R.drawable.action_help, 0, 0, 0);
+				txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
 				btnAnswerTestQuestions.setEnabled(true);
 			}
 		}
 
-		if (!scheduleCached ) (new ScheduleDownloadTask()).execute();
-		if (!questionsCached) (new QuestionDownloadTask()).execute();
+		if (!scheduleCached) (new ScheduleDownloadTask()).execute();
+		if (!questionsCached)
+		{
+			txtQuestionsAvailable.setText("Downloading Questions.");
+			(new QuestionDownloadTask()).execute();
+		}
 
 		int samplesCompletedToday = AppManager.getSamplesCompleteToday(context);
 		txtSamplesToday.setText("You have submitted " + samplesCompletedToday + " samples today.");
 		if (samplesCompletedToday == 1)
-			txtSamplesToday.setText("You have submitted " + samplesCompletedToday
-					+ " sample today.");
+			txtSamplesToday.setText("You have submitted " + samplesCompletedToday + " sample today.");
 		if (samplesCompletedToday < 1) txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(
 				R.drawable.action_empty_star, 0, 0, 0);
-		else if (samplesCompletedToday == 1) txtSamplesToday
-				.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_half_star, 0, 0, 0);
-		else txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_full_star,
-				0, 0, 0);
+		else if (samplesCompletedToday == 1) txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(
+				R.drawable.action_half_star, 0, 0, 0);
+		else txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_full_star, 0, 0, 0);
 
 		int numResponses = AppManager.getSamplesComplete(context);
 		txtNumResponses.setText("You have made " + numResponses + " responses so far.");
-		if (numResponses == 1)
-			txtNumResponses.setText("You have made " + numResponses + " response so far.");
+		if (numResponses == 1) txtNumResponses.setText("You have made " + numResponses + " response so far.");
 
 		String avgResponseTime = AppManager.getAverageResponseTime(context);
 		txtResponseTime.setText("Your average response time is " + avgResponseTime + ".");
@@ -150,8 +147,7 @@ public class DashboardActivity extends Activity
 				stackBuilder.addParentStack(DashboardActivity.class);
 				// Adds the Intent that starts the Activity to the top of the stack
 				stackBuilder.addNextIntent(clickIntent);
-				PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
-						PendingIntent.FLAG_UPDATE_CURRENT);
+				PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 				nb.setContentIntent(resultPendingIntent);
 				nb.setAutoCancel(true);
 
@@ -196,7 +192,7 @@ public class DashboardActivity extends Activity
 	{
 		String[] files = context.fileList();
 		boolean questionsCached = false;
-		
+
 		for (String file : files)
 		{
 			if (file.contains("questions"))
@@ -207,12 +203,12 @@ public class DashboardActivity extends Activity
 		}
 		return questionsCached;
 	}
-	
+
 	private boolean isScheduleCached()
 	{
 		String[] files = context.fileList();
 		boolean scheduleCached = false;
-		
+
 		for (String file : files)
 		{
 			if (file.contains("schedule"))
@@ -282,18 +278,15 @@ public class DashboardActivity extends Activity
 			if (scheduleDownloaded && questionsDownloaded)
 			{
 				if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
-				if (AppManager.getSamplesCompleteToday(context) < 2
-						&& AppManager.getGotNotification(context))
+				if (AppManager.getSamplesCompleteToday(context) < 2 && AppManager.getGotNotification(context))
 				{
 					txtQuestionsAvailable.setText("New Questions Available.");
-					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
-							R.drawable.action_help, 0, 0, 0);
+					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
 					btnAnswerTestQuestions.setEnabled(true);
 				}
 				else
 				{
-					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
-							R.drawable.action_help, 0, 0, 0);
+					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
 					txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
 					if (!AppManager.getGotNotification(context))
 						txtQuestionsAvailable.setText("Wait for the next notification.");
@@ -330,18 +323,15 @@ public class DashboardActivity extends Activity
 			{
 				if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
 
-				if (AppManager.getSamplesCompleteToday(context) < 2
-						&& AppManager.getGotNotification(context))
+				if (AppManager.getSamplesCompleteToday(context) < 2 && AppManager.getGotNotification(context))
 				{
 					txtQuestionsAvailable.setText("New Questions Available.");
-					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
-							R.drawable.action_help, 0, 0, 0);
+					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
 					btnAnswerTestQuestions.setEnabled(true);
 				}
 				else
 				{
-					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(
-							R.drawable.action_help, 0, 0, 0);
+					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
 					txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
 					if (!AppManager.getGotNotification(context))
 						txtQuestionsAvailable.setText("Wait for the next notification.");

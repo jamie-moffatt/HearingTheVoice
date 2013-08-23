@@ -18,6 +18,7 @@ public class Schedule
 	
 	public List<Section> filterBySession(List<Section> sections, int sessionID)
 	{
+		sessionID--;
 		List<Long> session = getSession(sessionID);
 		
 		List<Section> _sections = new ArrayList<Section>();

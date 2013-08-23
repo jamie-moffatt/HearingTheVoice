@@ -7,6 +7,10 @@ import android.util.Pair;
 
 public class Section
 {
+	public static final int START_TRAIT_SESSION_ID = 29;
+	public static final int MIDDLE_TRAIT_SESSION_ID = 30;
+	public static final int END_TRAIT_SESSION_ID = 31;
+	
 	long sectionID;
 	String name;
 	String description;
