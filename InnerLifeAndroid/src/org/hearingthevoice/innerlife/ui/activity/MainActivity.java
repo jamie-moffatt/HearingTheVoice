@@ -268,8 +268,9 @@ public class MainActivity extends Activity
 		manager.setResponseIDs(responseIDs);
 		manager.setResponseStrings(responseStrings);
 		manager.setResponseValues(responseValues);
-
+		
 		Intent i = new Intent(context, SummaryActivity.class);
+		i.putExtra("sessionID", session);
 		startActivity(i);
 		finish();
 	}

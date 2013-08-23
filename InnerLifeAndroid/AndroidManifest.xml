@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.hearingthevoice.innerlife"
     android:versionCode="1"
-    android:versionName="1.0.110-c025c46" xmlns:tools="http://schemas.android.com/tools">
+    android:versionName="1.0.186" xmlns:tools="http://schemas.android.com/tools">
 
     <uses-sdk
         android:minSdkVersion="8"
