@@ -81,7 +81,8 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="Answer Questions" />
+                    android:text="Answer Questions"
+                    android:onClick="answerQuestions__" />
 
                 <Button
                     android:id="@+id/btnTestNotification"
@@ -91,7 +92,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="5dp"
                     android:text="Test Notification"
-                    android:visibility="visible" />
+                    android:onClick="testNotification__" />
 
                 <Button
                     android:id="@+id/btnDisplayStoredData"
@@ -99,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:text="Debug Menu"
-                    android:visibility="visible" />
+                    android:onClick="debugMenu__" />
             </LinearLayout>
         </ScrollView>
     </FrameLayout>

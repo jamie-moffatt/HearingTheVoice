@@ -61,8 +61,8 @@ public class AlarmReceiver extends BroadcastReceiver
 			String notificationTime = sdf.format(now.getTime());
 			AppManager.setNotificationTime(context, notificationTime);
 
-			int notificationsSoFar = AppManager.getPossibleSamplesSoFar(context);
-			AppManager.setPossibleSamplesSoFar(context, notificationsSoFar + 1);
+			int notificationsSoFar = AppManager.getDebugSessionID(context);
+			AppManager.setDebugSessionID(context, notificationsSoFar + 1);
 
 		}
 	}

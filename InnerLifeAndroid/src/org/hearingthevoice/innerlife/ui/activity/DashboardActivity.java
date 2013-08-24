@@ -1,12 +1,13 @@
 package org.hearingthevoice.innerlife.ui.activity;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 import org.hearingthevoice.innerlife.AppManager;
+import org.hearingthevoice.innerlife.Common;
 import org.hearingthevoice.innerlife.R;
+import org.hearingthevoice.innerlife.TimeUtils;
 import org.hearingthevoice.innerlife.io.web.QuestionAPI;
 import org.hearingthevoice.innerlife.model.Schedule;
 import org.hearingthevoice.innerlife.model.Section;
@@ -33,6 +34,7 @@ public class DashboardActivity extends Activity
 {
 	private Button btnAnswerTestQuestions;
 	private Button btnTestNotification;
+	private Button btnOpenDebugMenu;
 	private TextView txtSamplesToday;
 	private TextView txtNumResponses;
 	private TextView txtResponseTime;
@@ -54,6 +56,7 @@ public class DashboardActivity extends Activity
 
 		btnAnswerTestQuestions = (Button) findViewById(R.id.btnAnswerTestQuestions);
 		btnTestNotification = (Button) findViewById(R.id.btnTestNotification);
+		btnOpenDebugMenu = (Button) findViewById(R.id.btnDisplayStoredData);
 		txtSamplesToday = (TextView) findViewById(R.id.txtSamplesToday);
 		txtNumResponses = (TextView) findViewById(R.id.txtResponses);
 		txtResponseTime = (TextView) findViewById(R.id.txtResponseTime);
@@ -62,25 +65,46 @@ public class DashboardActivity extends Activity
 		txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_download, 0, 0, 0);
 
 		btnAnswerTestQuestions.setEnabled(false);
-
-		progressDialog = ProgressDialog.show(context, "Downloading Questions",
-				"Currently downloading questions. Please wait...", true);
+		
+		if (!Common.DEBUG)
+		{
+			btnTestNotification.setVisibility(View.GONE);
+			btnOpenDebugMenu.setVisibility(View.GONE);
+		}
 
 		boolean questionsCached = areQuestionsCached();
 		boolean scheduleCached = isScheduleCached();
 
 		if (scheduleCached && questionsCached)
 		{
-			if (progressDialog != null) progressDialog.dismiss();
-			if (AppManager.getSamplesCompleteToday(context) < 2 && AppManager.getGotNotification(context))
+			if (Common.DEBUG)
 			{
 				txtQuestionsAvailable.setText("New Questions Available.");
 				txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
 				btnAnswerTestQuestions.setEnabled(true);
+				btnAnswerTestQuestions.setText("Answer Session: " + AppManager.getDebugSessionID(context));
+			}
+			else
+			{
+				if (AppManager.getSamplesCompleteToday(context) < 2 && AppManager.getGotNotification(context))
+				{
+					txtQuestionsAvailable.setText("New Questions Available.");
+					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
+					btnAnswerTestQuestions.setEnabled(true);
+				}
 			}
 		}
 
-		if (!scheduleCached) (new ScheduleDownloadTask()).execute();
+		if (!scheduleCached || !questionsCached)
+		{
+			progressDialog = ProgressDialog.show(context, "Downloading Questions",
+					"Currently downloading questions. Please wait...", true);
+		}
+
+		if (!scheduleCached)
+		{
+			(new ScheduleDownloadTask()).execute();
+		}
 		if (!questionsCached)
 		{
 			txtQuestionsAvailable.setText("Downloading Questions.");
@@ -104,88 +128,38 @@ public class DashboardActivity extends Activity
 		String avgResponseTime = AppManager.getAverageResponseTime(context);
 		txtResponseTime.setText("Your average response time is " + avgResponseTime + ".");
 
-		if (samplesCompletedToday > 1 && !AppManager.getGotNotification(context))
+		if (!Common.DEBUG)
 		{
-			txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
-			if (!AppManager.getGotNotification(context))
-				txtQuestionsAvailable.setText("Wait for the next notification.");
-			btnAnswerTestQuestions.setEnabled(false);
+			if (samplesCompletedToday > 1 && !AppManager.getGotNotification(context))
+			{
+				txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
+				if (!AppManager.getGotNotification(context))
+					txtQuestionsAvailable.setText("Wait for the next notification.");
+				btnAnswerTestQuestions.setEnabled(false);
+			}
 		}
-
-		btnAnswerTestQuestions.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				Intent i = new Intent(v.getContext(), MainActivity.class);
-				i.putExtra("sessionID", AppManager.getPossibleSamplesSoFar(context));
-				startActivity(i);
-				finish();
-			}
-		});
-
-		btnTestNotification.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				NotificationManager nm;
-				nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-				NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
-				nb.setContentTitle("New Questions Available");
-				nb.setContentText("Click to participate.");
-				nb.setSmallIcon(R.drawable.next_item);
-
-				Intent clickIntent = new Intent(context, DashboardActivity.class);
-
-				// The stack builder object will contain an artificial back stack for the
-				// started Activity.
-				// This ensures that navigating backward from the Activity leads out of
-				// your application to the Home screen.
-				TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-				// Adds the back stack for the Intent (but not the Intent itself)
-				stackBuilder.addParentStack(DashboardActivity.class);
-				// Adds the Intent that starts the Activity to the top of the stack
-				stackBuilder.addNextIntent(clickIntent);
-				PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-				nb.setContentIntent(resultPendingIntent);
-				nb.setAutoCancel(true);
-
-				nb.setSound(Uri.parse("content://settings/system/notification_sound"));
-
-				nm.notify(0, nb.build());
-
-				AppManager.setGotNotification(context, true);
-				Calendar now = Calendar.getInstance();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
-				String notificationTime = sdf.format(now.getTime());
-				AppManager.setNotificationTime(context, notificationTime);
-
-				int notificationsSoFar = AppManager.getPossibleSamplesSoFar(context);
-				AppManager.setPossibleSamplesSoFar(context, notificationsSoFar + 1);
-			}
-		});
-
-		Button btnDisplayStoredData = (Button) findViewById(R.id.btnDisplayStoredData);
-		btnDisplayStoredData.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				Intent i = new Intent(context, DebugActivity.class);
-				startActivity(i);
-			}
-		});
 
 		// Perform first-time run actions
 		if (AppManager.isFirstRun(context))
 		{
+			AppManager.setStartDate(context, Calendar.getInstance(Locale.UK).getTime());
 			Intent startServiceIntent = new Intent(context, BootService.class);
 			context.startService(startServiceIntent);
 			Intent intent = new Intent(context, FirstRunFormActivity.class);
 			startActivity(intent);
 			finish();
 		}
+	}
+
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		if (progressDialog != null && progressDialog.isShowing())
+		{
+			progressDialog.cancel();
+		}
+
 	}
 
 	private boolean areQuestionsCached()
@@ -220,21 +194,13 @@ public class DashboardActivity extends Activity
 		return scheduleCached;
 	}
 
-	@Override
-	public void onDestroy()
-	{
-		super.onDestroy();
-		if (progressDialog != null) if (progressDialog.isShowing())
-		{
-			progressDialog.cancel();
-		}
-
-	}
+	// =============================================================================================
+	// Menu Creation
+	// =============================================================================================
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_dashboard, menu);
 		return true;
 	}
@@ -251,6 +217,59 @@ public class DashboardActivity extends Activity
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	// =============================================================================================
+	// Button Callbacks
+	// =============================================================================================
+
+	public void answerQuestions__(View v)
+	{
+		Intent i = new Intent(context, MainActivity.class);
+		if (Common.DEBUG)
+		{
+			i.putExtra("sessionID", AppManager.getDebugSessionID(context));
+		}
+		else
+		{
+			i.putExtra("sessionID", TimeUtils.getSessionIDBasedOnTime(AppManager.getStartDate(context)));
+		}
+		startActivity(i);
+		finish();
+	}
+
+	public void testNotification__(View v)
+	{
+		NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+		nb.setContentTitle("New Questions Available");
+		nb.setContentText("Click to participate.");
+		nb.setSmallIcon(R.drawable.next_item);
+
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+		stackBuilder.addParentStack(DashboardActivity.class);
+		stackBuilder.addNextIntent(new Intent(context, DashboardActivity.class));
+		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+		nb.setContentIntent(resultPendingIntent);
+		nb.setAutoCancel(true);
+		nb.setSound(Uri.parse("content://settings/system/notification_sound"));
+		nm.notify(0, nb.build());
+
+		AppManager.setGotNotification(context, true);
+		AppManager.setNotificationTime(context, TimeUtils.serializeTime(Calendar.getInstance(Locale.UK).getTime()));
+
+		int sessionID = AppManager.getDebugSessionID(context);
+		AppManager.setDebugSessionID(context, sessionID + 1);
+	}
+
+	public void debugMenu__(View v)
+	{
+		startActivity(new Intent(context, DebugActivity.class));
+	}
+
+	// =============================================================================================
+	// Asynchronous Tasks
+	// =============================================================================================
 
 	private class ScheduleDownloadTask extends AsyncTask<String, Integer, Schedule>
 	{

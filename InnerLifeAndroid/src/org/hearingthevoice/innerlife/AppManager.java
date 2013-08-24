@@ -3,6 +3,7 @@ package org.hearingthevoice.innerlife;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -218,7 +219,7 @@ public class AppManager extends Application
 	public static String getUserCode(Context context)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-		return preferences.getString(USER_CODE, "1");
+		return preferences.getString(USER_CODE, "------");
 	}
 
 	public static void setUserAge(Context context, int userAge)
@@ -237,7 +238,6 @@ public class AppManager extends Application
 		return preferences.getInt(USER_AGE, 0);
 	}
 
-	// userGender could be an enum, but that seems like overkill
 	public static void setUserGender(Context context, String userGender)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
@@ -386,13 +386,13 @@ public class AppManager extends Application
 		editor.commit();
 	}
 
-	public static int getPossibleSamplesSoFar(Context context)
+	public static int getDebugSessionID(Context context)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-		return preferences.getInt(POSSIBLE_SAMPLES_SO_FAR, 0);
+		return preferences.getInt(POSSIBLE_SAMPLES_SO_FAR, 1);
 	}
 
-	public static void setPossibleSamplesSoFar(Context context, int samples)
+	public static void setDebugSessionID(Context context, int samples)
 	{
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		Editor editor = preferences.edit();
@@ -495,5 +495,30 @@ public class AppManager extends Application
 	    editor.putBoolean(STOP_NOTIFICATIONS, value);
 	    editor.commit();
 	}
+	
+	public static final String START_DATE = "start_date_key";
 
+	public static Date getStartDate(Context context)
+	{
+	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+	    String sdate = preferences.getString(START_DATE, null);
+	    
+	    if (sdate != null)
+		{
+			return TimeUtils.deserializeTime(sdate);
+		}
+	    else
+	    {
+	    	return Calendar.getInstance(Locale.UK).getTime();
+	    }
+	}
+
+	public static void setStartDate(Context context, Date date)
+	{
+	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+	    Editor editor = preferences.edit();
+	    editor.putString(START_DATE, TimeUtils.serializeTime(date));
+	    editor.commit();
+	}
+	
 }

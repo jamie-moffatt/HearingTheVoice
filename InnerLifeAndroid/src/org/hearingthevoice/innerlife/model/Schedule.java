@@ -14,11 +14,10 @@ public class Schedule
 	
 	public void addSession(List<Long> session) { sessions.add(session); }
 	
-	public List<Long> getSession(int sessionID) { return sessions.get(sessionID); }
+	public List<Long> getSession(int sessionID) { return sessions.get(sessionID - 1); }
 	
 	public List<Section> filterBySession(List<Section> sections, int sessionID)
 	{
-		sessionID--;
 		List<Long> session = getSession(sessionID);
 		
 		List<Section> _sections = new ArrayList<Section>();
