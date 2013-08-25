@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "ILDataSingleton.h"
 #import "ILQuestionProgressBar.h"
+#import "ILDashboardViewController.h"
 
-@interface ILQuestionFormViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ILQuestionFormViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 {
     @private ILDataSingleton *data;
 }
@@ -22,6 +23,8 @@
 - (void)nextButton:(id)sender;
 
 @property NSInteger currentSession;
+
+@property ILDashboardViewController* dashboard;
 
 @end
 

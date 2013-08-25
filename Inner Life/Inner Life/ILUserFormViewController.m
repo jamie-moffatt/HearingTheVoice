@@ -98,8 +98,8 @@
              [ILAppManager setUser:newUser];
              NSLog(@"Set New User: %@", newUser);
              
-             _dashboardDelegate.needsJump = YES;
-             _dashboardDelegate.sessionToJumpTo = TRAIT_START_ID;
+             _dashboard.needsJump = YES;
+             _dashboard.sessionToJumpTo = TRAIT_START_ID;
              [self dismissViewControllerAnimated:true completion:nil];
          }
      }];

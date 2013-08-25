@@ -18,6 +18,6 @@
 - (IBAction)showUserCodeHelp: (id)sender;
 - (IBAction)submitUserDetails:(id)sender;
 
-@property ILDashboardViewController* dashboardDelegate;
+@property ILDashboardViewController* dashboard;
 
 @end

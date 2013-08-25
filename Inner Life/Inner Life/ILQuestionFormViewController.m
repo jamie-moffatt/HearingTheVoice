@@ -182,7 +182,12 @@
                      [ILAppManager setSessionsSubmitted:submitted];
                  }
                  
-                 [self.navigationController popViewControllerAnimated:YES];
+                [self commonEndBehaviour];
+             }
+             else
+             {
+                 UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Failed Connection." message:@"The submission didn't reach the database, please ensure that you are connected to the Internet and press the sync button on the dashboard." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+                 [errorAlert show];
              }
          }];
         return;
@@ -205,6 +210,31 @@
     NSLog(@"Question Index: %d", data.currentQuestion);
     
     [self.tableView reloadData];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self commonEndBehaviour];
+}
+
+- (void)commonEndBehaviour
+{
+    if (_currentSession == 14)
+    {
+        _dashboard.needsJump = YES;
+        _dashboard.sessionToJumpTo = TRAIT_MIDDLE_ID;
+        [self.navigationController popViewControllerAnimated:NO];
+    }
+    else if (_currentSession == 28)
+    {
+        _dashboard.needsJump = YES;
+        _dashboard.sessionToJumpTo = TRAIT_END_ID;
+        [self.navigationController popViewControllerAnimated:NO];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)previousButton: (UIButton *)sender

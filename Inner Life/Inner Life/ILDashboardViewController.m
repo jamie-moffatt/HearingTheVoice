@@ -72,7 +72,7 @@
     if (![ILAppManager userIsRegistered])
     {
         ILUserFormViewController *userFormView = [[ILUserFormViewController alloc] initWithNibName:@"ILUserForm" bundle:nil];
-        userFormView.dashboardDelegate = self;
+        userFormView.dashboard = self;
         [self presentViewController:userFormView animated:YES completion:nil];
     }
     NSDate *startDate = [ILAppManager getStartDate];
@@ -119,7 +119,8 @@
     NSInteger session = [ILTimeUtils getSessionByRegistrationDate:[ILAppManager getStartDate]];
     if (session == -1) return;
     ILQuestionFormViewController *questionFormView = [[ILQuestionFormViewController alloc] initWithNibName:nil bundle:nil];
-    questionFormView.currentSession = session;
+    questionFormView.currentSession = 14;
+    questionFormView.dashboard = self;
     [self.navigationController pushViewController:questionFormView animated:YES];
 }
 
