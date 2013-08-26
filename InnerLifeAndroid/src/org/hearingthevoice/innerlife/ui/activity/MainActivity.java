@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.hearingthevoice.innerlife.AppManager;
+import org.hearingthevoice.innerlife.Common;
 import org.hearingthevoice.innerlife.R;
 import org.hearingthevoice.innerlife.io.web.QuestionAPI;
 import org.hearingthevoice.innerlife.model.Question;
@@ -82,6 +83,11 @@ public class MainActivity extends Activity
 		sbrScaleResponse = (SeekBar) findViewById(R.id.sbr_scale_response);
 		sliderContainer = (LinearLayout) findViewById(R.id.slider_container);
 		txtSliderValue = (TextView) findViewById(R.id.txt_slider_value);
+		
+		if (!Common.DEBUG)
+		{
+			txtQuestionHead.setVisibility(View.GONE);
+		}
 
 		String notificationTimeStored = AppManager.getNotificationTime(context);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.UK);
@@ -364,7 +370,7 @@ public class MainActivity extends Activity
 	 */
 	private void loadQuestion()
 	{
-		txtQuestionHead.setText("Section " + sections.get(section).getSectionID()
+		txtQuestionHead.setText("Session " + sessionID + ", Section " + sections.get(section).getSectionID()
 			+ ", Question " + questions.get(question).getNumber());
 		
 		if (sections.get(section).getDescription().length() == 0)
