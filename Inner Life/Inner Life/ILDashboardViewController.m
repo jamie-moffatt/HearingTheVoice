@@ -15,6 +15,7 @@
 
 #import "ILAppManager.h"
 #import "ILTimeUtils.h"
+#import "common.h"
 
 @interface ILDashboardViewController ()
 
@@ -65,6 +66,41 @@
     }
 }
 
+- (void)updateSessionProgressBar
+{
+    NSDate *startDate = [ILAppManager getStartDate];
+    NSInteger recommendedSession = [ILTimeUtils getSessionByRegistrationDate:startDate];
+    _sessionLabel.text = [NSString stringWithFormat:@"%d", recommendedSession];
+    
+    NSMutableArray *xs = [[NSMutableArray alloc] initWithCapacity:28];
+    for (int i = 0; i < 28; i++)
+    {
+        NSNumber* sessionIsComplete = [[ILAppManager getSessionsCompleted] objectForKey:[NSString stringWithFormat:@"%d", i+1]];
+        NSNumber* sessionIsSubmitted = [[ILAppManager getSessionsSubmitted] objectForKey:[NSString stringWithFormat:@"%d", i+1]];
+        
+        if (i + 1 > recommendedSession)
+        {
+            [xs addObject:[NSNumber numberWithInt:EMPTY]];
+        }
+        else
+        {
+            if ([sessionIsComplete boolValue] && [sessionIsSubmitted boolValue])
+            {
+                [xs addObject:[NSNumber numberWithInt:BLUE]];
+            }
+            else if ([sessionIsComplete boolValue])
+            {
+                [xs addObject:[NSNumber numberWithInt:PURPLE]];
+            }
+            else
+            {
+                [xs addObject:[NSNumber numberWithInt:GREY]];
+            }
+        }
+    }
+    [_sessionProgressBar setSegmentMap:xs];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -75,31 +111,8 @@
         userFormView.dashboard = self;
         [self presentViewController:userFormView animated:YES completion:nil];
     }
-    NSDate *startDate = [ILAppManager getStartDate];
-    NSInteger recommendedSession = [ILTimeUtils getSessionByRegistrationDate:startDate];
-    _sessionLabel.text = [NSString stringWithFormat:@"%d", recommendedSession];
     
-    NSMutableArray *xs = [[NSMutableArray alloc] initWithCapacity:28];
-    for (int i = 0; i < 28; i++)
-    {
-        NSNumber* sessionIsComplete = [[ILAppManager getSessionsCompleted] objectForKey:[NSString stringWithFormat:@"%d", i+1]];
-        if (i + 1 <= recommendedSession)
-        {
-            if ([sessionIsComplete boolValue])
-            {
-                [xs addObject:[NSNumber numberWithInt:1]];
-            }
-            else
-            {
-                [xs addObject:[NSNumber numberWithInt:2]];
-            }
-        }
-        else
-        {
-            [xs addObject:[NSNumber numberWithInt:0]];
-        }
-    }
-    [_sessionProgressBar setSegmentMap:xs];
+    [self updateSessionProgressBar];
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,6 +140,70 @@
 - (IBAction)testNotification:(id)sender
 {
     [ILAppManager setupNotifications];
+}
+
+- (IBAction)sync:(UIButton *)sender
+{
+    for (int i = 1; i <= 28; i++)
+    {
+        NSNumber* sessionIsComplete = [[ILAppManager getSessionsCompleted] objectForKey:[NSString stringWithFormat:@"%d", i]];
+        NSNumber* sessionIsSubmitted = [[ILAppManager getSessionsSubmitted] objectForKey:[NSString stringWithFormat:@"%d", i]];
+        
+        if ([sessionIsComplete boolValue] && ![sessionIsSubmitted boolValue])
+        {
+            NSFileManager* fm = [[NSFileManager alloc] init];
+            NSURL* docsurl = [fm URLForDirectory:NSDocumentDirectory
+                                        inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:nil];
+            NSURL* submissionFolder = [docsurl URLByAppendingPathComponent:@"ILSubmissions"];
+            
+            NSError* error = nil;
+            NSString* responseXML = [NSString stringWithContentsOfURL:[submissionFolder URLByAppendingPathComponent:[NSString stringWithFormat:@"submission%d.xml", i]] encoding:NSUTF8StringEncoding error:&error];
+            
+            if (!error)
+            {
+                NSLog(@"Submitting ResponseXML: %@", responseXML);
+                
+                NSURL *responseAPI_URL = [NSURL URLWithString:RESPONSE_API_ENDPOINT];
+                NSMutableURLRequest *URL_Request = [NSMutableURLRequest requestWithURL:responseAPI_URL];
+                [URL_Request setHTTPMethod:@"POST"];
+                [URL_Request setValue:@"text/xml" forHTTPHeaderField:@"Content-Type"];
+                [URL_Request setHTTPBody:[responseXML dataUsingEncoding:NSUTF8StringEncoding]];
+                
+                [NSURLConnection sendAsynchronousRequest:URL_Request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *body, NSError *error)
+                 {
+                     if (body)
+                     {
+                         NSString *s = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
+                         NSLog(@"Web API Response:\n%@", s);
+                         
+                         int http_status_code = [((NSHTTPURLResponse *)response) statusCode];
+                         
+                         // HTTP (201 Created).
+                         if (http_status_code == 201)
+                         {
+                             NSMutableDictionary *submitted = [NSMutableDictionary dictionaryWithDictionary:[ILAppManager getSessionsSubmitted]];
+                             [submitted setObject:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%d", i]];
+                             [ILAppManager setSessionsSubmitted:submitted];
+                         }
+                     }
+                     else
+                     {
+                         UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Failed Connection." message:@"Could not synchronize." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+                         [errorAlert show];
+                     }
+                 }];
+                
+            }
+            else
+            {
+                UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Failed Connection." message:@"Could not synchronize." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+                [errorAlert show];
+            }
+        }
+    }
+    
+    [self updateSessionProgressBar];
+    [_sessionProgressBar setNeedsDisplay];
 }
 
 - (void)settingsButton:(UIButton *)sender

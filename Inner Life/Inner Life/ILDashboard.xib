@@ -178,6 +178,28 @@
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
+					<object class="IBUIButton" id="737152775">
+						<reference key="NSNextResponder" ref="898102551"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{253, 68}, {60, 44}}</string>
+						<reference key="NSSuperview" ref="898102551"/>
+						<reference key="NSWindow"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<int key="IBUIButtonType">1</int>
+						<string key="IBUINormalTitle">Sync</string>
+						<reference key="IBUIHighlightedTitleColor" ref="669893260"/>
+						<object class="NSColor" key="IBUINormalTitleColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
+						</object>
+						<reference key="IBUINormalTitleShadowColor" ref="70484064"/>
+						<reference key="IBUIFontDescription" ref="915631926"/>
+						<reference key="IBUIFont" ref="688641676"/>
+					</object>
 				</array>
 				<string key="NSFrame">{{0, 64}, {320, 504}}</string>
 				<reference key="NSSuperview"/>
@@ -276,6 +298,15 @@
 					</object>
 					<int key="connectionID">61</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">sync:</string>
+						<reference key="source" ref="737152775"/>
+						<reference key="destination" ref="841351856"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">146</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -306,6 +337,7 @@
 							<reference ref="483058844"/>
 							<reference ref="990917188"/>
 							<reference ref="779694618"/>
+							<reference ref="737152775"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -341,6 +373,11 @@
 						<reference key="object" ref="779694618"/>
 						<reference key="parent" ref="898102551"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">145</int>
+						<reference key="object" ref="737152775"/>
+						<reference key="parent" ref="898102551"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -352,6 +389,7 @@
 				<string key="124.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="143.CustomClassName">ILNotificationClockView</string>
 				<string key="143.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="145.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="21.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="28.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="33.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -362,7 +400,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">144</int>
+			<int key="maxID">146</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -372,6 +410,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="answerQuestions:">id</string>
 						<string key="openFirstTimeForm:">id</string>
+						<string key="sync:">UIButton</string>
 						<string key="testNotification:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -382,6 +421,10 @@
 						<object class="IBActionInfo" key="openFirstTimeForm:">
 							<string key="name">openFirstTimeForm:</string>
 							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="sync:">
+							<string key="name">sync:</string>
+							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBActionInfo" key="testNotification:">
 							<string key="name">testNotification:</string>

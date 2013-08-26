@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#define EMPTY 0
+#define GREY 1
+#define BLUE 2
+#define PURPLE 3
+
 @interface ILSessionProgressBar : UIView
 
 @property (nonatomic) NSArray* segmentMap;

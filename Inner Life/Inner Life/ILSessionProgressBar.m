@@ -66,6 +66,13 @@
     CGFloat filledGradientLocations[] = {0, 0.8, 1};
     CGGradientRef filledGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)filledGradientColors, filledGradientLocations);
     
+    NSArray* specialGradientColors = [NSArray arrayWithObjects:
+                                      (id)[UIColor colorWithRed: 0.561 green: 0.145 blue: 0.701 alpha: 1].CGColor,
+                                      (id)[UIColor colorWithRed: 0.698 green: 0.247 blue: 0.85 alpha: 1].CGColor,
+                                      (id)[UIColor colorWithRed: 0.839 green: 0.349 blue: 1 alpha: 1].CGColor, nil];
+    CGFloat specialGradientLocations[] = {0, 0.8, 1};
+    CGGradientRef specialGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)specialGradientColors, specialGradientLocations);
+    
     NSArray* unfilledGradientColors = [NSArray arrayWithObjects:
                                        (id)[UIColor colorWithWhite: 0.65 alpha: 1].CGColor,
                                        (id)[UIColor colorWithWhite: 0.80 alpha: 1].CGColor,
@@ -127,7 +134,7 @@
             CGContextSaveGState(context);
             [leftCurvePath addClip];
             [outlinePath addClip];
-            CGContextDrawLinearGradient(context, sc == 2 ? unfilledGradient : filledGradient, CGPointMake(x + sw/2, y), CGPointMake(x +sw/2, y+height), 0);
+            CGContextDrawLinearGradient(context, sc == GREY ? unfilledGradient : (sc == BLUE ?filledGradient : specialGradient), CGPointMake(x + sw/2, y), CGPointMake(x +sw/2, y+height), 0);
             CGContextRestoreGState(context);
             
             UIBezierPath* leftCurveHighlightPath = [UIBezierPath bezierPath];
@@ -157,7 +164,7 @@
             CGContextSaveGState(context);
             [rightCurvePath addClip];
             [outlinePath addClip];
-            CGContextDrawLinearGradient(context, sc == 2 ? unfilledGradient : filledGradient, CGPointMake(x + sw/2, y), CGPointMake(x +sw/2, y+height), 0);
+            CGContextDrawLinearGradient(context, sc == GREY ? unfilledGradient : (sc == BLUE ?filledGradient : specialGradient), CGPointMake(x + sw/2, y), CGPointMake(x +sw/2, y+height), 0);
             CGContextRestoreGState(context);
             
             UIBezierPath* rightCurveHightlightPath = [UIBezierPath bezierPath];
@@ -185,7 +192,7 @@
             CGContextSaveGState(context);
             [middleSquarePath addClip];
             [outlinePath addClip];
-            CGContextDrawLinearGradient(context, sc == 2 ? unfilledGradient : filledGradient, CGPointMake(x + sw/2, y), CGPointMake(x +sw/2, y+height), 0);
+            CGContextDrawLinearGradient(context, sc == GREY ? unfilledGradient : (sc == BLUE ?filledGradient : specialGradient), CGPointMake(x + sw/2, y), CGPointMake(x +sw/2, y+height), 0);
             CGContextRestoreGState(context);
             
             UIBezierPath* middleSquareHighlightPath = [UIBezierPath bezierPath];

@@ -15,6 +15,7 @@
 - (IBAction)openFirstTimeForm:(id)sender;
 - (IBAction)answerQuestions:(id)sender;
 - (IBAction)testNotification:(id)sender;
+- (IBAction)sync:(UIButton *)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *sessionLabel;
 @property (weak, nonatomic) IBOutlet ILSessionProgressBar *sessionProgressBar;
