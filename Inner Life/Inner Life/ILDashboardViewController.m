@@ -132,7 +132,7 @@
     NSInteger session = [ILTimeUtils getSessionByRegistrationDate:[ILAppManager getStartDate]];
     if (session == -1) return;
     ILQuestionFormViewController *questionFormView = [[ILQuestionFormViewController alloc] initWithNibName:nil bundle:nil];
-    questionFormView.currentSession = 14;
+    questionFormView.currentSession = session;
     questionFormView.dashboard = self;
     [self.navigationController pushViewController:questionFormView animated:YES];
 }
@@ -203,7 +203,6 @@
     }
     
     [self updateSessionProgressBar];
-    [_sessionProgressBar setNeedsDisplay];
 }
 
 - (void)settingsButton:(UIButton *)sender
