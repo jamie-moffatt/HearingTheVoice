@@ -12,5 +12,6 @@
 
 + (NSInteger)getSessionByRegistrationDate:(NSDate*)date;
 + (NSDate *)dayAfter :(NSDate *)date;
++ (NSInteger)secondsOnCurrentDay;
 
 @end

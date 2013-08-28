@@ -14,6 +14,10 @@
     UIImage* clockHand;
 }
 
-@property (nonatomic) NSInteger d;
+@property (nonatomic) NSInteger amStart;
+@property (nonatomic) NSInteger amEnd;
+@property (nonatomic) NSInteger pmStart;
+@property (nonatomic) NSInteger pmEnd;
+@property (nonatomic) NSInteger time;
 
 @end

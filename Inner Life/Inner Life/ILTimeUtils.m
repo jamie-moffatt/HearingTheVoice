@@ -29,4 +29,10 @@
     return [[NSCalendar currentCalendar] dateFromComponents:dc];
 }
 
++ (NSInteger)secondsOnCurrentDay
+{
+    NSDateComponents* nsdc = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:[NSDate date]];
+    return ABS([[[NSCalendar currentCalendar] dateFromComponents:nsdc] timeIntervalSinceNow]);
+}
+
 @end

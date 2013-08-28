@@ -24,7 +24,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -150,17 +149,6 @@ public class DashboardActivity extends Activity
 			startActivity(intent);
 			finish();
 		}
-		
-		//=========================================================================================
-		// Test Code
-		//=========================================================================================
-		System.out.println("Hello");
-		Log.d("Should be -1", ""+TimeUtils.getSessionIDBasedOnTime(TimeUtils.deserializeTime("2013-05-09 12:00:00"), TimeUtils.deserializeTime("2013-05-09 12:00:00")));
-		Log.d("Should be -1", ""+TimeUtils.getSessionIDBasedOnTime(TimeUtils.deserializeTime("2013-05-09 12:00:00"), TimeUtils.deserializeTime("2013-05-09 23:59:00")));
-		Log.d("Should be  1", ""+TimeUtils.getSessionIDBasedOnTime(TimeUtils.deserializeTime("2013-05-09 12:00:00"), TimeUtils.deserializeTime("2013-05-10 00:00:01")));
-		Log.d("Should be  1", ""+TimeUtils.getSessionIDBasedOnTime(TimeUtils.deserializeTime("2013-05-09 12:00:00"), TimeUtils.deserializeTime("2013-05-10 00:01:00")));
-		Log.d("Should be  2", ""+TimeUtils.getSessionIDBasedOnTime(TimeUtils.deserializeTime("2013-05-09 12:00:00"), TimeUtils.deserializeTime("2013-05-10 12:00:00")));
-		Log.d("Should be  3", ""+TimeUtils.getSessionIDBasedOnTime(TimeUtils.deserializeTime("2013-05-09 12:00:00"), TimeUtils.deserializeTime("2013-05-11 09:00:00")));
 	}
 
 	@Override

@@ -64,6 +64,14 @@
         questionFormView.currentSession = _sessionToJumpTo;
         [self.navigationController pushViewController:questionFormView animated:YES];
     }
+    
+    _clock.amStart = [ILAppManager getAMNotificationTime];
+    _clock.amEnd = [ILAppManager getAMNotificationTime] + 3;
+    _clock.pmStart = [ILAppManager getPMNotificationTime];
+    _clock.pmEnd = [ILAppManager getPMNotificationTime] + 3;
+    
+    NSLog(@"%d", [ILTimeUtils secondsOnCurrentDay]);
+    _clock.time = [ILTimeUtils secondsOnCurrentDay];
 }
 
 - (void)updateSessionProgressBar
