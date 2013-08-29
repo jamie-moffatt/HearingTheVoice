@@ -13,6 +13,8 @@ import org.hearingthevoice.innerlife.model.Schedule;
 import org.hearingthevoice.innerlife.model.Section;
 import org.hearingthevoice.innerlife.services.BootService;
 
+import com.testflightapp.lib.TestFlight;
+
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -142,6 +144,7 @@ public class DashboardActivity extends Activity
 		// Perform first-time run actions
 		if (AppManager.isFirstRun(context))
 		{
+			TestFlight.passCheckpoint("Set Start Time");
 			AppManager.setStartDate(context, Calendar.getInstance(Locale.UK).getTime());
 			Intent startServiceIntent = new Intent(context, BootService.class);
 			context.startService(startServiceIntent);

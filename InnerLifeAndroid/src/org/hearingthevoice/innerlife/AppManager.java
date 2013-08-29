@@ -10,6 +10,8 @@ import java.util.Map;
 
 import org.hearingthevoice.innerlife.model.Section;
 
+import com.testflightapp.lib.TestFlight;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -55,6 +57,8 @@ public class AppManager extends Application
 	{
 		super.onCreate();
 		sInstance = this;
+		
+		TestFlight.takeOff(this, "d3efa820-9a27-4c93-8b55-68fe624e50dc");
 	}
 
 	public static AppManager getInstance()

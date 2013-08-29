@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Random;
 
 import org.hearingthevoice.innerlife.AppManager;
+import org.hearingthevoice.innerlife.TimeUtils;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -25,17 +26,6 @@ public class BootService extends Service
 	{
 		final Context context = this;
 
-		// TODO determine whether the app is done with and stop doing things
-
-//		NotificationManager nm;
-//		nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-//		NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
-//		nb.setContentInfo("BootService started.");
-//		nb.setContentText("BootService started.");
-//		nb.setContentTitle("BOOT SERVICE");
-//		nb.setSmallIcon(R.drawable.next_item);
-		// nm.notify(784, nb.build());
-
 		// Get the AlarmManager service
 		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 
@@ -44,7 +34,7 @@ public class BootService extends Service
 
 		int amTime = AppManager.getAMNotificationTime(context);
 				
-		if (now.get(Calendar.HOUR_OF_DAY) < amTime)
+		if (TimeUtils.getSessionIDBasedOnTime(AppManager.getStartDate(context)) > 0 && now.get(Calendar.HOUR_OF_DAY) < amTime)
 		{
 			int randomizedAMTime = amTime + random.nextInt(4);
 			
@@ -63,7 +53,7 @@ public class BootService extends Service
 		
 		int pmTime = AppManager.getPMNotificationTime(context);
 
-		if (now.get(Calendar.HOUR_OF_DAY) < pmTime)
+		if (TimeUtils.getSessionIDBasedOnTime(AppManager.getStartDate(context)) > 0 && now.get(Calendar.HOUR_OF_DAY) < pmTime)
 		{
 			int randomizedPMTime = pmTime + random.nextInt(4);
 			

@@ -13,6 +13,8 @@ import org.hearingthevoice.innerlife.R;
 import org.hearingthevoice.innerlife.io.web.QuestionAPI;
 import org.hearingthevoice.innerlife.model.Section;
 
+import com.testflightapp.lib.TestFlight;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -207,6 +209,7 @@ public class FirstRunFormActivity extends Activity
 				return;
 			}
 
+			TestFlight.passCheckpoint("Created New User");
 			AppManager.setUserID(context, userID);
 			AppManager.setFirstRun(context, false);
 			AppManager.setNotificationTime(context, new SimpleDateFormat("yyyy-MM-dd", Locale.UK).format((Calendar.getInstance()).getTime()));

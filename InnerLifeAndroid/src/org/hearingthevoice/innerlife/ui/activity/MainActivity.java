@@ -18,6 +18,8 @@ import org.hearingthevoice.innerlife.model.Question.QuestionType;
 import org.hearingthevoice.innerlife.model.Schedule;
 import org.hearingthevoice.innerlife.model.Section;
 
+import com.testflightapp.lib.TestFlight;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -75,7 +77,7 @@ public class MainActivity extends Activity
 		setContentView(R.layout.activity_main);
 		context = this;
 		
-		Log.d("MainActivity:77", "Opening question form with session " + getIntent().getExtras().getInt("sessionID"));
+		Log.d("MainActivity:80", "Opening question form with session " + getIntent().getExtras().getInt("sessionID"));
 		
 		txtQuestionHead = (TextView) findViewById(R.id.txt_question_header);
 		txtQuestionBody = (TextView) findViewById(R.id.txt_question_body);
@@ -133,6 +135,10 @@ public class MainActivity extends Activity
 			Bundle e = getIntent().getExtras();
 			sessionID = e.getInt("sessionID");
 
+			if (sessionID == Section.START_TRAIT_SESSION_ID) TestFlight.passCheckpoint("Started Start Trait Questions");
+			if (sessionID == Section.MIDDLE_TRAIT_SESSION_ID) TestFlight.passCheckpoint("Started Middle Trait Questions");
+			if (sessionID == Section.END_TRAIT_SESSION_ID) TestFlight.passCheckpoint("Started End Trait Questions");
+			
 			sections = schedule.filterBySession(sections, sessionID);
 
 			manager = AppManager.getInstance();

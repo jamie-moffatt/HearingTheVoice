@@ -9,6 +9,8 @@ import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.R;
 import org.hearingthevoice.innerlife.io.web.QuestionAPI;
 
+import com.testflightapp.lib.TestFlight;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -38,7 +40,7 @@ public class EndActivity extends Activity
 		setContentView(R.layout.activity_end);
 
 		context = this;
-
+		TestFlight.passCheckpoint("Reached EndActivity");
 		txtResponseTime = (TextView) findViewById(R.id.txtResponseTimeEnd);
 		String avgResponseTime = AppManager.getAverageResponseTime(context);
 		txtResponseTime.setText("Your average response time was " + avgResponseTime + ".");
