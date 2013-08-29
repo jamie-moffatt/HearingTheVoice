@@ -8,8 +8,8 @@
 
 #import "ILAppDelegate.h"
 
-#import "ILDashboardViewController.h"
 #import "ILAppManager.h"
+#import "ILQuestionFormViewController.h"
 
 @implementation ILAppDelegate
 
@@ -19,9 +19,9 @@
     
     // Override point for customization after application launch.
     
-    ILDashboardViewController* dashboardViewController = [[ILDashboardViewController alloc] initWithNibName:@"ILDashboard" bundle:nil];
+    dashboard = [[ILDashboardViewController alloc] initWithNibName:@"ILDashboard" bundle:nil];
     
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:dashboardViewController];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:dashboard];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     
@@ -33,15 +33,11 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    UIAlertView *alertView = [
-                              [UIAlertView alloc]
-                              initWithTitle:@"MyAlertView"
-                              message:@"Local notification was received"
-                              delegate:self
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil
-                              ];
-    [alertView show];
+    NSInteger sessionID = [[notification.userInfo objectForKey:@"SESSION_ID"] integerValue];
+    ILQuestionFormViewController* questionForm = [[ILQuestionFormViewController alloc] initWithNibName:nil bundle:nil];
+    questionForm.dashboard = dashboard;
+    questionForm.currentSession = sessionID;
+    [dashboard.navigationController pushViewController:questionForm animated:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

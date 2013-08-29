@@ -78,7 +78,6 @@
 {
     NSDate *startDate = [ILAppManager getStartDate];
     NSInteger recommendedSession = [ILTimeUtils getSessionByRegistrationDate:startDate];
-    _sessionLabel.text = [NSString stringWithFormat:@"%d", recommendedSession];
     
     NSMutableArray *xs = [[NSMutableArray alloc] initWithCapacity:28];
     for (int i = 0; i < 28; i++)
@@ -129,12 +128,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)openFirstTimeForm:(id)sender
-{
-    ILEndViewController *userFormView = [[ILEndViewController alloc] initWithNibName:@"ILEndView" bundle:nil];
-    [self presentViewController:userFormView animated:YES completion:nil];
-}
-
 - (IBAction)answerQuestions:(id)sender
 {
     NSInteger session = [ILTimeUtils getSessionByRegistrationDate:[ILAppManager getStartDate]];
@@ -143,11 +136,6 @@
     questionFormView.currentSession = session;
     questionFormView.dashboard = self;
     [self.navigationController pushViewController:questionFormView animated:YES];
-}
-
-- (IBAction)testNotification:(id)sender
-{
-    [ILAppManager setupNotifications];
 }
 
 - (IBAction)sync:(UIButton *)sender

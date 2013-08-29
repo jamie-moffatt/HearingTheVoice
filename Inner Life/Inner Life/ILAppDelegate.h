@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ILDashboardViewController.h"
 
 @interface ILAppDelegate : UIResponder <UIApplicationDelegate>
+{
+    ILDashboardViewController* dashboard;
+}
 
 @property (strong, nonatomic) UIWindow* window;
 @property (strong, nonatomic) UINavigationController* navigationController;
