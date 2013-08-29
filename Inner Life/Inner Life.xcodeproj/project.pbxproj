@@ -16,6 +16,9 @@
 		473343CE176CBAAD0027D61D /* ILNetworkDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 473343CD176CBAAD0027D61D /* ILNetworkDataHandler.m */; };
 		473343D1176CBD2A0027D61D /* ILAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 473343D0176CBD2A0027D61D /* ILAppManager.m */; };
 		473343D4176CBDD40027D61D /* ILDataSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 473343D3176CBDD40027D61D /* ILDataSingleton.m */; };
+		4781FF2317CFF2C800C012BB /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4781FF2217CFF2C800C012BB /* AdSupport.framework */; };
+		4781FF2517CFF33300C012BB /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4781FF2417CFF33300C012BB /* libTestFlight.a */; };
+		4781FF2717CFF36700C012BB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4781FF2617CFF36700C012BB /* libz.dylib */; };
 		4792ECE41768A7B800441527 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ECE31768A7B800441527 /* UIKit.framework */; };
 		4792ECE61768A7B800441527 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ECE51768A7B800441527 /* Foundation.framework */; };
 		4792ECE81768A7B800441527 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ECE71768A7B800441527 /* CoreGraphics.framework */; };
@@ -91,6 +94,12 @@
 		473343D3176CBDD40027D61D /* ILDataSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILDataSingleton.m; sourceTree = "<group>"; };
 		4750EC1017B1913F00470763 /* ILTimeSelectorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ILTimeSelectorDelegate.h; sourceTree = "<group>"; };
 		47659DA1179BFB2A00F63185 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		4781FF2217CFF2C800C012BB /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		4781FF2417CFF33300C012BB /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		4781FF2617CFF36700C012BB /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		4781FF2917CFF6AC00C012BB /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		4781FF2A17CFF6AC00C012BB /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		4781FF2B17CFF6AC00C012BB /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		4792ECE01768A7B800441527 /* Inner Life.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Inner Life.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4792ECE31768A7B800441527 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4792ECE51768A7B800441527 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -157,11 +166,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4781FF2717CFF36700C012BB /* libz.dylib in Frameworks */,
+				4781FF2317CFF2C800C012BB /* AdSupport.framework in Frameworks */,
 				47FB34D217B26A1700E989C9 /* QuartzCore.framework in Frameworks */,
 				4792ED3D17691ABF00441527 /* SystemConfiguration.framework in Frameworks */,
 				4792ECE41768A7B800441527 /* UIKit.framework in Frameworks */,
 				4792ECE61768A7B800441527 /* Foundation.framework in Frameworks */,
 				4792ECE81768A7B800441527 /* CoreGraphics.framework in Frameworks */,
+				4781FF2517CFF33300C012BB /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +208,16 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
+		4781FF2817CFF69400C012BB /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				4781FF2917CFF6AC00C012BB /* TestFlight.h */,
+				4781FF2A17CFF6AC00C012BB /* TestFlight+AsyncLogging.h */,
+				4781FF2B17CFF6AC00C012BB /* TestFlight+ManualSessions.h */,
+			);
+			name = TestFlight;
+			sourceTree = "<group>";
+		};
 		4792ECD71768A7B800441527 = {
 			isa = PBXGroup;
 			children = (
@@ -218,6 +240,9 @@
 		4792ECE21768A7B800441527 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4781FF2617CFF36700C012BB /* libz.dylib */,
+				4781FF2417CFF33300C012BB /* libTestFlight.a */,
+				4781FF2217CFF2C800C012BB /* AdSupport.framework */,
 				47FB34D117B26A1700E989C9 /* QuartzCore.framework */,
 				4792ED3C17691ABF00441527 /* SystemConfiguration.framework */,
 				4792ECE31768A7B800441527 /* UIKit.framework */,
@@ -248,6 +273,7 @@
 				47C9154517C151C30087C10E /* Default.png */,
 				47C9154617C151C30087C10E /* Default@2x.png */,
 				4792ED381769183500441527 /* Reachability */,
+				4781FF2817CFF69400C012BB /* TestFlight */,
 				4792ED371768FE5600441527 /* Images */,
 				4792ECEB1768A7B800441527 /* Inner Life-Info.plist */,
 				4792ECEC1768A7B800441527 /* InfoPlist.strings */,
@@ -629,6 +655,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inner Life/Inner Life-Prefix.pch";
 				INFOPLIST_FILE = "Inner Life/Inner Life-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -644,6 +674,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Inner Life/Inner Life-Prefix.pch";
 				INFOPLIST_FILE = "Inner Life/Inner Life-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

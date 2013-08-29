@@ -11,6 +11,7 @@
 #import "ILUser.h"
 #import "ILAppManager.h"
 #import "ILQuestionFormViewController.h"
+#import "TestFlight.h"
 
 @interface ILUserFormViewController ()
 
@@ -31,7 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [TestFlight passCheckpoint:@"Opened User Creation Form"];
     // TODO: Load data from the device if it already exists
 }
 
@@ -97,6 +98,7 @@
              
              [ILAppManager setUser:newUser];
              NSLog(@"Set New User: %@", newUser);
+             [TestFlight passCheckpoint:@"Created New User"];
              
              _dashboard.needsJump = YES;
              _dashboard.sessionToJumpTo = TRAIT_START_ID;

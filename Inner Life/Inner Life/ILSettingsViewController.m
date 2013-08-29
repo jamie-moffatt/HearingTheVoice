@@ -8,6 +8,7 @@
 
 #import "ILSettingsViewController.h"
 #import "common.h"
+#import "TestFlight.h"
 
 @interface ILSettingsViewController ()
 
@@ -76,6 +77,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [TestFlight passCheckpoint:@"Opened Settings"];
 }
 
 - (void)didReceiveMemoryWarning

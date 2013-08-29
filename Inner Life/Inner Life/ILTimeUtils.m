@@ -16,7 +16,9 @@
     dateComps.day = dateComps.day+1;
     NSDate* dayAfterRegistration = [[NSCalendar currentCalendar] dateFromComponents:dateComps];
     
-    if ([date compare:dayAfterRegistration] == NSOrderedAscending) return -1;
+    NSDate* now = [NSDate date];
+    
+    if ([now compare:dayAfterRegistration] == NSOrderedAscending) return -1;
     
     NSTimeInterval timeOnSchedule = [[NSDate date] timeIntervalSinceDate:dayAfterRegistration];
     return ((NSInteger)timeOnSchedule / (60*60*12)) + 1;

@@ -10,11 +10,15 @@
 
 #import "ILAppManager.h"
 #import "ILQuestionFormViewController.h"
+#import "TestFlight.h"
 
 @implementation ILAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [TestFlight setDeviceIdentifier:[[UIDevice currentDevice] uniqueIdentifier]];
+    [TestFlight takeOff:@"bf306c44-5948-49a0-a550-91403b12284e"];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     // Override point for customization after application launch.

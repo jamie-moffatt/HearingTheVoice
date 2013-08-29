@@ -16,6 +16,7 @@
 #import "ILAppManager.h"
 #import "ILTimeUtils.h"
 #import "common.h"
+#import "TestFlight.h"
 
 @interface ILDashboardViewController ()
 
@@ -37,6 +38,7 @@
 {
     [super viewDidLoad];
 	
+    [TestFlight passCheckpoint:@"Opened Dashboard"];
     self.title = @"Dashboard";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:self action:@selector(settingsButton:)];
@@ -45,6 +47,7 @@
     
     if ([ILAppManager isFirstRun])
     {
+        [TestFlight passCheckpoint:@"Set Start Date"];
         [ILAppManager setFirstRun:NO];
         [ILAppManager setStartDate:[NSDate date]];
         [ILAppManager setupNotifications];
@@ -80,12 +83,13 @@
     NSInteger recommendedSession = [ILTimeUtils getSessionByRegistrationDate:startDate];
     
     NSMutableArray *xs = [[NSMutableArray alloc] initWithCapacity:28];
-    for (int i = 0; i < 28; i++)
+    for (int i = 1; i <= 28; i++)
     {
-        NSNumber* sessionIsComplete = [[ILAppManager getSessionsCompleted] objectForKey:[NSString stringWithFormat:@"%d", i+1]];
-        NSNumber* sessionIsSubmitted = [[ILAppManager getSessionsSubmitted] objectForKey:[NSString stringWithFormat:@"%d", i+1]];
+        NSNumber* sessionIsComplete = [[ILAppManager getSessionsCompleted] objectForKey:[NSString stringWithFormat:@"%d", i]];
+        NSNumber* sessionIsSubmitted = [[ILAppManager getSessionsSubmitted] objectForKey:[NSString stringWithFormat:@"%d", i]];
         
-        if (i + 1 > recommendedSession)
+        NSLog(@"%d", recommendedSession);
+        if (i > recommendedSession)
         {
             [xs addObject:[NSNumber numberWithInt:EMPTY]];
         }
@@ -105,6 +109,7 @@
             }
         }
     }
+    NSLog(@"%@", xs);
     [_sessionProgressBar setSegmentMap:xs];
 }
 

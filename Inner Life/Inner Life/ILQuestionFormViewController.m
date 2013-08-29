@@ -10,6 +10,7 @@
 #import "common.h"
 #import "ILUser.h"
 #import "ILAppManager.h"
+#import "TestFlight.h"
 
 @interface ILQuestionFormViewController ()
 {
@@ -82,6 +83,7 @@
     [super viewDidLoad];
     
     self.title = @"Questions";
+    [TestFlight passCheckpoint:@"Opened Question Form"];
     
     NSMutableArray *sectionLengthSpec = [[NSMutableArray alloc] initWithCapacity:[sections count]];
     for (ILSection *section in sections)
@@ -111,7 +113,7 @@
     if (data.currentQuestion == (numberOfQuestionsInCurrentSection - 1) && data.currentSection == (numberOfSectionsInCurrentSession - 1))
     {
         NSLog(@"FINISH");
-        
+        [TestFlight passCheckpoint:@"Finished Session"];
         // Construct Response XML
         NSMutableString *responseXML = [[NSMutableString alloc] init];
         
@@ -180,6 +182,7 @@
                      NSMutableDictionary *submitted = [NSMutableDictionary dictionaryWithDictionary:[ILAppManager getSessionsSubmitted]];
                      [submitted setObject:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%d", _currentSession]];
                      [ILAppManager setSessionsSubmitted:submitted];
+                     [TestFlight passCheckpoint:@"Submitted Session"];
                  }
                  
                 [self commonEndBehaviour];
