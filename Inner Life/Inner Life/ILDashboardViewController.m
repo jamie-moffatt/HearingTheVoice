@@ -73,7 +73,6 @@
     _clock.pmStart = [ILAppManager getPMNotificationTime];
     _clock.pmEnd = [ILAppManager getPMNotificationTime] + 3;
     
-    NSLog(@"%d", [ILTimeUtils secondsOnCurrentDay]);
     _clock.time = [ILTimeUtils secondsOnCurrentDay];
 }
 
@@ -88,7 +87,6 @@
         NSNumber* sessionIsComplete = [[ILAppManager getSessionsCompleted] objectForKey:[NSString stringWithFormat:@"%d", i]];
         NSNumber* sessionIsSubmitted = [[ILAppManager getSessionsSubmitted] objectForKey:[NSString stringWithFormat:@"%d", i]];
         
-        NSLog(@"%d", recommendedSession);
         if (i > recommendedSession)
         {
             [xs addObject:[NSNumber numberWithInt:EMPTY]];
@@ -109,7 +107,6 @@
             }
         }
     }
-    NSLog(@"%@", xs);
     [_sessionProgressBar setSegmentMap:xs];
 }
 

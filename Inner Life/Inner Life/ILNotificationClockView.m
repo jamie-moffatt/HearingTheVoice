@@ -117,9 +117,7 @@
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, x+r, y+r);
     CGFloat hours = ((float)_time / (60*60));
-    NSLog(@"%f", hours);
     CGFloat degrees = hours*15 - 90;
-    NSLog(@"%f", degrees);
     CGContextRotateCTM(context, degrees * M_PI / 180);
     CGContextTranslateCTM(context, -r -x, -r -y);
     [clockHand drawInRect:CGRectMake(x, y, d, d)];

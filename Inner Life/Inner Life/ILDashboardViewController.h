@@ -12,6 +12,7 @@
 
 @interface ILDashboardViewController : UIViewController
 
+- (void)updateSessionProgressBar;
 - (IBAction)answerQuestions:(id)sender;
 - (IBAction)sync:(UIButton *)sender;
 
