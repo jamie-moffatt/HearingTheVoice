@@ -1,5 +1,6 @@
 package org.hearingthevoice.innerlife.ui.view;
 
+import org.hearingthevoice.innerlife.Common;
 import org.hearingthevoice.innerlife.R;
 
 import android.annotation.SuppressLint;
@@ -80,15 +81,14 @@ public class TimeSelector extends View
 	private void init(AttributeSet attrs, int style)
 	{
 		// Load attributes
-		final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TimeSelector,
-				style, 0);
+		final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TimeSelector, style, 0);
 
 		a.recycle();
 
 		// Set up a default TextPaint object
 		textPaint = new TextPaint();
-		textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17,
-				getResources().getDisplayMetrics()));
+		textPaint.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 17, getResources()
+				.getDisplayMetrics()));
 		textPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 		textPaint.setTextAlign(Paint.Align.LEFT);
 
@@ -104,8 +104,8 @@ public class TimeSelector extends View
 		borderPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 		borderPaint.setColor(Color.BLACK);
 		borderPaint.setStyle(Style.STROKE);
-		borderPaint.setStrokeWidth(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3,
-				getResources().getDisplayMetrics()));
+		borderPaint.setStrokeWidth(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, getResources()
+				.getDisplayMetrics()));
 		borderPaint.setStrokeCap(Cap.ROUND);
 
 		dividerPaint = new Paint();
@@ -134,7 +134,7 @@ public class TimeSelector extends View
 	{
 		return this.amStartTime;
 	}
-	
+
 	public void setAMTime(int time)
 	{
 		this.amStartTime = time;
@@ -142,13 +142,13 @@ public class TimeSelector extends View
 
 	private void decrementAMTime()
 	{
-		if (this.amStartTime > 0) this.amStartTime--;
+		if (this.amStartTime > 2) this.amStartTime--;
 		invalidate();
 	}
 
 	private void incrementAMTime()
 	{
-		if (this.amStartTime < 9) this.amStartTime++;
+		if (this.amStartTime < 11) this.amStartTime++;
 		invalidate();
 	}
 
@@ -156,7 +156,7 @@ public class TimeSelector extends View
 	{
 		return this.pmStartTime;
 	}
-	
+
 	public void setPMTime(int time)
 	{
 		this.pmStartTime = time;
@@ -164,13 +164,13 @@ public class TimeSelector extends View
 
 	private void decrementPMTime()
 	{
-		if (this.pmStartTime > 12) this.pmStartTime--;
+		if (this.pmStartTime > 14) this.pmStartTime--;
 		invalidate();
 	}
 
 	private void incrementPMTime()
 	{
-		if (this.pmStartTime < 21) this.pmStartTime++;
+		if (this.pmStartTime < 23) this.pmStartTime++;
 		invalidate();
 	}
 
@@ -210,13 +210,12 @@ public class TimeSelector extends View
 		centreY = paddingTop + contentHeight / 2;
 		int radius = Math.min(contentWidth, contentHeight) / 2;
 
-		RectF rect = new RectF(centreX - radius, centreY - radius, centreX + radius,
-				centreY + radius);
+		RectF rect = new RectF(centreX - radius, centreY - radius, centreX + radius, centreY + radius);
 
 		canvas.drawCircle(centreX, centreY, radius, backgroundPaint);
 
 		canvas.drawArc(rect, 120, 180, false, darkBackgroundPaint);
-		
+
 		/*
 		 * DRAW AM ARC
 		 */
@@ -237,16 +236,10 @@ public class TimeSelector extends View
 		{
 			Point a, b, c;
 			a = new Point((int) centreX, (int) centreY);
-			b = new Point(
-					(int) (centreX + radius * (float) Math
-							.sin(((amStartTime + 3) * 15 * Math.PI) / 180.0)),
-					(int) (centreY - radius * (float) Math
-							.cos(((amStartTime + 3) * 15 * Math.PI) / 180.0)));
-			c = new Point(
-					(int) (centreX + radius * (float) Math
-							.sin((amStartTime * 15 * Math.PI) / 180.0)),
-					(int) (centreY - radius * (float) Math
-							.cos((amStartTime * 15 * Math.PI) / 180.0)));
+			b = new Point((int) (centreX + radius * (float) Math.sin(((amStartTime + 3) * 15 * Math.PI) / 180.0)),
+					(int) (centreY - radius * (float) Math.cos(((amStartTime + 3) * 15 * Math.PI) / 180.0)));
+			c = new Point((int) (centreX + radius * (float) Math.sin((amStartTime * 15 * Math.PI) / 180.0)),
+					(int) (centreY - radius * (float) Math.cos((amStartTime * 15 * Math.PI) / 180.0)));
 
 			path = new Path();
 			path.moveTo(a.x, a.y);
@@ -257,8 +250,7 @@ public class TimeSelector extends View
 		}
 
 		amBoundingTriangle[0] = new Point(0, 0);
-		amBoundingTriangle[2] = new Point(
-				(int) (radius * (float) Math.sin((amStartTime * 15 * Math.PI) / 180.0)),
+		amBoundingTriangle[2] = new Point((int) (radius * (float) Math.sin((amStartTime * 15 * Math.PI) / 180.0)),
 				(int) (radius * (float) Math.cos((amStartTime * 15 * Math.PI) / 180.0)));
 		amBoundingTriangle[1] = new Point(
 				(int) (radius * (float) Math.sin(((amStartTime + 3) * 15 * Math.PI) / 180.0)),
@@ -284,16 +276,10 @@ public class TimeSelector extends View
 		{
 			Point a, b, c;
 			a = new Point((int) centreX, (int) centreY);
-			b = new Point(
-					(int) (centreX + radius * (float) Math
-							.sin(((pmStartTime + 3) * 15 * Math.PI) / 180.0)),
-					(int) (centreY - radius * (float) Math
-							.cos(((pmStartTime + 3) * 15 * Math.PI) / 180.0)));
-			c = new Point(
-					(int) (centreX + radius * (float) Math
-							.sin((pmStartTime * 15 * Math.PI) / 180.0)),
-					(int) (centreY - radius * (float) Math
-							.cos((pmStartTime * 15 * Math.PI) / 180.0)));
+			b = new Point((int) (centreX + radius * (float) Math.sin(((pmStartTime + 3) * 15 * Math.PI) / 180.0)),
+					(int) (centreY - radius * (float) Math.cos(((pmStartTime + 3) * 15 * Math.PI) / 180.0)));
+			c = new Point((int) (centreX + radius * (float) Math.sin((pmStartTime * 15 * Math.PI) / 180.0)),
+					(int) (centreY - radius * (float) Math.cos((pmStartTime * 15 * Math.PI) / 180.0)));
 
 			path = new Path();
 			path.moveTo(a.x, a.y);
@@ -312,78 +298,67 @@ public class TimeSelector extends View
 				(int) (radius * (float) Math.cos(((pmStartTime + 3) * 15 * Math.PI) / 180.0)));
 
 		canvas.drawCircle(centreX, centreY, radius, borderPaint);
-
-		canvas.drawLine(centreX, centreY - radius, centreX, centreY + radius, dividerPaint);
+		
+		canvas.drawLine(
+				(float) (centreX + radius*Math.sin(Math.toRadians(30))), 
+				(float) (centreY - radius*Math.cos(Math.toRadians(30))), 
+				(float) (centreX - radius*Math.sin(Math.toRadians(30))), 
+				(float) (centreY + radius*Math.cos(Math.toRadians(30))),
+				dividerPaint);
 
 		int hour = 0;
 
 		for (int i = 0; i < 90; i += 15)
 		{
 			canvas.drawLine(centreX + radius * (float) Math.sin((i * Math.PI) / 180.0),
-					centreY - radius * (float) Math.cos((i * Math.PI) / 180.0),
-					centreX + (radius * 0.95f) * (float) Math.sin((i * Math.PI) / 180.0),
-					centreY - (radius * 0.95f) * (float) Math.cos((i * Math.PI) / 180.0),
-					borderPaint);
+					centreY - radius * (float) Math.cos((i * Math.PI) / 180.0), centreX + (radius * 0.95f)
+							* (float) Math.sin((i * Math.PI) / 180.0),
+					centreY - (radius * 0.95f) * (float) Math.cos((i * Math.PI) / 180.0), borderPaint);
 			String hourLabel = "" + (hour++);
 			float textWidth = textPaint.measureText(hourLabel);
 			Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
 			float textHeight = fontMetrics.bottom;
-			canvas.drawText(
-					hourLabel,
-					centreX + (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0) - textWidth / 2,
-					centreY - (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0) + textHeight,
-					textPaint);
+			canvas.drawText(hourLabel, centreX + (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0) - textWidth
+					/ 2, centreY - (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0) + textHeight, textPaint);
 		}
 		for (int i = 90; i >= 0; i -= 15)
 		{
 			canvas.drawLine(centreX + radius * (float) Math.sin((i * Math.PI) / 180.0),
-					centreY + radius * (float) Math.cos((i * Math.PI) / 180.0),
-					centreX + (radius * 0.95f) * (float) Math.sin((i * Math.PI) / 180.0),
-					centreY + (radius * 0.95f) * (float) Math.cos((i * Math.PI) / 180.0),
-					borderPaint);
+					centreY + radius * (float) Math.cos((i * Math.PI) / 180.0), centreX + (radius * 0.95f)
+							* (float) Math.sin((i * Math.PI) / 180.0),
+					centreY + (radius * 0.95f) * (float) Math.cos((i * Math.PI) / 180.0), borderPaint);
 			String hourLabel = "" + (hour++);
 			float textWidth = textPaint.measureText(hourLabel);
 			Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
 			float textHeight = fontMetrics.bottom;
-			canvas.drawText(
-					hourLabel,
-					centreX + (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0) - textWidth / 2,
-					centreY + (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0) + textHeight,
-					textPaint);
+			canvas.drawText(hourLabel, centreX + (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0) - textWidth
+					/ 2, centreY + (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0) + textHeight, textPaint);
 		}
 		for (int i = 15; i < 90; i += 15)
 		{
 			canvas.drawLine(centreX - radius * (float) Math.sin((i * Math.PI) / 180.0),
-					centreY + radius * (float) Math.cos((i * Math.PI) / 180.0),
-					centreX - (radius * 0.95f) * (float) Math.sin((i * Math.PI) / 180.0),
-					centreY + (radius * 0.95f) * (float) Math.cos((i * Math.PI) / 180.0),
-					borderPaint);
+					centreY + radius * (float) Math.cos((i * Math.PI) / 180.0), centreX - (radius * 0.95f)
+							* (float) Math.sin((i * Math.PI) / 180.0),
+					centreY + (radius * 0.95f) * (float) Math.cos((i * Math.PI) / 180.0), borderPaint);
 			String hourLabel = "" + (hour++);
 			float textWidth = textPaint.measureText(hourLabel);
 			Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
 			float textHeight = fontMetrics.bottom;
-			canvas.drawText(
-					hourLabel,
-					centreX - (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0) - textWidth / 2,
-					centreY + (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0) + textHeight,
-					textPaint);
+			canvas.drawText(hourLabel, centreX - (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0) - textWidth
+					/ 2, centreY + (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0) + textHeight, textPaint);
 		}
 		for (int i = 90; i >= 15; i -= 15)
 		{
 			canvas.drawLine(centreX - radius * (float) Math.sin((i * Math.PI) / 180.0),
-					centreY - radius * (float) Math.cos((i * Math.PI) / 180.0),
-					centreX - (radius * 0.95f) * (float) Math.sin((i * Math.PI) / 180.0),
-					centreY - (radius * 0.95f) * (float) Math.cos((i * Math.PI) / 180.0),
-					borderPaint);
+					centreY - radius * (float) Math.cos((i * Math.PI) / 180.0), centreX - (radius * 0.95f)
+							* (float) Math.sin((i * Math.PI) / 180.0),
+					centreY - (radius * 0.95f) * (float) Math.cos((i * Math.PI) / 180.0), borderPaint);
 			String hourLabel = "" + (hour++);
 			float textWidth = textPaint.measureText(hourLabel);
 			Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
 			float textHeight = fontMetrics.bottom;
-			canvas.drawText(
-					hourLabel,
-					centreX - (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0) - textWidth / 2,
-					centreY - (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0) + textHeight,
-					textPaint);
+			canvas.drawText(hourLabel, centreX - (radius * 0.85f) * (float) Math.sin((i * Math.PI) / 180.0) - textWidth
+					/ 2, centreY - (radius * 0.85f) * (float) Math.cos((i * Math.PI) / 180.0) + textHeight, textPaint);
 		}
 
 		canvas.drawText("PM", centreX - 1.5f * textPaint.measureText("PM") - 10, centreY, textPaint);
@@ -475,8 +450,7 @@ public class TimeSelector extends View
 		{
 			touching = false;
 			hit = NO_COLLISION;
-			if (timeChangedCallback != null)
-				timeChangedCallback.onTimeChanged(amStartTime, pmStartTime);
+			if (timeChangedCallback != null) timeChangedCallback.onTimeChanged(amStartTime, pmStartTime);
 			invalidate();
 		}
 

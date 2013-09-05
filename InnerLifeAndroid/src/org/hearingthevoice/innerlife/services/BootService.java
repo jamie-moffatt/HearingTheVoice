@@ -33,15 +33,15 @@ public class BootService extends Service
 		Calendar now = Calendar.getInstance();
 
 		int amTime = AppManager.getAMNotificationTime(context);
-				
-		if (TimeUtils.getSessionIDBasedOnTime(AppManager.getStartDate(context)) > 0 && now.get(Calendar.HOUR_OF_DAY) < amTime)
+
+		if (TimeUtils.getSessionIDBasedOnTime(AppManager.getStartDate(context)) > 0
+				&& now.get(Calendar.HOUR_OF_DAY) < amTime)
 		{
-			int randomizedAMTime = amTime + random.nextInt(4);
-			
 			Calendar amSession = Calendar.getInstance();
-			amSession.set(Calendar.HOUR_OF_DAY, randomizedAMTime); // 10
+			amSession.set(Calendar.HOUR_OF_DAY, amTime); // 10
 			amSession.set(Calendar.MINUTE, 0); // 0
-			amSession.set(Calendar.SECOND, 0); // 0 
+			amSession.set(Calendar.SECOND, 0); // 0
+			amSession.add(Calendar.MINUTE, random.nextInt(180));
 
 			Intent amIntent = new Intent(context, AlarmReceiver.class);
 			amIntent.putExtra("NOTIFICATION_TYPE", "AM");
@@ -50,17 +50,17 @@ public class BootService extends Service
 
 			am.set(AlarmManager.RTC, amSession.getTimeInMillis(), amSender);
 		}
-		
+
 		int pmTime = AppManager.getPMNotificationTime(context);
 
-		if (TimeUtils.getSessionIDBasedOnTime(AppManager.getStartDate(context)) > 0 && now.get(Calendar.HOUR_OF_DAY) < pmTime)
+		if (TimeUtils.getSessionIDBasedOnTime(AppManager.getStartDate(context)) > 0
+				&& now.get(Calendar.HOUR_OF_DAY) < pmTime)
 		{
-			int randomizedPMTime = pmTime + random.nextInt(4);
-			
 			Calendar pmSession = Calendar.getInstance();
-			pmSession.set(Calendar.HOUR_OF_DAY, randomizedPMTime); // 17
+			pmSession.set(Calendar.HOUR_OF_DAY, pmTime); // 17
 			pmSession.set(Calendar.MINUTE, 0); // 0
 			pmSession.set(Calendar.SECOND, 0); // 0
+			pmSession.add(Calendar.MINUTE, random.nextInt(180));
 
 			Intent pmIntent = new Intent(context, AlarmReceiver.class);
 			pmIntent.putExtra("NOTIFICATION_TYPE", "PM");

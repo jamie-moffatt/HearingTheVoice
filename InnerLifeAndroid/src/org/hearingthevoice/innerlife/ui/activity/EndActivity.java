@@ -24,10 +24,12 @@ import android.widget.TextView;
 
 public class EndActivity extends Activity
 {
-	private static final String THANK_YOU_TEXT = "Thanks!\n\n" +
-			"You can now uninstall Inner Life via your Applications folder.\n\n" +
+	private static final String THANK_YOU_TEXT = "Thanks!\n\n"
+			+
+			"You can now uninstall Inner Life via your Applications folder.\n\n"
+			+
 			"If you have any questions about the app, you can contact Dr Ben Alderson-Day at benjamin.alderson-day@durham.ac.uk.";
-	
+
 	private Context context;
 
 	private TextView txtResponseTime;
@@ -74,7 +76,8 @@ public class EndActivity extends Activity
 
 	private class AcceptDeclineDataUseThread extends AsyncTask<Boolean, Integer, Boolean>
 	{
-		// Send a notification to database detailing whether or not the user's data
+		// Send a notification to database detailing whether or not the user's
+		// data
 		// should be used in the study
 		@Override
 		protected Boolean doInBackground(Boolean... params)
@@ -110,22 +113,24 @@ public class EndActivity extends Activity
 				conn.setDoInput(true);
 
 				conn.connect();
-				
+
 				PrintWriter pw = new PrintWriter(conn.getOutputStream());
-				pw.print(String.format("<user id=\"%d\" useDataPermission=\"%s\" />", AppManager.getUserID(context), allowDataUse ? "true" : "false"));
+				pw.print(String.format("<user id=\"%d\" useDataPermission=\"%s\" />", AppManager.getUserID(context),
+						allowDataUse ? "true" : "false"));
 				pw.flush();
 				pw.close();
-				
+
 				Log.d("USER PERMISSION CONNECT", "made connection");
 				Log.d("USER PERMISSION HTTP RESPONSE MESSAGE", conn.getResponseMessage());
-				Log.d("USER PERMISSION HTTP CODE", ""+conn.getResponseCode());
+				Log.d("USER PERMISSION HTTP CODE", "" + conn.getResponseCode());
 
 				String response = "";
 				Scanner sc = new Scanner(conn.getInputStream());
-				while (sc.hasNextLine()) response += sc.nextLine();
+				while (sc.hasNextLine())
+					response += sc.nextLine();
 
 				conn.disconnect();
-				
+
 				Log.d("USER PERMISSION RESPONSE", response);
 
 				if (response.contains("Success")) return true;
@@ -147,7 +152,7 @@ public class EndActivity extends Activity
 			if (submitted)
 			{
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-				AlertDialog dialog = builder.setTitle("Request Successfully Submitted.")
+				builder.setTitle("Request Successfully Submitted.")
 						.setMessage(THANK_YOU_TEXT)
 						.setPositiveButton("OK", new DialogInterface.OnClickListener()
 						{
@@ -161,11 +166,10 @@ public class EndActivity extends Activity
 			else
 			{
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-				AlertDialog dialog = builder
-						.setTitle("Request Failed.")
+				builder.setTitle("Request Failed.")
 						.setMessage(
 								"Unfortunately your data request did not make it to the database. "
-										+ "Ensure that you have an internet connection and restart the application.")
+							  + "Ensure that you have an internet connection and restart the application.")
 						.setPositiveButton("OK", new DialogInterface.OnClickListener()
 						{
 							@Override
