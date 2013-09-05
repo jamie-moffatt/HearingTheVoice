@@ -9,6 +9,8 @@
 #import "ILAppManager.h"
 #import "ILTimeUtils.h"
 
+#import <stdlib.h>
+
 @implementation ILAppManager
 
 +(void)setDefaults
@@ -235,9 +237,13 @@
         
         dc.hour = amTime;
         NSDate *amNotificationTime = [[NSCalendar currentCalendar] dateFromComponents:dc];
+        int r = (arc4random() % (3*60)) * 60;
+        amNotificationTime = [NSDate dateWithTimeInterval:r sinceDate:amNotificationTime];
         
         dc.hour = pmTime;
         NSDate *pmNotificationTime = [[NSCalendar currentCalendar] dateFromComponents:dc];
+        r = (arc4random() % (3*60)) * 60;
+        pmNotificationTime = [NSDate dateWithTimeInterval:r sinceDate:pmNotificationTime];
         
         UILocalNotification *amNotification = [[UILocalNotification alloc] init];
         amNotification.fireDate = amNotificationTime;
@@ -297,6 +303,8 @@
             else dc.hour = newAMTime;
             
             NSDate *newNotificationTime = [[NSCalendar currentCalendar] dateFromComponents:dc];
+            int r = (arc4random() % (3*60)) * 60;
+            newNotificationTime = [NSDate dateWithTimeInterval:r sinceDate:newNotificationTime];
             
             UILocalNotification *newNotification = [[UILocalNotification alloc] init];
             newNotification.fireDate = newNotificationTime;
@@ -308,9 +316,7 @@
             newNotification.alertAction = @"View Details";
             newNotification.soundName = UILocalNotificationDefaultSoundName;
             
-            NSNumber *sessionID = [noteData valueForKey:@"SESSION_ID"];
-            
-            newNotification.applicationIconBadgeNumber = [sessionID integerValue];
+            newNotification.applicationIconBadgeNumber = 1;
             newNotification.userInfo = [n.userInfo copy];
             
             [newNotifications addObject:newNotification];
