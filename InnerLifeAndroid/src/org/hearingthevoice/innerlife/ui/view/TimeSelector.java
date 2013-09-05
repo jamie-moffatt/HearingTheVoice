@@ -56,8 +56,6 @@ public class TimeSelector extends View
 	private static final int PM_TRIANGLE_COLLISION = 2;
 	private int hit = NO_COLLISION;
 
-	private static final boolean DEBUG = false;
-
 	public TimeSelector(Context context)
 	{
 		super(context);
@@ -72,18 +70,18 @@ public class TimeSelector extends View
 		init(attrs, 0);
 	}
 
-	public TimeSelector(Context context, AttributeSet attrs, int defStyle)
+	public TimeSelector(Context context, AttributeSet attrs, int style)
 	{
-		super(context, attrs, defStyle);
+		super(context, attrs, style);
 		this.context = context;
-		init(attrs, defStyle);
+		init(attrs, style);
 	}
 
-	private void init(AttributeSet attrs, int defStyle)
+	private void init(AttributeSet attrs, int style)
 	{
 		// Load attributes
 		final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TimeSelector,
-				defStyle, 0);
+				style, 0);
 
 		a.recycle();
 
@@ -200,8 +198,6 @@ public class TimeSelector extends View
 	{
 		super.onDraw(canvas);
 
-		// TODO: consider storing these as member variables to reduce
-		// allocations per draw cycle.
 		int paddingLeft = getPaddingLeft();
 		int paddingTop = getPaddingTop();
 		int paddingRight = getPaddingRight();
@@ -219,8 +215,8 @@ public class TimeSelector extends View
 
 		canvas.drawCircle(centreX, centreY, radius, backgroundPaint);
 
-		canvas.drawArc(rect, 90, 180, false, darkBackgroundPaint);
-
+		canvas.drawArc(rect, 120, 180, false, darkBackgroundPaint);
+		
 		/*
 		 * DRAW AM ARC
 		 */
@@ -237,7 +233,7 @@ public class TimeSelector extends View
 		 * END DRAW AM ARC
 		 */
 
-		if (DEBUG)
+		if (Common.DEBUG)
 		{
 			Point a, b, c;
 			a = new Point((int) centreX, (int) centreY);
@@ -284,7 +280,7 @@ public class TimeSelector extends View
 		 * END DRAW PM ARC
 		 */
 
-		if (DEBUG)
+		if (Common.DEBUG)
 		{
 			Point a, b, c;
 			a = new Point((int) centreX, (int) centreY);
@@ -393,7 +389,7 @@ public class TimeSelector extends View
 		canvas.drawText("PM", centreX - 1.5f * textPaint.measureText("PM") - 10, centreY, textPaint);
 		canvas.drawText("AM", centreX + 0.5f * textPaint.measureText("AM") + 10, centreY, textPaint);
 
-		if (DEBUG)
+		if (Common.DEBUG)
 		{
 			if (touching)
 			{
