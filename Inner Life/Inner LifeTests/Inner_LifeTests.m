@@ -44,7 +44,9 @@
         
         int sessionID = [[notification.userInfo objectForKey:@"SESSION_ID"] integerValue];
         
-        NSDateComponents* dc = [[NSCalendar currentCalendar] components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:notificationTime];
+        NSDateComponents* dc = [
+        [NSCalendar currentCalendar]
+        components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:notificationTime];
         NSDateComponents* startDC = [dc copy];
         startDC.hour = (sessionID % 2) ? am : pm;
         NSDateComponents* endDC = [dc copy];
