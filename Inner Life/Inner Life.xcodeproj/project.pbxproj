@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		470886A417DA57D100A87FCD /* NSDate-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 470886A317DA57D100A87FCD /* NSDate-Utilities.m */; };
 		470B1BFC17A5346E009F67A0 /* ILUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 470B1BFB17A5346E009F67A0 /* ILUser.m */; };
 		4711150217B136B5001BF1C6 /* ILTimeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 4711150117B136B5001BF1C6 /* ILTimeSelector.m */; };
 		471270BF17BEBB25009CBB51 /* ILSessionProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 471270BE17BEBB25009CBB51 /* ILSessionProgressBar.m */; };
@@ -59,7 +60,6 @@
 		47F217E9176A209E0098FF4A /* ILChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E8176A209E0098FF4A /* ILChoice.m */; };
 		47FB34D017B25AAB00E989C9 /* ILSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FB34CF17B25AAB00E989C9 /* ILSettingsViewController.m */; };
 		47FB34D217B26A1700E989C9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47FB34D117B26A1700E989C9 /* QuartzCore.framework */; };
-		47FB34D817B27B8E00E989C9 /* DURoundedBorderLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FB34D717B27B8E00E989C9 /* DURoundedBorderLabel.m */; };
 		47FB34D917B27C2500E989C9 /* DURoundedBorderLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FB34D717B27B8E00E989C9 /* DURoundedBorderLabel.m */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +74,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		470886A217DA57C200A87FCD /* NSDate-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate-Utilities.h"; sourceTree = "<group>"; };
+		470886A317DA57D100A87FCD /* NSDate-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate-Utilities.m"; sourceTree = "<group>"; };
 		470B1BFA17A5346E009F67A0 /* ILUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUser.h; sourceTree = "<group>"; };
 		470B1BFB17A5346E009F67A0 /* ILUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUser.m; sourceTree = "<group>"; };
 		4711150017B136B5001BF1C6 /* ILTimeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILTimeSelector.h; sourceTree = "<group>"; };
@@ -190,6 +192,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		470886A117DA57A900A87FCD /* DateUtils */ = {
+			isa = PBXGroup;
+			children = (
+				470886A317DA57D100A87FCD /* NSDate-Utilities.m */,
+				470886A217DA57C200A87FCD /* NSDate-Utilities.h */,
+			);
+			name = DateUtils;
+			sourceTree = "<group>";
+		};
 		472CAE22179DB30C00B1179C /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -269,6 +280,7 @@
 		4792ECEA1768A7B800441527 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				470886A117DA57A900A87FCD /* DateUtils */,
 				47C9154417C151C30087C10E /* Default-568h@2x.png */,
 				47C9154517C151C30087C10E /* Default.png */,
 				47C9154617C151C30087C10E /* Default@2x.png */,
@@ -547,6 +559,7 @@
 				47D1E15D17BD2BBF00833F1A /* ILEndViewController.m in Sources */,
 				471270BF17BEBB25009CBB51 /* ILSessionProgressBar.m in Sources */,
 				47C9154C17C1584C0087C10E /* ILNotificationClockView.m in Sources */,
+				470886A417DA57D100A87FCD /* NSDate-Utilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,7 +568,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4792ED1E1768A7B900441527 /* Inner_LifeTests.m in Sources */,
-				47FB34D817B27B8E00E989C9 /* DURoundedBorderLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
