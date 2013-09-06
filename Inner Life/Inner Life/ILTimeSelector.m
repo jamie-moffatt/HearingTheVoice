@@ -64,25 +64,25 @@ CGFloat toDegrees(CGFloat radians)
 
 - (void)decrementAMTime
 {
-    if (_amStartTime > 0) _amStartTime--;
+    if (_amStartTime > 2) _amStartTime--;
     [self setNeedsDisplay];
 }
 
 - (void)incrementAMTime
 {
-    if (_amStartTime < 9) _amStartTime++;
+    if (_amStartTime < 11) _amStartTime++;
     [self setNeedsDisplay];
 }
 
 - (void)decrementPMTime
 {
-    if (_pmStartTime > 12) _pmStartTime--;
+    if (_pmStartTime > 14) _pmStartTime--;
     [self setNeedsDisplay];
 }
 
 - (void)incrementPMTime
 {
-    if (_pmStartTime < 21) _pmStartTime++;
+    if (_pmStartTime < 23) _pmStartTime++;
     [self setNeedsDisplay];
 }
 
@@ -110,7 +110,7 @@ CGFloat toDegrees(CGFloat radians)
     
     // AM Background Fill
     UIBezierPath* amBackgroundPath = [UIBezierPath bezierPath];
-    [amBackgroundPath addArcWithCenter: CGPointMake(cx, cy) radius: r startAngle: 270 * M_PI/180 endAngle: 90 * M_PI/180 clockwise: YES];
+    [amBackgroundPath addArcWithCenter: CGPointMake(cx, cy) radius: r startAngle: toRadians(300) endAngle: toRadians(120) clockwise: YES];
     [amBackgroundPath addLineToPoint: CGPointMake(cx, cy)];
     [amBackgroundPath closePath];
     
@@ -119,7 +119,7 @@ CGFloat toDegrees(CGFloat radians)
     
     // PM Background Fill
     UIBezierPath* pmBackgroundPath = [UIBezierPath bezierPath];
-    [pmBackgroundPath addArcWithCenter: CGPointMake(cx, cy) radius: r startAngle: 90 * M_PI/180 endAngle: 270 * M_PI/180 clockwise: YES];
+    [pmBackgroundPath addArcWithCenter: CGPointMake(cx, cy) radius: r startAngle: toRadians(120) endAngle: toRadians(300) clockwise: YES];
     [pmBackgroundPath addLineToPoint: CGPointMake(cx, cy)];
     [pmBackgroundPath closePath];
     
