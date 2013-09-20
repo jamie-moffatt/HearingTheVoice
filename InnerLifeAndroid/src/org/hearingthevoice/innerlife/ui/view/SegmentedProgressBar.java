@@ -27,11 +27,12 @@ public class SegmentedProgressBar extends View
 
 	private Paint borderPaint;
 	private Paint debugFillPaint;
-	
+
 	private Paint emptyPaint;
 	private Paint greyPaint;
 	private Paint bluePaint;
 	private Paint purplePaint;
+	private Paint shadowPaint;
 
 	private List<Integer> segmentMap;
 	private int cornerRadius;
@@ -63,9 +64,9 @@ public class SegmentedProgressBar extends View
 		segmentMap = new ArrayList<Integer>(28);
 		for (int i = 0; i < 28; i++)
 		{
-			if (i % 3 == 0 && i % 5 == 0) segmentMap.add(PURPLE);
-			else if (i % 3 == 0) segmentMap.add(BLUE);
-			else if (i % 5 == 0) segmentMap.add(GREY);
+			if (i < 8) segmentMap.add(BLUE);
+			else if (i == 9) segmentMap.add(PURPLE);
+			else if (i % 4 == 0) segmentMap.add(GREY);
 			else segmentMap.add(EMPTY);
 		}
 		cornerRadius = 10;
@@ -73,42 +74,30 @@ public class SegmentedProgressBar extends View
 		borderPaint = new Paint();
 		borderPaint.setColor(Color.BLACK);
 		borderPaint.setStyle(Style.STROKE);
-		borderPaint.setStrokeWidth(1);
-		
+		borderPaint.setStrokeWidth(2);
+
 		emptyPaint = new Paint();
-		emptyPaint.setShader(new LinearGradient(0, 0, 0, 40, Color.LTGRAY, Color.argb(255, 242, 242, 242), Shader.TileMode.CLAMP));
-		
+		emptyPaint.setShader(new LinearGradient(0, 0, 0, 40, Color.LTGRAY, Color.argb(255, 242, 242, 242),
+				Shader.TileMode.CLAMP));
+
 		greyPaint = new Paint();
-		greyPaint.setShader(new LinearGradient(0, 0, 0, 40, 
-				new int[]
-				{
-					Color.argb(255, 166, 166, 166),
-					Color.argb(255, 204, 204, 204),
-					Color.argb(255, 255, 255, 255)
-				}, new float[]{0, 0.8f, 1}, Shader.TileMode.CLAMP));
-		
+		greyPaint.setColor(Color.GRAY);
+
 		bluePaint = new Paint();
-		bluePaint.setShader(new LinearGradient(0, 0, 0, 40, 
-				new int[]
-				{
-					Color.argb(255, 36, 74, 179),
-					Color.argb(255, 61, 108, 217),
-					Color.argb(255, 87, 143, 255)
-				}, new float[]{0, 0.8f, 1}, Shader.TileMode.CLAMP));
-		
+		bluePaint.setColor(Color.argb(255, 36, 74, 179));
+		bluePaint.setStrokeWidth(1);
+		bluePaint.setStyle(Style.FILL);
+
 		purplePaint = new Paint();
-		purplePaint.setShader(new LinearGradient(0, 0, 0, 40, 
-				new int[]
-				{
-					Color.argb(255, 143, 37, 179),
-					Color.argb(255, 178, 63, 217),
-					Color.argb(255, 214, 89, 255)
-				}, new float[]{0, 0.8f, 1}, Shader.TileMode.CLAMP));
+		purplePaint.setColor(Color.argb(255, 143, 37, 179));
 
 		debugFillPaint = new Paint();
 		debugFillPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
-		debugFillPaint.setColor(0xDDDDDDFF);
+		debugFillPaint.setColor(Color.BLACK);
 		debugFillPaint.setStyle(Style.FILL);
+
+		shadowPaint = new Paint();
+		shadowPaint.setColor(0x44000000);
 	}
 
 	public List<Integer> getSegmentMap()
@@ -131,17 +120,12 @@ public class SegmentedProgressBar extends View
 		int x = getPaddingLeft();
 		int y = getPaddingTop();
 		int width = getWidth() - getPaddingLeft() - getPaddingRight();
-//		int height = getHeight() - getPaddingTop() - getPaddingBottom();
+		// int height = getHeight() - getPaddingTop() - getPaddingBottom();
 		int height = 40;
 
 		float sw = width / (float) segmentMap.size();
 
-		Path clipPath = new Path();
-		clipPath.addRoundRect(new RectF(x, y, width, height), cornerRadius, cornerRadius, Path.Direction.CW);
-
-		canvas.clipPath(clipPath);
-
-		canvas.drawRect(0, 0, getWidth(), getHeight(), debugFillPaint);
+		List<RectF> clips = new ArrayList<RectF>();
 
 		for (int i = 0; i < segmentMap.size(); i++)
 		{
@@ -159,8 +143,28 @@ public class SegmentedProgressBar extends View
 			}
 			else
 			{
-				canvas.drawRect(x + i * sw, 0, x + i * sw + sw, y + height, emptyPaint);
+				clips.add(new RectF(x + i * sw, 0, x + i * sw + sw, y + height));
 			}
+		}
+
+		for (int i = 0; i * 40 < width; i++)
+		{
+			Path p = new Path();
+			p.moveTo(x + (i * 40), y + height);
+			p.lineTo(x + (i * 40) + 20, y + height);
+			p.lineTo(x + (i * 40) + 40, y);
+			p.lineTo(x + (i * 40) + 20, y);
+			p.close();
+
+			canvas.drawPath(p, shadowPaint);
+		}
+		
+		for (RectF r : clips)
+			canvas.drawRect(r, emptyPaint);
+		
+		for (int i = 0; i < segmentMap.size(); i++)
+		{
+			canvas.drawRect(x + i * sw + 1, 1, x + i * sw + sw, y + height - 1, borderPaint);
 		}
 
 	}
