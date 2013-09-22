@@ -175,11 +175,11 @@ public class DashboardActivity extends Activity
 		}
 		for (Integer i : sessionsCompleted.keySet())
 		{
-			if (sessionsCompleted.get(i) != null && sessionsCompleted.get(i)) segmentMap.set(i-1, SegmentedProgressBar.COMPLETED_BUT_UNSYNCED);
+			if (i < 29 && sessionsCompleted.get(i) != null && sessionsCompleted.get(i)) segmentMap.set(i-1, SegmentedProgressBar.COMPLETED_BUT_UNSYNCED);
 		}
 		for (Integer i : sessionsSubmitted.keySet())
 		{
-			if (sessionsSubmitted.get(i) != null && sessionsSubmitted.get(i)) segmentMap.set(i-1, SegmentedProgressBar.SUBMITTED);
+			if (i < 29 && sessionsSubmitted.get(i) != null && sessionsSubmitted.get(i)) segmentMap.set(i-1, SegmentedProgressBar.SUBMITTED);
 		}
 		sessionProgressBar.setSegmentMap(segmentMap);
 	}
