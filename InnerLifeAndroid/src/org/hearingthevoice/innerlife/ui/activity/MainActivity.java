@@ -18,8 +18,6 @@ import org.hearingthevoice.innerlife.model.Question.QuestionType;
 import org.hearingthevoice.innerlife.model.Schedule;
 import org.hearingthevoice.innerlife.model.Section;
 
-import com.testflightapp.lib.TestFlight;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -40,6 +38,8 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.testflightapp.lib.TestFlight;
+
 public class MainActivity extends Activity
 {
 	private Context context;
@@ -59,11 +59,11 @@ public class MainActivity extends Activity
 	private LinearLayout sliderContainer;
 	private SeekBar sbrScaleResponse;
 	private TextView txtSliderValue;
-	
-	// stored the values of question responses, mapped  by unique question ID
-	private Map<Long, Integer> responseIDs;     // in terms of widget
-	private Map<Long, String>  responseStrings; // in terms of natural language
-	private Map<Long, String>  responseValues;  // in terms of data entry
+
+	// stored the values of question responses, mapped by unique question ID
+	private Map<Long, Integer> responseIDs; // in terms of widget
+	private Map<Long, String> responseStrings; // in terms of natural language
+	private Map<Long, String> responseValues; // in terms of data entry
 
 	private Button btnBack;
 	private Button btnNext;
@@ -76,16 +76,16 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		context = this;
-		
+
 		Log.d("MainActivity:80", "Opening question form with session " + getIntent().getExtras().getInt("sessionID"));
-		
+
 		txtQuestionHead = (TextView) findViewById(R.id.txt_question_header);
 		txtQuestionBody = (TextView) findViewById(R.id.txt_question_body);
 		rblResponses = (RadioGroup) findViewById(R.id.rbl_responses);
 		sbrScaleResponse = (SeekBar) findViewById(R.id.sbr_scale_response);
 		sliderContainer = (LinearLayout) findViewById(R.id.slider_container);
 		txtSliderValue = (TextView) findViewById(R.id.txt_slider_value);
-		
+
 		if (!Common.DEBUG)
 		{
 			txtQuestionHead.setVisibility(View.GONE);
@@ -131,23 +131,24 @@ public class MainActivity extends Activity
 
 			Log.d("SCHEDULE", "read from file");
 			schedule = QuestionAPI.retrieveCachedSchedule(context);
-			
+
 			Bundle e = getIntent().getExtras();
 			sessionID = e.getInt("sessionID");
 
 			if (sessionID == Section.START_TRAIT_SESSION_ID) TestFlight.passCheckpoint("Started Start Trait Questions");
-			if (sessionID == Section.MIDDLE_TRAIT_SESSION_ID) TestFlight.passCheckpoint("Started Middle Trait Questions");
+			if (sessionID == Section.MIDDLE_TRAIT_SESSION_ID) TestFlight
+					.passCheckpoint("Started Middle Trait Questions");
 			if (sessionID == Section.END_TRAIT_SESSION_ID) TestFlight.passCheckpoint("Started End Trait Questions");
-			
+
 			sections = schedule.filterBySession(sections, sessionID);
 
 			manager = AppManager.getInstance();
 			manager.setSection(sections);
-			
+
 			question = manager.question;
 			section = manager.section;
-			
-			questions = sections.get(section).getQuestions();	
+
+			questions = sections.get(section).getQuestions();
 		}
 		catch (Exception e)
 		{
@@ -174,9 +175,19 @@ public class MainActivity extends Activity
 		});
 
 		// attempt to load stored values from application when screen refreshes
-		responseIDs     = (manager.getResponseIDs()     == null) ? new HashMap<Long, Integer>() : manager.getResponseIDs(); // TODO need to check that questions are actually downloaded
-		responseStrings = (manager.getResponseStrings() == null) ? new HashMap<Long, String>()  : manager.getResponseStrings();
-		responseValues  = (manager.getResponseValues()  == null) ? new HashMap<Long, String>()  : manager.getResponseValues();
+		responseIDs = (manager.getResponseIDs() == null) ? new HashMap<Long, Integer>() : manager.getResponseIDs(); // TODO
+																													// need
+																													// to
+																													// check
+																													// that
+																													// questions
+																													// are
+																													// actually
+																													// downloaded
+		responseStrings = (manager.getResponseStrings() == null) ? new HashMap<Long, String>() : manager
+				.getResponseStrings();
+		responseValues = (manager.getResponseValues() == null) ? new HashMap<Long, String>() : manager
+				.getResponseValues();
 
 		btnBack = (Button) findViewById(R.id.btn_back);
 		btnNext = (Button) findViewById(R.id.btn_next);
@@ -187,32 +198,47 @@ public class MainActivity extends Activity
 			public void onClick(View v)
 			{
 				// Toast.makeText(context, String.format("You chose: %d",
-				// rblResponses.getCheckedRadioButtonId()), Toast.LENGTH_SHORT).show();
-				
+				// rblResponses.getCheckedRadioButtonId()),
+				// Toast.LENGTH_SHORT).show();
+
 				if (!questions.isEmpty()) recordResponse();
 
 				question--; // cycle back to previous question
-				
+
 				if (question < 0 && !questions.isEmpty())
 				{
-					// if the question index is < 0, cycle back to previous section
-					if (section > 0) section--; // cannot cycle back if on first section
-					questions = sections.get(section).getQuestions(); // set questions to those of previous section
-					question = questions.size() - 1; // set current question to last question in section upon cycling back
+					// if the question index is < 0, cycle back to previous
+					// section
+					if (section > 0) section--; // cannot cycle back if on first
+												// section
+					questions = sections.get(section).getQuestions(); // set
+																		// questions
+																		// to
+																		// those
+																		// of
+																		// previous
+																		// section
+					question = questions.size() - 1; // set current question to
+														// last question in
+														// section upon cycling
+														// back
 				}
 
 				if (!questions.isEmpty()) loadQuestion();
 				else loadPlaceholder();
-				
+
 				// if on the first question of the first section, there is no
 				// question to go back to so the back button is disabled.
-				btnBack.setEnabled(section != 0 || question != 0); // De Morgan's Law
-				
+				btnBack.setEnabled(section != 0 || question != 0); // De
+																	// Morgan's
+																	// Law
+
 				manager.question = question;
 				manager.section = section;
 			}
 		});
-		// back button starts as being disabled as activity opens on section 1 (0), question 1 (0)
+		// back button starts as being disabled as activity opens on section 1
+		// (0), question 1 (0)
 		btnBack.setEnabled(section != 0 || question != 0);
 
 		btnNext.setOnClickListener(new OnClickListener()
@@ -221,33 +247,47 @@ public class MainActivity extends Activity
 			public void onClick(View v)
 			{
 				// Toast.makeText(context, String.format("You chose: %d",
-				// rblResponses.getCheckedRadioButtonId()), Toast.LENGTH_SHORT).show();
-				
+				// rblResponses.getCheckedRadioButtonId()),
+				// Toast.LENGTH_SHORT).show();
+
 				if (!questions.isEmpty()) recordResponse();
 
-				// upon clicking next on the last question of the last section, end the session
+				// upon clicking next on the last question of the last section,
+				// end the session
 				if (section == sections.size() - 1 && question == questions.size() - 1)
 				{
 					endSession();
 					return;
 				}
-				
-				if (question == questions.size() - 1) // if next is clicked on the last question...
+
+				if (question == questions.size() - 1) // if next is clicked on
+														// the last question...
 				{
 					section++; // move onto next section
-					questions = sections.get(section).getQuestions(); // set questions to those of next section //TODO ArrayIndexOutOfBounds
+					questions = sections.get(section).getQuestions(); // set
+																		// questions
+																		// to
+																		// those
+																		// of
+																		// next
+																		// section
+																		// //TODO
+																		// ArrayIndexOutOfBounds
 					question = -1; // for post increment below to work correctly
 				}
-				
+
 				question++; // cycle to next question
 
 				if (!questions.isEmpty()) loadQuestion();
 				else loadPlaceholder();
 
-				// re-enable the back button when user proceeds from the first question
+				// re-enable the back button when user proceeds from the first
+				// question
 				// of the first section.
-				btnBack.setEnabled(section != 0 || question != 0); // De Morgan's Law
-				
+				btnBack.setEnabled(section != 0 || question != 0); // De
+																	// Morgan's
+																	// Law
+
 				manager.question = question;
 				manager.section = section;
 			}
@@ -270,7 +310,7 @@ public class MainActivity extends Activity
 		manager.setResponseIDs(responseIDs);
 		manager.setResponseStrings(responseStrings);
 		manager.setResponseValues(responseValues);
-		
+
 		Intent i = new Intent(context, SummaryActivity.class);
 		i.putExtra("sessionID", sessionID);
 		startActivity(i);
@@ -278,15 +318,16 @@ public class MainActivity extends Activity
 	}
 
 	/**
-	 * This method adds an appropriate widget to the user interface allowing the user
-	 * to select an appropriate response to the current question. This widget may vary
-	 * depending on the style of question; for example, a seek bar is used for numeral
-	 * answers while a group of radio buttons is used if there is a finite number of
-	 * natural language responses. 
+	 * This method adds an appropriate widget to the user interface allowing the
+	 * user to select an appropriate response to the current question. This
+	 * widget may vary depending on the style of question; for example, a seek
+	 * bar is used for numeral answers while a group of radio buttons is used if
+	 * there is a finite number of natural language responses.
 	 */
 	public void populateResponses()
 	{
-		rblResponses.removeAllViews(); // remove current responses prior to repopulation
+		rblResponses.removeAllViews(); // remove current responses prior to
+										// repopulation
 
 		List<Pair<String, String>> responses = new ArrayList<Pair<String, String>>();
 
@@ -294,35 +335,35 @@ public class MainActivity extends Activity
 		{
 			switch (questions.get(question).getType())
 			{
-				case YESNO:
-				{
-					rblResponses.setVisibility(View.VISIBLE);
-					sliderContainer.setVisibility(View.GONE);
-					responses.add(Pair.create("No" , "0"));
-					responses.add(Pair.create("Yes", "1"));
-					break;
-				}
-				case RADIO:
-				{
-					rblResponses.setVisibility(View.VISIBLE);
-					sliderContainer.setVisibility(View.GONE);
-					responses = sections.get(section).getResponses();
-					break;
-				}
-				case NUMSCALE:
-				{
-					// TODO add labels for low and high values
-					List<Pair<String, String>> minmax = sections.get(section).getResponses();
-	
-					rblResponses.setVisibility(View.GONE);
-					sliderContainer.setVisibility(View.VISIBLE);
-					String minDescription = minmax.get(0).first;
-					String maxDescription = minmax.get(1).first;
-	
-					sbrScaleResponse.setMax(9);
-	
-					break;
-				}
+			case YESNO:
+			{
+				rblResponses.setVisibility(View.VISIBLE);
+				sliderContainer.setVisibility(View.GONE);
+				responses.add(Pair.create("No", "0"));
+				responses.add(Pair.create("Yes", "1"));
+				break;
+			}
+			case RADIO:
+			{
+				rblResponses.setVisibility(View.VISIBLE);
+				sliderContainer.setVisibility(View.GONE);
+				responses = sections.get(section).getResponses();
+				break;
+			}
+			case NUMSCALE:
+			{
+				// TODO add labels for low and high values
+				List<Pair<String, String>> minmax = sections.get(section).getResponses();
+
+				rblResponses.setVisibility(View.GONE);
+				sliderContainer.setVisibility(View.VISIBLE);
+				String minDescription = minmax.get(0).first;
+				String maxDescription = minmax.get(1).first;
+
+				sbrScaleResponse.setMax(9);
+
+				break;
+			}
 			}
 
 			if (responses.size() > 0)
@@ -349,7 +390,7 @@ public class MainActivity extends Activity
 		if (responseIDs.containsKey(questionID))
 		{
 			rblResponses.check(responseIDs.get(questionID));
-			
+
 			if (sbrScaleResponse != null
 					&& questions.get(question).getType() == QuestionType.NUMSCALE)
 			{
@@ -377,8 +418,8 @@ public class MainActivity extends Activity
 	private void loadQuestion()
 	{
 		txtQuestionHead.setText("Session " + sessionID + ", Section " + sections.get(section).getSectionID()
-			+ ", Question " + questions.get(question).getNumber());
-		
+				+ ", Question " + questions.get(question).getNumber());
+
 		if (sections.get(section).getDescription().length() == 0)
 		{
 			txtQuestionBody.setText(questions.get(question).getDescription());
@@ -386,15 +427,15 @@ public class MainActivity extends Activity
 		else
 		{
 			txtQuestionBody.setText(Html.fromHtml("<b>" + sections.get(section).getDescription()
-				+ "</b><br /><br />" + questions.get(question).getDescription()));
+					+ "</b><br /><br />" + questions.get(question).getDescription()));
 		}
-		
+
 		populateResponses();
 	}
 
 	/**
-	 * This method is called when the appropriate question cannot be loaded
-	 * due to an error (e.g. question data cannot be loaded / is null). 
+	 * This method is called when the appropriate question cannot be loaded due
+	 * to an error (e.g. question data cannot be loaded / is null).
 	 */
 	private void loadPlaceholder()
 	{
@@ -407,39 +448,45 @@ public class MainActivity extends Activity
 	private void recordResponse()
 	{
 		long id = questions.get(question).getQuestionID();
-		
+
 		if (questions.get(question).getType() == QuestionType.NUMSCALE)
 		{
 			int response = sbrScaleResponse.getProgress();
-			
-			responseIDs    .put(id, response);
+
+			responseIDs.put(id, response);
 			responseStrings.put(id, "" + response); // convert to string
-			responseValues .put(id, "" + response);
+			responseValues.put(id, "" + response);
 		}
 		else
 		{
 			int responseID = rblResponses.getCheckedRadioButtonId();
 			responseIDs.put(id, responseID);
-			
-			if (responseID > -1) // -1 is used as an invalid ID by the Android API 
-			{							
+
+			if (responseID > -1) // -1 is used as an invalid ID by the Android
+									// API
+			{
 				if (questions.get(question).getType() == QuestionType.YESNO)
 				{
-					responseValues.put(id, "" + responseID); // yes/no values have direct mapping
+					responseValues.put(id, "" + responseID); // yes/no values
+																// have direct
+																// mapping
 				}
 				else
 				{
 					responseValues.put(id, sections.get(section).getResponses().get(responseID).second);
 				}
 			}
-			else responseValues.put(questions.get(question).getQuestionID(), "N/A"); // placeholder for skipped question
+			else responseValues.put(questions.get(question).getQuestionID(), "N/A"); // placeholder
+																						// for
+																						// skipped
+																						// question
 
 			RadioButton selection = (RadioButton) rblResponses.getChildAt(responseID);
 			String response = (selection == null) ? "No Response" : selection.getText().toString();
-			
+
 			responseStrings.put(id, response);
 		}
-		
+
 		manager.setResponseIDs(responseIDs);
 		manager.setResponseStrings(responseStrings);
 		manager.setResponseValues(responseValues);

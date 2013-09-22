@@ -1,21 +1,28 @@
 package org.hearingthevoice.innerlife;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import org.hearingthevoice.innerlife.model.Section;
 
-import com.testflightapp.lib.TestFlight;
-
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+
+import com.testflightapp.lib.TestFlight;
 
 public class AppManager extends Application
 {
@@ -57,7 +64,7 @@ public class AppManager extends Application
 	{
 		super.onCreate();
 		sInstance = this;
-		
+
 		TestFlight.takeOff(this, "d3efa820-9a27-4c93-8b55-68fe624e50dc");
 	}
 
@@ -355,9 +362,21 @@ public class AppManager extends Application
 		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
 		int avgResponseTime = preferences.getInt(AVERAGE_RESPONSE_TIME, 0);
 		String formattedTime = "";
-		if (avgResponseTime > (60 * 60)) formattedTime += (avgResponseTime / (60 * 60)) + "h";
-		if (avgResponseTime > 60) formattedTime += ((avgResponseTime % (60 * 60)) / 60) + "m";
-		if (avgResponseTime > 0) formattedTime += ((avgResponseTime % (60 * 60)) % 60) + "s";
+		if (avgResponseTime > (60 * 60))
+		{
+			int hours = avgResponseTime / (60 * 60);
+			formattedTime += hours + (hours == 1 ? " hour " : " hours ");
+		}
+		if (avgResponseTime > 60)
+		{
+			int minutes = (avgResponseTime % (60 * 60)) / 60;
+			formattedTime += minutes + (minutes == 1 ? " minute " : " minutes ");
+		}
+		if (avgResponseTime > 0)
+		{
+			int seconds = (avgResponseTime % (60 * 60)) % 60;
+			formattedTime += seconds + (seconds == 1 ? " second" : " seconds");
+		}
 		else return "?";
 		return formattedTime;
 	}
@@ -451,78 +470,151 @@ public class AppManager extends Application
 		editor.putBoolean(SUBMITTED_START_TRAIT, value);
 		editor.commit();
 	}
-	
+
 	public static final String SUBMITTED_MIDDLE_TRAIT = "submitted_middle_trait_key";
 
 	public static boolean getSubmittedMiddleTrait(Context context)
 	{
-	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-	    return preferences.getBoolean(SUBMITTED_MIDDLE_TRAIT, false);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getBoolean(SUBMITTED_MIDDLE_TRAIT, false);
 	}
 
 	public static void setSubmittedMiddleTrait(Context context, boolean value)
 	{
-	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-	    Editor editor = preferences.edit();
-	    editor.putBoolean(SUBMITTED_MIDDLE_TRAIT, value);
-	    editor.commit();
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putBoolean(SUBMITTED_MIDDLE_TRAIT, value);
+		editor.commit();
 	}
-	
+
 	public static final String SUBMITTED_END_TRAIT = "submitted_end_trait_key";
 
 	public static boolean getSubmittedEndTrait(Context context)
 	{
-	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-	    return preferences.getBoolean(SUBMITTED_END_TRAIT, false);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getBoolean(SUBMITTED_END_TRAIT, false);
 	}
 
 	public static void setSubmittedEndTrait(Context context, boolean value)
 	{
-	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-	    Editor editor = preferences.edit();
-	    editor.putBoolean(SUBMITTED_END_TRAIT, value);
-	    editor.commit();
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putBoolean(SUBMITTED_END_TRAIT, value);
+		editor.commit();
 	}
-	
+
 	public static final String STOP_NOTIFICATIONS = "stop_notifications_key";
 
 	public static boolean getStopNotifications(Context context)
 	{
-	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-	    return preferences.getBoolean(STOP_NOTIFICATIONS, false);
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		return preferences.getBoolean(STOP_NOTIFICATIONS, false);
 	}
 
 	public static void setStopNotifications(Context context, boolean value)
 	{
-	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-	    Editor editor = preferences.edit();
-	    editor.putBoolean(STOP_NOTIFICATIONS, value);
-	    editor.commit();
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putBoolean(STOP_NOTIFICATIONS, value);
+		editor.commit();
 	}
-	
+
 	public static final String START_DATE = "start_date_key";
 
 	public static Date getStartDate(Context context)
 	{
-	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-	    String sdate = preferences.getString(START_DATE, null);
-	    
-	    if (sdate != null)
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		String sdate = preferences.getString(START_DATE, null);
+
+		if (sdate != null)
 		{
 			return TimeUtils.deserializeTime(sdate);
 		}
-	    else
-	    {
-	    	return Calendar.getInstance(Locale.UK).getTime();
-	    }
+		else
+		{
+			return Calendar.getInstance(Locale.UK).getTime();
+		}
 	}
 
 	public static void setStartDate(Context context, Date date)
 	{
-	    SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
-	    Editor editor = preferences.edit();
-	    editor.putString(START_DATE, TimeUtils.serializeTime(date));
-	    editor.commit();
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_KEY, Context.MODE_PRIVATE);
+		Editor editor = preferences.edit();
+		editor.putString(START_DATE, TimeUtils.serializeTime(date));
+		editor.commit();
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	@SuppressLint("UseSparseArrays")
+	public static Map<Integer, Boolean> getSessionsCompleted(Context context)
+	{
+		File file = new File(context.getDir("data", MODE_PRIVATE), "sessions_completed");
+		try
+		{
+			ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file));
+			Map<Integer, Boolean> completed = (Map<Integer, Boolean>) inputStream.readObject();
+			inputStream.close();
+
+			if (completed != null) return completed;
+			else return new HashMap<Integer, Boolean>();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+			return new HashMap<Integer, Boolean>();
+		}
+	}
+
+	public static void setSessionsCompleted(Context context, Map<Integer, Boolean> map)
+	{
+		File file = new File(context.getDir("data", MODE_PRIVATE), "sessions_completed");
+		try
+		{
+			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file));
+			outputStream.writeObject(map);
+			outputStream.flush();
+			outputStream.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@SuppressLint("UseSparseArrays")
+	public static Map<Integer, Boolean> getSessionsSubmitted(Context context)
+	{
+		File file = new File(context.getDir("data", MODE_PRIVATE), "sessions_submitted");
+		try
+		{
+			ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file));
+			Map<Integer, Boolean> submitted = (Map<Integer, Boolean>) inputStream.readObject();
+			inputStream.close();
+
+			if (submitted != null) return submitted;
+			else return new HashMap<Integer, Boolean>();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+			return new HashMap<Integer, Boolean>();
+		}
+	}
+
+	public static void setSessionsSubmitted(Context context, Map<Integer, Boolean> map)
+	{
+		File file = new File(context.getDir("data", MODE_PRIVATE), "sessions_submitted");
+		try
+		{
+			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(file));
+			outputStream.writeObject(map);
+			outputStream.flush();
+			outputStream.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
 }

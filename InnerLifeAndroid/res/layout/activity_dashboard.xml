@@ -103,9 +103,10 @@
                     android:onClick="debugMenu__" />
 
                 <org.hearingthevoice.innerlife.ui.view.SegmentedProgressBar
-                    android:id="@+id/segmentedProgressBar1"
+                    android:id="@+id/sessionProgressBar"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp" />
+                    android:layout_height="40dp"
+                    android:padding="10dp" />
 
             </LinearLayout>
         </ScrollView>

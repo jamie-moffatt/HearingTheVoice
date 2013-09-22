@@ -1,8 +1,10 @@
 package org.hearingthevoice.innerlife.ui.activity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.hearingthevoice.innerlife.AppManager;
 import org.hearingthevoice.innerlife.Common;
@@ -12,8 +14,7 @@ import org.hearingthevoice.innerlife.io.web.QuestionAPI;
 import org.hearingthevoice.innerlife.model.Schedule;
 import org.hearingthevoice.innerlife.model.Section;
 import org.hearingthevoice.innerlife.services.BootService;
-
-import com.testflightapp.lib.TestFlight;
+import org.hearingthevoice.innerlife.ui.view.SegmentedProgressBar;
 
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -32,6 +33,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.testflightapp.lib.TestFlight;
+
 public class DashboardActivity extends Activity
 {
 	private Button btnAnswerTestQuestions;
@@ -41,6 +44,7 @@ public class DashboardActivity extends Activity
 	private TextView txtNumResponses;
 	private TextView txtResponseTime;
 	private TextView txtQuestionsAvailable;
+	private SegmentedProgressBar sessionProgressBar;
 
 	private ProgressDialog progressDialog;
 
@@ -63,11 +67,12 @@ public class DashboardActivity extends Activity
 		txtNumResponses = (TextView) findViewById(R.id.txtResponses);
 		txtResponseTime = (TextView) findViewById(R.id.txtResponseTime);
 		txtQuestionsAvailable = (TextView) findViewById(R.id.txtQuestionsAvailable);
+		sessionProgressBar = (SegmentedProgressBar) findViewById(R.id.sessionProgressBar);
 
 		txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_download, 0, 0, 0);
 
 		btnAnswerTestQuestions.setEnabled(false);
-		
+
 		if (!Common.DEBUG)
 		{
 			btnTestNotification.setVisibility(View.GONE);
@@ -115,8 +120,8 @@ public class DashboardActivity extends Activity
 
 		int samplesCompletedToday = AppManager.getSamplesCompleteToday(context);
 		txtSamplesToday.setText("You have submitted " + samplesCompletedToday + " samples today.");
-		if (samplesCompletedToday == 1)
-			txtSamplesToday.setText("You have submitted " + samplesCompletedToday + " sample today.");
+		if (samplesCompletedToday == 1) txtSamplesToday.setText("You have submitted " + samplesCompletedToday
+				+ " sample today.");
 		if (samplesCompletedToday < 1) txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(
 				R.drawable.action_empty_star, 0, 0, 0);
 		else if (samplesCompletedToday == 1) txtSamplesToday.setCompoundDrawablesWithIntrinsicBounds(
@@ -135,8 +140,8 @@ public class DashboardActivity extends Activity
 			if (samplesCompletedToday > 1 && !AppManager.getGotNotification(context))
 			{
 				txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
-				if (!AppManager.getGotNotification(context))
-					txtQuestionsAvailable.setText("Wait for the next notification.");
+				if (!AppManager.getGotNotification(context)) txtQuestionsAvailable
+						.setText("Wait for the next notification.");
 				btnAnswerTestQuestions.setEnabled(false);
 			}
 		}
@@ -152,6 +157,31 @@ public class DashboardActivity extends Activity
 			startActivity(intent);
 			finish();
 		}
+	}
+
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+
+		int session = TimeUtils.getSessionIDBasedOnTime(AppManager.getStartDate(context));
+		Map<Integer, Boolean> sessionsCompleted = AppManager.getSessionsCompleted(context);
+		Map<Integer, Boolean> sessionsSubmitted = AppManager.getSessionsSubmitted(context);
+		List<Integer> segmentMap = new ArrayList<Integer>();
+		for (int i = 1; i <= 28; i++)
+		{
+			if (i < session) segmentMap.add(SegmentedProgressBar.MISSED);
+			else segmentMap.add(SegmentedProgressBar.EMPTY);
+		}
+		for (Integer i : sessionsCompleted.keySet())
+		{
+			if (sessionsCompleted.get(i) != null && sessionsCompleted.get(i)) segmentMap.set(i-1, SegmentedProgressBar.COMPLETED_BUT_UNSYNCED);
+		}
+		for (Integer i : sessionsSubmitted.keySet())
+		{
+			if (sessionsSubmitted.get(i) != null && sessionsSubmitted.get(i)) segmentMap.set(i-1, SegmentedProgressBar.SUBMITTED);
+		}
+		sessionProgressBar.setSegmentMap(segmentMap);
 	}
 
 	@Override
@@ -310,8 +340,8 @@ public class DashboardActivity extends Activity
 				{
 					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
 					txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
-					if (!AppManager.getGotNotification(context))
-						txtQuestionsAvailable.setText("Wait for the next notification.");
+					if (!AppManager.getGotNotification(context)) txtQuestionsAvailable
+							.setText("Wait for the next notification.");
 					btnAnswerTestQuestions.setEnabled(false);
 				}
 			}
@@ -355,8 +385,8 @@ public class DashboardActivity extends Activity
 				{
 					txtQuestionsAvailable.setCompoundDrawablesWithIntrinsicBounds(R.drawable.action_help, 0, 0, 0);
 					txtQuestionsAvailable.setText("Today's Questions Have Been Answered");
-					if (!AppManager.getGotNotification(context))
-						txtQuestionsAvailable.setText("Wait for the next notification.");
+					if (!AppManager.getGotNotification(context)) txtQuestionsAvailable
+							.setText("Wait for the next notification.");
 					btnAnswerTestQuestions.setEnabled(false);
 				}
 			}

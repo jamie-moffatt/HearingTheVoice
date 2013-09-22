@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.hearingthevoice.innerlife.AppManager;
@@ -109,9 +110,8 @@ public class SummaryActivity extends Activity
 			Calendar submissionTime = Calendar.getInstance();
 			String extension = new SimpleDateFormat("yyyyMMddHHmmss", Locale.UK).format(submissionTime.getTime());
 
-			if (sessionID < Section.START_TRAIT_SESSION_ID)
-				AppManager.recordSampleComplete(context,
-						new SimpleDateFormat("yyyy-MM-dd", Locale.UK).format(submissionTime.getTime()));
+			if (sessionID < Section.START_TRAIT_SESSION_ID) AppManager.recordSampleComplete(context,
+					new SimpleDateFormat("yyyy-MM-dd", Locale.UK).format(submissionTime.getTime()));
 
 			filename = extension + " responses";
 			FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
@@ -145,6 +145,10 @@ public class SummaryActivity extends Activity
 
 			fos.write(str.toString().getBytes());
 			fos.close();
+
+			Map<Integer, Boolean> sessionsCompleted = AppManager.getSessionsCompleted(context);
+			sessionsCompleted.put(sessionID, true);
+			AppManager.setSessionsCompleted(context, sessionsCompleted);
 
 			AppManager.updateAverageResponseTime(context, _notificationTime, _submissionTime);
 
@@ -236,11 +240,19 @@ public class SummaryActivity extends Activity
 		{
 			if (postedSuccessfully)
 			{
+				Map<Integer, Boolean> sessionsSubmitted = AppManager.getSessionsSubmitted(context);
+				sessionsSubmitted.put(sessionID, true);
+				AppManager.setSessionsSubmitted(context, sessionsSubmitted);
+
 				Toast.makeText(activity, "Responses submitted.", Toast.LENGTH_LONG).show();
 				commonEndBehaviour();
 			}
 			else
 			{
+				Map<Integer, Boolean> sessionsSubmitted = AppManager.getSessionsSubmitted(context);
+				sessionsSubmitted.put(sessionID, false);
+				AppManager.setSessionsSubmitted(context, sessionsSubmitted);
+
 				Toast.makeText(activity, "Network Problem. Responses were not submitted.", Toast.LENGTH_LONG).show();
 
 				if (submissionProgressDialog != null && submissionProgressDialog.isShowing())
