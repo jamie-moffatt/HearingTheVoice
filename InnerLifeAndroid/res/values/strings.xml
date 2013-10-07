@@ -30,7 +30,6 @@
     <string name="thank_you_for_using_inner_life_">Thank you for using Inner Life.</string>
     <string name="you_have_now_completed_all_28_samples_">You have now completed all 28 samples.</string>
     <string name="your_average_response_time_was_">Your average response time was --.</string>
-    <string name="thank_you_message">Thank you for your responses: you have now reached the end of the study.\\nAll the data you provided will be stored anonymously and confidentially.\\n\\nIf you are happy for us to use your data in our research, select YES.\\nIf you would prefer that we didn\'t, select NO.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
 

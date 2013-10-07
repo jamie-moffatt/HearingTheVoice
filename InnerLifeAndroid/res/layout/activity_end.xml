@@ -53,13 +53,12 @@
                     android:textColor="#FFFFFF" />
 
                 <TextView
-                    android:id="@+id/TextView01"
+                    android:id="@+id/txtEndThankYou"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center_vertical"
                     android:padding="8dp"
-                    android:text="@string/thank_you_message"
                     android:textColor="#FFFFFF" />
 
                 <LinearLayout

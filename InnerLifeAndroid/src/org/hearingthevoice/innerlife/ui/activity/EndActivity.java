@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class EndActivity extends Activity
 
 	private TextView txtResponseTime;
 	private ProgressDialog progressDialog;
+	private TextView txtEndThankYou;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -44,8 +46,10 @@ public class EndActivity extends Activity
 		context = this;
 		TestFlight.passCheckpoint("Reached EndActivity");
 		txtResponseTime = (TextView) findViewById(R.id.txtResponseTimeEnd);
+		txtEndThankYou = (TextView) findViewById(R.id.txtEndThankYou);
 		String avgResponseTime = AppManager.getAverageResponseTime(context);
 		txtResponseTime.setText("Your average response time was " + avgResponseTime + ".");
+		txtEndThankYou.setText(Html.fromHtml("Thank you for your responses: you have now reached the end of the study.<br/>All the data you provided will be stored anonymously and confidentially.<br/><br/>If you are happy for us to use your data in our research, select YES.<br/>If you would prefer that we didn't, select NO."));
 	}
 
 	public void acceptDataSubmission(View v)
@@ -153,7 +157,7 @@ public class EndActivity extends Activity
 			{
 				AlertDialog.Builder builder = new AlertDialog.Builder(context);
 				builder.setTitle("Request Successfully Submitted.")
-						.setMessage(THANK_YOU_TEXT)
+						.setMessage(Html.fromHtml(THANK_YOU_TEXT))
 						.setPositiveButton("OK", new DialogInterface.OnClickListener()
 						{
 							@Override
