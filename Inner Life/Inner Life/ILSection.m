@@ -12,7 +12,7 @@
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"(%d,%@)", _sectionID, _name];
+    return [NSString stringWithFormat:@"(%ld,%@)", (long)_sectionID, _name];
 }
 
 @end

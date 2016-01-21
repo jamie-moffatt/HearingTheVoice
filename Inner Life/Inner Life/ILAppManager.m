@@ -181,10 +181,14 @@
         if ([completionDictionary objectForKey:key]) numberOfCompletions++;
     }
     
-    int weightedAvgResponseTime = [ILAppManager getAverageResponseTime] * (numberOfCompletions - 1);
-    int newAvgResponseTime = (weightedAvgResponseTime + (int)newResponseTime) / numberOfCompletions;
     
-    [[NSUserDefaults standardUserDefaults] setInteger:newAvgResponseTime forKey:UD_AVERAGE_RESPONSE_TIME];
+    NSInteger weightedAvgResponseTime = [ILAppManager getAverageResponseTime] * (numberOfCompletions - 1);
+    if (numberOfCompletions > 0)
+    {
+        NSInteger newAvgResponseTime = (weightedAvgResponseTime + (int)newResponseTime) / numberOfCompletions;
+        [[NSUserDefaults standardUserDefaults] setInteger:newAvgResponseTime forKey:UD_AVERAGE_RESPONSE_TIME];
+    }
+    
 }
 
 + (NSInteger)getAverageResponseTime
@@ -194,23 +198,23 @@
 
 + (NSString *)getFormattedAverageResponseTime
 {
-    int averageResponseTime = [ILAppManager getAverageResponseTime];
+    NSInteger averageResponseTime = [ILAppManager getAverageResponseTime];
     
-    int seconds = averageResponseTime % 60;
-    int minutes = (averageResponseTime % (60 * 60)) / 60;
-    int hours = averageResponseTime / (60 * 60);
+    NSInteger seconds = averageResponseTime % 60;
+    NSInteger minutes = (averageResponseTime % (60 * 60)) / 60;
+    NSInteger hours = averageResponseTime / (60 * 60);
     
     NSMutableString *s = [[NSMutableString alloc] init];
     
     if (averageResponseTime > (60 * 60))
     {
-        [s appendFormat:@"%d Hour%@ ", hours, hours > 1 || hours == 0 ? @"s" : @""];
+        [s appendFormat:@"%ld Hour%@ ", (long)hours, hours > 1 || hours == 0 ? @"s" : @""];
     }
     if (averageResponseTime > 60)
     {
-        [s appendFormat:@"%d Minute%@ ", minutes, minutes > 1 || minutes == 0 ? @"s" : @""];
+        [s appendFormat:@"%ld Minute%@ ", (long)minutes, minutes > 1 || minutes == 0 ? @"s" : @""];
     }
-    [s appendFormat:@"%d Second%@ ", seconds, seconds > 1 || seconds == 0 ? @"s" : @""];
+    [s appendFormat:@"%ld Second%@ ", (long)seconds, seconds > 1 || seconds == 0 ? @"s" : @""];
     
     return [s copy];
 }

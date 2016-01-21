@@ -174,7 +174,7 @@
                          NSString *s = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
                          NSLog(@"Web API Response:\n%@", s);
                          
-                         int http_status_code = [((NSHTTPURLResponse *)response) statusCode];
+                         NSInteger http_status_code = [((NSHTTPURLResponse *)response) statusCode];
                          
                          // HTTP (201 Created).
                          if (http_status_code == 201)

@@ -31,7 +31,7 @@
 {
     [super viewDidLoad];
 	[TestFlight passCheckpoint:@"Reached EndViewController"];
-    _lblSamplesComplete.text = [NSString stringWithFormat:@"You completed %d/28 samples.", [[ILAppManager getSessionsCompleted] count]];
+    _lblSamplesComplete.text = [NSString stringWithFormat:@"You completed %lu/28 samples.", (unsigned long)[[ILAppManager getSessionsCompleted] count]];
     _lblAverageResponseTime.text = [ILAppManager getFormattedAverageResponseTime];
 }
 
@@ -85,7 +85,7 @@
     NSMutableURLRequest *URL_Request = [NSMutableURLRequest requestWithURL:permissionsAPI_URL];
     [URL_Request setHTTPMethod:@"POST"];
     [URL_Request setValue:@"text/xml" forHTTPHeaderField:@"Content-Type"];
-    NSString* permissionXML = [NSString stringWithFormat:@"<user id=\"%d\" useDataPermission=\"%@\" />", [ILAppManager getUser].userID, allowDataUse ? @"true" : @"false"];
+    NSString* permissionXML = [NSString stringWithFormat:@"<user id=\"%ld\" useDataPermission=\"%@\" />", (long)[ILAppManager getUser].userID, allowDataUse ? @"true" : @"false"];
     NSLog(@"%@", permissionXML);
     [URL_Request setHTTPBody:[permissionXML dataUsingEncoding:NSUTF8StringEncoding]];
     

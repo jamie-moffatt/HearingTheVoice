@@ -31,7 +31,7 @@
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"(%d, \"%@\", %d, %@)", _userID, _userCode, _age, _gender];
+    return [NSString stringWithFormat:@"(%ld, \"%@\", %ld, %@)", (long)_userID, _userCode, (long)_age, _gender];
 }
 
 @end

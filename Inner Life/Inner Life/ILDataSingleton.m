@@ -99,7 +99,7 @@
 - (NSArray *)getFlatQuestionArrayBySession: (NSInteger)sessionID
 {
     NSArray *session = [[self getSchedule].sessions objectAtIndex:(sessionID - 1)];
-    NSLog(@"Session %d:\n\n", sessionID);
+    NSLog(@"Session %ld:\n\n",(long)sessionID);
     NSLog(@"%@", session);
     NSMutableArray *questions = [[NSMutableArray alloc] init];
     for (int i = 0; i < [session count]; i++)

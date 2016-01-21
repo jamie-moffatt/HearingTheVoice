@@ -50,9 +50,9 @@
     lblTimeRangeDescription.font = [UIFont systemFontOfSize:13];
     lblTimeRangeDescription.text =
     [NSString stringWithFormat:
-     @"You will be notified between %d:00 - %d:00 and %d:00 - %d:00.",
-     amTime, (amTime + 3) % 24,
-     pmTime, (pmTime + 3) % 24];
+     @"You will be notified between %ld:00 - %ld:00 and %ld:00 - %ld:00.",
+     (long)amTime, (amTime + 3) % 24,
+     (long)pmTime, (pmTime + 3) % 24];
     lblTimeRangeDescription.textAlignment = NSTextAlignmentLeft;
     lblTimeRangeDescription.backgroundColor = [UIColor colorWithWhite:0.92 alpha:1];
     [lblTimeRangeDescription sizeToFitFixedWidth:width - 20];
@@ -98,9 +98,9 @@
     
     lblTimeRangeDescription.text =
     [NSString stringWithFormat:
-     @"You will be notified between %d:00 - %d:00 and %d:00 - %d:00.",
-     amTime, (amTime + 3) % 24,
-     pmTime, (pmTime + 3) % 24];
+     @"You will be notified between %ld:00 - %ld:00 and %ld:00 - %ld:00.",
+     (long)amTime, (long)((amTime + 3) % 24),
+     (long)pmTime, (long)((pmTime + 3) % 24)];
 }
 
 @end

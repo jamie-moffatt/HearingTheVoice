@@ -43,7 +43,7 @@
     NSArray *xs = [data getFlatQuestionArrayBySession:_currentSession];
     for (ILQuestion *q in xs)
     {
-        [data.responses setObject:[ILChoice NA] forKey:[NSString stringWithFormat:@"%d", q.questionID]];
+        [data.responses setObject:[ILChoice NA] forKey:[NSString stringWithFormat:@"%ld", (long)q.questionID]];
     }
     
     UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
@@ -124,7 +124,7 @@
         [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         NSString *date = [df stringFromDate:now];
         
-        [responseXML appendFormat:@"<submission userID=\"%d\" sessionID=\"%d\" notificationTime=\"%@\" submissionTime=\"%@\">", user.userID, _currentSession, [[ILAppManager getNotificationMap] objectForKey:[NSString stringWithFormat:@"%d",_currentSession]], date];
+        [responseXML appendFormat:@"<submission userID=\"%ld\" sessionID=\"%ld\" notificationTime=\"%@\" submissionTime=\"%@\">", (long)user.userID, (long)_currentSession, [[ILAppManager getNotificationMap] objectForKey:[NSString stringWithFormat:@"%ld",(long)_currentSession]], date];
         for (NSString *key in data.responses)
         {
             NSString *questionID = key;
@@ -150,12 +150,12 @@
                withIntermediateDirectories:YES attributes:nil error:nil];
         
         NSError* error = nil;
-        BOOL writeSuccess = [responseXML writeToURL:[myfolder URLByAppendingPathComponent:[NSString stringWithFormat:@"submission%d.xml", _currentSession]] atomically:YES encoding:NSUTF8StringEncoding error:&error];
+        BOOL writeSuccess = [responseXML writeToURL:[myfolder URLByAppendingPathComponent:[NSString stringWithFormat:@"submission%ld.xml", (long)_currentSession]] atomically:YES encoding:NSUTF8StringEncoding error:&error];
         
         if (writeSuccess)
         {        
             NSMutableDictionary *completed = [NSMutableDictionary dictionaryWithDictionary:[ILAppManager getSessionsCompleted]];
-            [completed setObject:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%d", _currentSession]];
+            [completed setObject:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%ld", (long)_currentSession]];
             [ILAppManager setSessionsCompleted:completed];
         }
         
@@ -174,13 +174,13 @@
                  NSString *s = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
                  NSLog(@"Web API Response:\n%@", s);
                  
-                 int http_status_code = [((NSHTTPURLResponse *)response) statusCode];
+                 NSInteger http_status_code = [((NSHTTPURLResponse *)response) statusCode];
                  
                  // HTTP (201 Created).
                  if (http_status_code == 201)
                  {
                      NSMutableDictionary *submitted = [NSMutableDictionary dictionaryWithDictionary:[ILAppManager getSessionsSubmitted]];
-                     [submitted setObject:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%d", _currentSession]];
+                     [submitted setObject:[NSNumber numberWithBool:YES] forKey:[NSString stringWithFormat:@"%ld", (long)_currentSession]];
                      [ILAppManager setSessionsSubmitted:submitted];
                      [TestFlight passCheckpoint:@"Submitted Session"];
                  }
@@ -209,8 +209,8 @@
         _questionProgressBar.currentSubSection++;
     }
     
-    NSLog(@"Section Index: %d", data.currentSection);
-    NSLog(@"Question Index: %d", data.currentQuestion);
+    NSLog(@"Section Index: %ld", (long)data.currentSection);
+    NSLog(@"Question Index: %ld", (long)data.currentQuestion);
     
     [self.tableView reloadData];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -275,7 +275,7 @@
 {
     ILQuestion *q = [self getCurrentQuestion:[self getCurrentSection]];
     ILChoice *c = [[ILChoice alloc] initWithText:@"From UISlider" andValue:[NSString stringWithFormat:@"%d", (int)sender.value]];
-    [data.responses setObject:c forKey:[NSString stringWithFormat:@"%d", q.questionID]];
+    [data.responses setObject:c forKey:[NSString stringWithFormat:@"%ld", (long)q.questionID]];
     
     [self.tableView reloadData];
 }
@@ -416,7 +416,7 @@
                     UILabel *minTextLabel = (UILabel *)[cell viewWithTag:1];
                     UILabel *maxTextLabel = (UILabel *)[cell viewWithTag:2];
                     
-                    ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", q.questionID]];
+                    ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%ld", (long)q.questionID]];
                     
                     if (response)
                     {
@@ -481,7 +481,7 @@
             {
                 cell.textLabel.font = [UIFont systemFontOfSize:15];
 
-                ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", q.questionID]];
+                ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%ld", (long)q.questionID]];
                 if ([response.value isEqualToString:@"N/A"])
                 {
                     cell.textLabel.text = @"1";
@@ -508,7 +508,7 @@
                 cell.textLabel.text = @"No";
             }
             
-            ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", q.questionID]];
+            ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%ld", (long)q.questionID]];
             
             if (response)
             {
@@ -540,7 +540,7 @@
             cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
             cell.textLabel.text = choice.text;
             
-            ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%d", q.questionID]];
+            ILChoice *response = [data.responses objectForKey:[NSString stringWithFormat:@"%ld", (long)q.questionID]];
             
             if (response)
             {
@@ -589,12 +589,12 @@
             {
                 choice = [[ILChoice alloc] initWithText:@"NO" andValue:@"0"];
             }
-            [data.responses setObject:choice forKey:[NSString stringWithFormat:@"%d", q.questionID]];
+            [data.responses setObject:choice forKey:[NSString stringWithFormat:@"%ld", (long)q.questionID]];
         }
         else
         {
             ILChoice *choice = [[self getCurrentSection].choices objectAtIndex:indexPath.row];
-            [data.responses setObject:choice forKey:[NSString stringWithFormat:@"%d", q.questionID]];
+            [data.responses setObject:choice forKey:[NSString stringWithFormat:@"%ld", (long)q.questionID]];
         }
     }
     [self.tableView reloadData];

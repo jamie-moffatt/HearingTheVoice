@@ -88,7 +88,7 @@
              NSString *dataStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
              NSInteger userID = [dataStr integerValue];
              
-             NSLog(@"New User Accepted with ID: %d", userID);
+             NSLog(@"New User Accepted with ID: %ld", (long)userID);
              
              ILUser *newUser = [[ILUser alloc] init];
              newUser.userID = userID;

@@ -68,7 +68,7 @@
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGFloat width = rect.size.width;
     
-    int numOfSections = [_sectionSpecification count];
+    NSInteger numOfSections = [_sectionSpecification count];
     CGFloat sizeOfSegments = width / 10;
     
     NSArray* gradientColors = [NSArray arrayWithObjects:
@@ -82,14 +82,14 @@
     CGContextSaveGState(context);
     if (numOfSections % 2)
     {
-        for (int i = 5 - numOfSections/2, j = 0; i <= 5 + numOfSections/2; i++, j++)
+        for (NSInteger i = 5 - numOfSections/2, j = 0; i <= 5 + numOfSections/2; i++, j++)
         {
             CGContextAddPath(context, [UIBezierPath bezierPathWithOvalInRect:CGRectMake(i*sizeOfSegments-11, 4, 22, 22)].CGPath);
         }
     }
     else
     {
-        for (int i = 5 - numOfSections/2, j = 0; i < 5 + numOfSections/2; i++, j++)
+        for (NSInteger i = 5 - numOfSections/2, j = 0; i < 5 + numOfSections/2; i++, j++)
         {
             CGContextAddPath(context, [UIBezierPath bezierPathWithOvalInRect:CGRectMake(i*sizeOfSegments-11+sizeOfSegments/2, 4, 22, 22)].CGPath);
         }
@@ -117,7 +117,7 @@
     
     if (numOfSections % 2)
     {
-        for (int i = 5 - numOfSections/2, j = 0; i <= 5 + numOfSections/2; i++, j++)
+        for (NSInteger i = 5 - numOfSections/2, j = 0; i <= 5 + numOfSections/2; i++, j++)
         {
             if (j < _currentSection) [complete drawInRect:CGRectMake(i*sizeOfSegments-10, 5, 20, 20)];
             else if (j == _currentSection) [current drawInRect:CGRectMake(i*sizeOfSegments-10, 5, 20, 20)];
@@ -126,7 +126,7 @@
     }
     else
     {
-        for (int i = 5 - numOfSections/2, j = 0; i < 5 + numOfSections/2; i++, j++)
+        for (NSInteger i = 5 - numOfSections/2, j = 0; i < 5 + numOfSections/2; i++, j++)
         {
             if (j < _currentSection) [complete drawInRect:CGRectMake(i*sizeOfSegments-10+sizeOfSegments/2, 5, 20, 20)];
             else if (j == _currentSection) [current drawInRect:CGRectMake(i*sizeOfSegments-10+sizeOfSegments/2, 5, 20, 20)];
@@ -139,7 +139,7 @@
     
     if (numOfSections % 2)
     {
-        for (int i = 14 - numOfSections/2, j = 0; i <= 14 + numOfSections/2; i++, j++)
+        for (NSInteger i = 14 - numOfSections/2, j = 0; i <= 14 + numOfSections/2; i++, j++)
         {
             UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(i*sizeOfSegments-4.5, 30, 9, 9)];
             if (j < _currentSubSection) [[UIColor colorWithWhite:0.5 alpha: 1] setFill];
@@ -150,7 +150,7 @@
     }
     else
     {
-        for (int i = 14 - numOfSections/2, j = 0; i < 14 + numOfSections/2; i++, j++)
+        for (NSInteger i = 14 - numOfSections/2, j = 0; i < 14 + numOfSections/2; i++, j++)
         {
             UIBezierPath* ovalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(i*sizeOfSegments-4.5+sizeOfSegments/2, 30, 9, 9)];
             if (j < _currentSubSection) [[UIColor colorWithWhite:0.5 alpha: 1] setFill];

@@ -12,7 +12,7 @@
 
 - (NSString*)description
 {
-    return [NSString stringWithFormat:@"(%d,%d)", _questionID, _number];
+    return [NSString stringWithFormat:@"(%ld,%ld)", (long)_questionID, (long)_number];
 }
 
 + (ILQuestionType) typeFromString: (NSString*)string
