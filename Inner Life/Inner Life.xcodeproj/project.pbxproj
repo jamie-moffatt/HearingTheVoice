@@ -59,6 +59,8 @@
 		4792ED451769260C00441527 /* ILQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED441769260C00441527 /* ILQuestion.m */; };
 		4792ED48176928C900441527 /* ILSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED47176928C900441527 /* ILSchedule.m */; };
 		4792ED4B1769293300441527 /* ILSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4792ED4A1769293300441527 /* ILSection.m */; };
+		47B804631C5289FC003007D9 /* ILFirstTimeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47B804621C5289FC003007D9 /* ILFirstTimeView.xib */; settings = {ASSET_TAGS = (); }; };
+		47B804661C52931D003007D9 /* ILFirstTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47B804651C52931D003007D9 /* ILFirstTimeViewController.m */; settings = {ASSET_TAGS = (); }; };
 		47C9154717C151C30087C10E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 47C9154417C151C30087C10E /* Default-568h@2x.png */; };
 		47C9154C17C1584C0087C10E /* ILNotificationClockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 47C9154B17C1584C0087C10E /* ILNotificationClockView.m */; };
 		47D1E15D17BD2BBF00833F1A /* ILEndViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47D1E15C17BD2BBF00833F1A /* ILEndViewController.m */; };
@@ -168,6 +170,9 @@
 		4792ED47176928C900441527 /* ILSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSchedule.m; sourceTree = "<group>"; };
 		4792ED491769293300441527 /* ILSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILSection.h; sourceTree = "<group>"; };
 		4792ED4A1769293300441527 /* ILSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILSection.m; sourceTree = "<group>"; };
+		47B804621C5289FC003007D9 /* ILFirstTimeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILFirstTimeView.xib; sourceTree = "<group>"; };
+		47B804641C52931D003007D9 /* ILFirstTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILFirstTimeViewController.h; sourceTree = "<group>"; };
+		47B804651C52931D003007D9 /* ILFirstTimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILFirstTimeViewController.m; sourceTree = "<group>"; };
 		47C9154417C151C30087C10E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		47C9154A17C1584C0087C10E /* ILNotificationClockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILNotificationClockView.h; sourceTree = "<group>"; };
 		47C9154B17C1584C0087C10E /* ILNotificationClockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILNotificationClockView.m; sourceTree = "<group>"; };
@@ -416,6 +421,7 @@
 				47E733441792B9AC00F23708 /* ILDashboard.xib */,
 				47E733851793090400F23708 /* ILUserForm.xib */,
 				47D7200217BD227E00F9FB14 /* ILEndView.xib */,
+				47B804621C5289FC003007D9 /* ILFirstTimeView.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -433,6 +439,8 @@
 				47FB34CF17B25AAB00E989C9 /* ILSettingsViewController.m */,
 				47D1E15B17BD2BBF00833F1A /* ILEndViewController.h */,
 				47D1E15C17BD2BBF00833F1A /* ILEndViewController.m */,
+				47B804641C52931D003007D9 /* ILFirstTimeViewController.h */,
+				47B804651C52931D003007D9 /* ILFirstTimeViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -543,6 +551,7 @@
 			files = (
 				4792ECEE1768A7B800441527 /* InfoPlist.strings in Resources */,
 				4792ED301768BD8600441527 /* InnerLife-iOS-57x57.png in Resources */,
+				47B804631C5289FC003007D9 /* ILFirstTimeView.xib in Resources */,
 				47765C271C4AFE9100B0C409 /* InnerLife-iOS-40x2.png in Resources */,
 				47765C2B1C4AFE9100B0C409 /* InnerLife-iOS-57x1.png in Resources */,
 				4792ED321768BDA300441527 /* InnerLife-iOS-114x114.png in Resources */,
@@ -618,6 +627,7 @@
 				4792ED48176928C900441527 /* ILSchedule.m in Sources */,
 				4792ED4B1769293300441527 /* ILSection.m in Sources */,
 				47F217E3176A1DB10098FF4A /* ILQuestionXMLParserDelegate.m in Sources */,
+				47B804661C52931D003007D9 /* ILFirstTimeViewController.m in Sources */,
 				47F217E6176A1DD50098FF4A /* ILScheduleXMLParserDelegate.m in Sources */,
 				47F217E9176A209E0098FF4A /* ILChoice.m in Sources */,
 				473343CB176CB7120027D61D /* ILTimeUtils.m in Sources */,
