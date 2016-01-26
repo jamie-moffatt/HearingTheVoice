@@ -23,6 +23,7 @@
 #define UD_PERMISSIONS_ARE_VALID @"permissions_are_valid"
 #define UD_PERMISSION_TO_STUDY_DATA @"permission_to_study_data"
 #define UD_PERMISSIONS_HAVE_SYNCED @"permissions_have_synced"
+#define UD_STUDY_CODE @"study_code"
 
 + (void)setDefaults;
 + (NSString *)userDefaultsToString;
@@ -76,5 +77,8 @@
 
 + (BOOL)permissionsHaveSynchronized;
 + (void)setPermissionsHaveSynchronized :(BOOL)dataHasSynced;
+
++ (NSString *)getStudyCode;
++ (void)setStudyCode :(NSString *)studyCode;
 
 @end

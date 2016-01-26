@@ -12,6 +12,7 @@
 #import "ILQuestionFormViewController.h"
 #import "ILSettingsViewController.h"
 #import "ILEndViewController.h"
+#import "ILFirstTimeViewController.h"
 
 #import "ILAppManager.h"
 #import "ILTimeUtils.h"
@@ -116,8 +117,8 @@
     
     if (![ILAppManager userIsRegistered])
     {
-        ILUserFormViewController *userFormView = [[ILUserFormViewController alloc] initWithNibName:@"ILUserForm" bundle:nil];
-        userFormView.dashboard = self;
+        ILFirstTimeViewController *userFormView = [[ILFirstTimeViewController alloc] initWithNibName:@"ILFirstTimeView" bundle:nil];
+        //userFormView.dashboard = self;
         [self presentViewController:userFormView animated:YES completion:nil];
     }
     

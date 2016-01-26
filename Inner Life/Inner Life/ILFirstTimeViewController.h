@@ -11,6 +11,7 @@
 @interface ILFirstTimeViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *txtStudyCode;
+@property (weak, nonatomic) IBOutlet UIButton *btnStartFullApp;
 
 
 - (IBAction)onStartDemoTapped:(UIButton *)sender;

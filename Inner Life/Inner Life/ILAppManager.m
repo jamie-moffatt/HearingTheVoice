@@ -373,4 +373,14 @@
     [[NSUserDefaults standardUserDefaults] setBool:dataHasSynced forKey:UD_PERMISSIONS_HAVE_SYNCED];
 }
 
++(NSString *)getStudyCode
+{
+    return [[NSUserDefaults standardUserDefaults] stringForKey:UD_STUDY_CODE];
+}
+
++(void)setStudyCode:(NSString *)studyCode
+{
+    [[NSUserDefaults standardUserDefaults] setObject:studyCode forKey:UD_STUDY_CODE];
+}
+
 @end

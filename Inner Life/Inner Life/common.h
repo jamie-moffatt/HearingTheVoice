@@ -10,3 +10,5 @@
 #define TRAIT_START_ID 29
 #define TRAIT_MIDDLE_ID 30
 #define TRAIT_END_ID 31
+
+#define DEFAULT_STUDY_CODE @"1000"

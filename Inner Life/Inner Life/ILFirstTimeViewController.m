@@ -8,35 +8,82 @@
 
 #import "ILFirstTimeViewController.h"
 
+#import "common.h"
+#import "ILAppManager.h"
+
 @interface ILFirstTimeViewController ()
 
 @end
 
 @implementation ILFirstTimeViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (!string.length)
+    {
+        return YES;
+    }
+    
+    // Prevent invalid character input, if keyboard is numberpad
+    if (textField.keyboardType == UIKeyboardTypeNumberPad)
+    {
+        if ([string rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location != NSNotFound)
+        {
+            return NO;
+        }
+    }
+    
+    // verify max length has not been exceeded
+    NSString *updatedText = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    if (updatedText.length > 4)
+    {
+        return NO;
+    }
+    
+    return YES;
 }
-*/
 
-- (IBAction)onStartDemoTapped:(id)sender {
+
+- (IBAction)onStartDemoTapped:(UIButton *)sender
+{
+    
 }
 
-- (IBAction)onStartFullApp:(UIButton *)sender {
+- (IBAction)onStartFullApp:(UIButton *)sender
+{
+    NSString* studyCodeText = _txtStudyCode.text;
+    
+    if (studyCodeText.length > 0 && studyCodeText.length < 4)
+    {
+        UIAlertController* incorrectFormatAlert = [UIAlertController
+                                                   alertControllerWithTitle:@"Format Error"
+                                                   message:@"Study code should be 4-digits or left blank."
+                                                   preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* okButton = [UIAlertAction
+                                   actionWithTitle:@"OK"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action)
+                                   {
+                                   }];
+        
+        [incorrectFormatAlert addAction:okButton];
+        [self presentViewController:incorrectFormatAlert animated:YES completion:nil];
+        
+        return;
+    }
+    
+    [ILAppManager setStudyCode:studyCodeText.length == 4 ? studyCodeText : DEFAULT_STUDY_CODE];
 }
 @end
