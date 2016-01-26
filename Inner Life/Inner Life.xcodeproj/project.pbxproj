@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		470474041C52C25400D87A0C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 470474031C52C25400D87A0C /* Default@2x.png */; settings = {ASSET_TAGS = (); }; };
+		470474071C52CAF100D87A0C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 470474051C52CAF100D87A0C /* Localizable.strings */; settings = {ASSET_TAGS = (); }; };
 		470886A417DA57D100A87FCD /* NSDate-Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 470886A317DA57D100A87FCD /* NSDate-Utilities.m */; };
 		470B1BFC17A5346E009F67A0 /* ILUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 470B1BFB17A5346E009F67A0 /* ILUser.m */; };
 		4711150217B136B5001BF1C6 /* ILTimeSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 4711150117B136B5001BF1C6 /* ILTimeSelector.m */; };
@@ -35,7 +37,6 @@
 		47765C321C4AFE9100B0C409 /* InnerLife-iOS-76x1.png in Resources */ = {isa = PBXBuildFile; fileRef = 47765C211C4AFE9100B0C409 /* InnerLife-iOS-76x1.png */; settings = {ASSET_TAGS = (); }; };
 		47765C331C4AFE9100B0C409 /* InnerLife-iOS-76x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 47765C221C4AFE9100B0C409 /* InnerLife-iOS-76x2.png */; settings = {ASSET_TAGS = (); }; };
 		47765C361C4B0B2A00B0C409 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 47765C341C4B0B2A00B0C409 /* Default.png */; settings = {ASSET_TAGS = (); }; };
-		47765C371C4B0B2A00B0C409 /* Default@2.png in Resources */ = {isa = PBXBuildFile; fileRef = 47765C351C4B0B2A00B0C409 /* Default@2.png */; settings = {ASSET_TAGS = (); }; };
 		4781FF2317CFF2C800C012BB /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4781FF2217CFF2C800C012BB /* AdSupport.framework */; };
 		4781FF2517CFF33300C012BB /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4781FF2417CFF33300C012BB /* libTestFlight.a */; };
 		4781FF2717CFF36700C012BB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4781FF2617CFF36700C012BB /* libz.dylib */; };
@@ -93,6 +94,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		470474031C52C25400D87A0C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		470474061C52CAF100D87A0C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		470886A217DA57C200A87FCD /* NSDate-Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate-Utilities.h"; sourceTree = "<group>"; };
 		470886A317DA57D100A87FCD /* NSDate-Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate-Utilities.m"; sourceTree = "<group>"; };
 		470B1BFA17A5346E009F67A0 /* ILUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUser.h; sourceTree = "<group>"; };
@@ -133,7 +136,6 @@
 		47765C211C4AFE9100B0C409 /* InnerLife-iOS-76x1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "InnerLife-iOS-76x1.png"; sourceTree = "<group>"; };
 		47765C221C4AFE9100B0C409 /* InnerLife-iOS-76x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "InnerLife-iOS-76x2.png"; sourceTree = "<group>"; };
 		47765C341C4B0B2A00B0C409 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		47765C351C4B0B2A00B0C409 /* Default@2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2.png"; sourceTree = "<group>"; };
 		4781FF2217CFF2C800C012BB /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4781FF2417CFF33300C012BB /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		4781FF2617CFF36700C012BB /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -318,8 +320,8 @@
 		4792ECEA1768A7B800441527 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				470474051C52CAF100D87A0C /* Localizable.strings */,
 				470886A117DA57A900A87FCD /* DateUtils */,
-				47C9154417C151C30087C10E /* Default-568h@2x.png */,
 				4792ED381769183500441527 /* Reachability */,
 				4781FF2817CFF69400C012BB /* TestFlight */,
 				4792ED371768FE5600441527 /* Images */,
@@ -354,8 +356,9 @@
 		4792ED371768FE5600441527 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				47C9154417C151C30087C10E /* Default-568h@2x.png */,
 				47765C341C4B0B2A00B0C409 /* Default.png */,
-				47765C351C4B0B2A00B0C409 /* Default@2.png */,
+				470474031C52C25400D87A0C /* Default@2x.png */,
 				47765C121C4AFE9100B0C409 /* InnerLife-iOS-29x1.png */,
 				47765C131C4AFE9100B0C409 /* InnerLife-iOS-29x2.png */,
 				47765C141C4AFE9100B0C409 /* InnerLife-iOS-29x3.png */,
@@ -561,6 +564,8 @@
 				47E733871793090400F23708 /* ILUserForm.xib in Resources */,
 				47765C291C4AFE9100B0C409 /* InnerLife-iOS-50x1.png in Resources */,
 				47765C361C4B0B2A00B0C409 /* Default.png in Resources */,
+				470474041C52C25400D87A0C /* Default@2x.png in Resources */,
+				470474071C52CAF100D87A0C /* Localizable.strings in Resources */,
 				47765C281C4AFE9100B0C409 /* InnerLife-iOS-40x3.png in Resources */,
 				47765C301C4AFE9100B0C409 /* InnerLife-iOS-72x1.png in Resources */,
 				47F0794617A7F3B1003B922C /* section_complete.png in Resources */,
@@ -577,7 +582,6 @@
 				47C9154717C151C30087C10E /* Default-568h@2x.png in Resources */,
 				47765C2A1C4AFE9100B0C409 /* InnerLife-iOS-50x2.png in Resources */,
 				47765C2F1C4AFE9100B0C409 /* InnerLife-iOS-60x3.png in Resources */,
-				47765C371C4B0B2A00B0C409 /* Default@2.png in Resources */,
 				47E5603E17C2564D00FB4E9A /* ClockHand.png in Resources */,
 				47765C311C4AFE9100B0C409 /* InnerLife-iOS-72x2.png in Resources */,
 				47765C321C4AFE9100B0C409 /* InnerLife-iOS-76x1.png in Resources */,
@@ -666,6 +670,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		470474051C52CAF100D87A0C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				470474061C52CAF100D87A0C /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		4792ECEC1768A7B800441527 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
