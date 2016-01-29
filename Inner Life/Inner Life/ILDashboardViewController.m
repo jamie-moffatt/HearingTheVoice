@@ -17,7 +17,6 @@
 #import "ILAppManager.h"
 #import "ILTimeUtils.h"
 #import "common.h"
-#import "TestFlight.h"
 
 @interface ILDashboardViewController ()
 
@@ -39,7 +38,6 @@
 {
     [super viewDidLoad];
 	
-    [TestFlight passCheckpoint:@"Opened Dashboard"];
     self.title = @"Dashboard";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:self action:@selector(settingsButton:)];
@@ -48,7 +46,6 @@
     
     if ([ILAppManager isFirstRun])
     {
-        [TestFlight passCheckpoint:@"Set Start Date"];
         [ILAppManager setFirstRun:NO];
         [ILAppManager setStartDate:[NSDate date]];
         [ILAppManager setupNotifications];

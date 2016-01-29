@@ -38,7 +38,6 @@
 		47765C331C4AFE9100B0C409 /* InnerLife-iOS-76x2.png in Resources */ = {isa = PBXBuildFile; fileRef = 47765C221C4AFE9100B0C409 /* InnerLife-iOS-76x2.png */; settings = {ASSET_TAGS = (); }; };
 		47765C361C4B0B2A00B0C409 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 47765C341C4B0B2A00B0C409 /* Default.png */; settings = {ASSET_TAGS = (); }; };
 		4781FF2317CFF2C800C012BB /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4781FF2217CFF2C800C012BB /* AdSupport.framework */; };
-		4781FF2517CFF33300C012BB /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4781FF2417CFF33300C012BB /* libTestFlight.a */; };
 		4781FF2717CFF36700C012BB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4781FF2617CFF36700C012BB /* libz.dylib */; };
 		4792ECE41768A7B800441527 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ECE31768A7B800441527 /* UIKit.framework */; };
 		4792ECE61768A7B800441527 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792ECE51768A7B800441527 /* Foundation.framework */; };
@@ -137,11 +136,7 @@
 		47765C221C4AFE9100B0C409 /* InnerLife-iOS-76x2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "InnerLife-iOS-76x2.png"; sourceTree = "<group>"; };
 		47765C341C4B0B2A00B0C409 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		4781FF2217CFF2C800C012BB /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		4781FF2417CFF33300C012BB /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		4781FF2617CFF36700C012BB /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		4781FF2917CFF6AC00C012BB /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
-		4781FF2A17CFF6AC00C012BB /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
-		4781FF2B17CFF6AC00C012BB /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		4792ECE01768A7B800441527 /* Inner Life.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Inner Life.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4792ECE31768A7B800441527 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4792ECE51768A7B800441527 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -216,7 +211,6 @@
 				4792ECE41768A7B800441527 /* UIKit.framework in Frameworks */,
 				4792ECE61768A7B800441527 /* Foundation.framework in Frameworks */,
 				4792ECE81768A7B800441527 /* CoreGraphics.framework in Frameworks */,
-				4781FF2517CFF33300C012BB /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,16 +253,6 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
-		4781FF2817CFF69400C012BB /* TestFlight */ = {
-			isa = PBXGroup;
-			children = (
-				4781FF2917CFF6AC00C012BB /* TestFlight.h */,
-				4781FF2A17CFF6AC00C012BB /* TestFlight+AsyncLogging.h */,
-				4781FF2B17CFF6AC00C012BB /* TestFlight+ManualSessions.h */,
-			);
-			name = TestFlight;
-			sourceTree = "<group>";
-		};
 		4792ECD71768A7B800441527 = {
 			isa = PBXGroup;
 			children = (
@@ -292,7 +276,6 @@
 			isa = PBXGroup;
 			children = (
 				4781FF2617CFF36700C012BB /* libz.dylib */,
-				4781FF2417CFF33300C012BB /* libTestFlight.a */,
 				4781FF2217CFF2C800C012BB /* AdSupport.framework */,
 				47FB34D117B26A1700E989C9 /* QuartzCore.framework */,
 				4792ED3C17691ABF00441527 /* SystemConfiguration.framework */,
@@ -323,7 +306,6 @@
 				470474051C52CAF100D87A0C /* Localizable.strings */,
 				470886A117DA57A900A87FCD /* DateUtils */,
 				4792ED381769183500441527 /* Reachability */,
-				4781FF2817CFF69400C012BB /* TestFlight */,
 				4792ED371768FE5600441527 /* Images */,
 				4792ECEB1768A7B800441527 /* Inner Life-Info.plist */,
 				4792ECEC1768A7B800441527 /* InfoPlist.strings */,

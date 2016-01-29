@@ -9,7 +9,6 @@
 #import "ILEndViewController.h"
 #import "ILAppManager.h"
 #import "common.h"
-#import "TestFlight.h"
 
 @interface ILEndViewController ()
 
@@ -30,7 +29,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[TestFlight passCheckpoint:@"Reached EndViewController"];
     _lblSamplesComplete.text = [NSString stringWithFormat:@"You completed %lu/28 samples.", (unsigned long)[[ILAppManager getSessionsCompleted] count]];
     _lblAverageResponseTime.text = [ILAppManager getFormattedAverageResponseTime];
 }
