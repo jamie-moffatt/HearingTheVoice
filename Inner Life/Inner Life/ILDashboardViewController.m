@@ -18,6 +18,8 @@
 #import "ILTimeUtils.h"
 #import "common.h"
 
+#import <Crashlytics/Crashlytics.h>
+
 @interface ILDashboardViewController ()
 
 @end
@@ -140,6 +142,7 @@
 
 - (IBAction)sync:(UIButton *)sender
 {
+    [[Crashlytics sharedInstance] crash];
     for (int i = 1; i <= 28; i++)
     {
         NSNumber* sessionIsComplete = [[ILAppManager getSessionsCompleted] objectForKey:[NSString stringWithFormat:@"%d", i]];

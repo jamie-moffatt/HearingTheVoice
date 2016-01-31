@@ -75,9 +75,6 @@
 		47E733451792B9AC00F23708 /* ILDashboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E733441792B9AC00F23708 /* ILDashboard.xib */; };
 		47E733861793090400F23708 /* ILUserFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E733841793090400F23708 /* ILUserFormViewController.m */; };
 		47E733871793090400F23708 /* ILUserForm.xib in Resources */ = {isa = PBXBuildFile; fileRef = 47E733851793090400F23708 /* ILUserForm.xib */; };
-		47F0794617A7F3B1003B922C /* section_complete.png in Resources */ = {isa = PBXBuildFile; fileRef = 47F0794317A7F3B1003B922C /* section_complete.png */; };
-		47F0794717A7F3B1003B922C /* section_current.png in Resources */ = {isa = PBXBuildFile; fileRef = 47F0794417A7F3B1003B922C /* section_current.png */; };
-		47F0794817A7F3B1003B922C /* section_incomplete.png in Resources */ = {isa = PBXBuildFile; fileRef = 47F0794517A7F3B1003B922C /* section_incomplete.png */; };
 		47F217E3176A1DB10098FF4A /* ILQuestionXMLParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E2176A1DB10098FF4A /* ILQuestionXMLParserDelegate.m */; };
 		47F217E6176A1DD50098FF4A /* ILScheduleXMLParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E5176A1DD50098FF4A /* ILScheduleXMLParserDelegate.m */; };
 		47F217E9176A209E0098FF4A /* ILChoice.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F217E8176A209E0098FF4A /* ILChoice.m */; };
@@ -191,9 +188,6 @@
 		47E733831793090400F23708 /* ILUserFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILUserFormViewController.h; sourceTree = "<group>"; };
 		47E733841793090400F23708 /* ILUserFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILUserFormViewController.m; sourceTree = "<group>"; };
 		47E733851793090400F23708 /* ILUserForm.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILUserForm.xib; sourceTree = "<group>"; };
-		47F0794317A7F3B1003B922C /* section_complete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = section_complete.png; sourceTree = "<group>"; };
-		47F0794417A7F3B1003B922C /* section_current.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = section_current.png; sourceTree = "<group>"; };
-		47F0794517A7F3B1003B922C /* section_incomplete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = section_incomplete.png; sourceTree = "<group>"; };
 		47F217E1176A1DB10098FF4A /* ILQuestionXMLParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILQuestionXMLParserDelegate.h; sourceTree = "<group>"; };
 		47F217E2176A1DB10098FF4A /* ILQuestionXMLParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILQuestionXMLParserDelegate.m; sourceTree = "<group>"; };
 		47F217E4176A1DD50098FF4A /* ILScheduleXMLParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILScheduleXMLParserDelegate.h; sourceTree = "<group>"; };
@@ -376,9 +370,6 @@
 				47765C221C4AFE9100B0C409 /* InnerLife-iOS-76x2.png */,
 				47E5603C17C2564D00FB4E9A /* ClockHand.png */,
 				47E5603D17C2564D00FB4E9A /* ClockHand@2x.png */,
-				47F0794317A7F3B1003B922C /* section_complete.png */,
-				47F0794417A7F3B1003B922C /* section_current.png */,
-				47F0794517A7F3B1003B922C /* section_incomplete.png */,
 				4792ED351768BE0100441527 /* InnerLife-iOS-144x144.png */,
 				4792ED331768BDFB00441527 /* InnerLife-iOS-72x72.png */,
 				4792ED311768BDA300441527 /* InnerLife-iOS-114x114.png */,
@@ -567,12 +558,9 @@
 				470474071C52CAF100D87A0C /* Localizable.strings in Resources */,
 				47765C281C4AFE9100B0C409 /* InnerLife-iOS-40x3.png in Resources */,
 				47765C301C4AFE9100B0C409 /* InnerLife-iOS-72x1.png in Resources */,
-				47F0794617A7F3B1003B922C /* section_complete.png in Resources */,
 				47765C261C4AFE9100B0C409 /* InnerLife-iOS-40x1.png in Resources */,
 				47765C251C4AFE9100B0C409 /* InnerLife-iOS-29x3.png in Resources */,
-				47F0794717A7F3B1003B922C /* section_current.png in Resources */,
 				47765C241C4AFE9100B0C409 /* InnerLife-iOS-29x2.png in Resources */,
-				47F0794817A7F3B1003B922C /* section_incomplete.png in Resources */,
 				47765C231C4AFE9100B0C409 /* InnerLife-iOS-29x1.png in Resources */,
 				47765C2C1C4AFE9100B0C409 /* InnerLife-iOS-57x2.png in Resources */,
 				47D7200417BD227E00F9FB14 /* ILEndView.xib in Resources */,
@@ -612,7 +600,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run 084e696343a5aa3836230e29a65b546cd6412fa1 80b6fd73233f1f97ba9ce0a63356faad189ad1473e52218168ee2d3da68b484e";
+			shellScript = "./Fabric.framework/run 084e696343a5aa3836230e29a65b546cd6412fa1 80b6fd73233f1f97ba9ce0a63356faad189ad1473e52218168ee2d3da68b484e\n\nsha=$(git log -1 --format=\"%h\")\nagvtool new-version -all $sha\n\nversion=$(git rev-list --count HEAD)\nagvtool new-marketing-version 1.$version";
 		};
 		4792ED0D1768A7B900441527 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
