@@ -21,11 +21,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.217</string>
+	<string>1.218</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>3a3d3cc</string>
+	<string>b57b956</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
