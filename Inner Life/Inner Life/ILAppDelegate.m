@@ -11,10 +11,16 @@
 #import "ILAppManager.h"
 #import "ILQuestionFormViewController.h"
 
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
 @implementation ILAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{    
+{
+    // Hook for error reporting through Crashlytics
+    [Fabric with:@[[Crashlytics class]]];
+
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
