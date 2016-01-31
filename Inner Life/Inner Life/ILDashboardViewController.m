@@ -114,9 +114,9 @@
     
     if (![ILAppManager userIsRegistered])
     {
-        ILFirstTimeViewController *userFormView = [[ILFirstTimeViewController alloc] initWithNibName:@"ILFirstTimeView" bundle:nil];
-        //userFormView.dashboard = self;
-        [self presentViewController:userFormView animated:YES completion:nil];
+//        ILFirstTimeViewController *userFormView = [[ILFirstTimeViewController alloc] initWithNibName:@"ILFirstTimeView" bundle:nil];
+//        //userFormView.dashboard = self;
+//        [self presentViewController:userFormView animated:YES completion:nil];
     }
     
     [self updateSessionProgressBar];

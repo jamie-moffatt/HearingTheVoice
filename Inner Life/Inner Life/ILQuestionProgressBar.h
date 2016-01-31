@@ -9,13 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ILQuestionProgressBar : UIView
-{
-    @private
-    UIImage *current;
-    UIImage *incomplete;
-    UIImage *complete;
-    
-}
 
 @property (nonatomic) NSInteger currentSection;
 @property (nonatomic) NSInteger currentSubSection;
